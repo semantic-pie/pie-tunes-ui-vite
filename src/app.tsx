@@ -4,10 +4,12 @@ import SidePill from "./components/SidePill";
 
 export function App() {
   return (
-      <>
-        <SidePill/>
-        <MainPage />
-        <Player/>
-      </>
+    <>
+      <SidePill />
+      <MainPage />
+      <div class="absolute bottom-28 w-full">
+        <Player />
+      </div>
+    </>
   )
 }
