@@ -1,5 +1,5 @@
 import { RouterProvider, createRootRoute, createRoute, createRouter, useLoaderData } from "@tanstack/react-router";
-import MainPage from "./components/MainPage/MainPage";
+import MainPage from "./components/pages/MainPage";
 import SidePill from "./components/SidePill";
 import BubblePlayer from "./components/BubblePlayer";
 import Page from "./components/pages/Page";
