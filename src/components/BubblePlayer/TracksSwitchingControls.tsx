@@ -1,9 +1,9 @@
-import Backward from "@/assets/icons/PlayerIcons/Backward";
-import Forward from "@/assets/icons/PlayerIcons/Forward";
-import Pause from "@/assets/icons/PlayerIcons/Pause";
-import Play from "@/assets/icons/PlayerIcons/Play";
+import Backward from "@/components/icons/PlayerIcons/Backward";
+import Forward from "@/components/icons/PlayerIcons/Forward";
+import Pause from "@/components/icons/PlayerIcons/Pause";
+import Play from "@/components/icons/PlayerIcons/Play";
 
-type TracksControls = {
+type TracksSwitchingControlsProps = {
     playing: boolean
     onNext: () => void
     onPrev: () => void
@@ -11,7 +11,7 @@ type TracksControls = {
     onResume: () => void
 }
 
-const TracksControls = (props: TracksControls) => {
+const TracksSwitchingControls = (props: TracksSwitchingControlsProps) => {
     return (
         <div class="flex flex-row gap-4 items-center justify-center">
             <button onClick={props.onPrev} class="flex items-center justify-center bg-yellow-400  w-14 h-14">
@@ -34,4 +34,4 @@ const TracksControls = (props: TracksControls) => {
     )
 }
 
-export default TracksControls;
+export default TracksSwitchingControls;

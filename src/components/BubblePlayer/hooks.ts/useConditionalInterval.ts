@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "preact/hooks";
 
 const useConditionalInterval = (callback: () => void, delay: number, condition: any) => {
   useEffect(() => {

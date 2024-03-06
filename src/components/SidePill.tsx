@@ -1,6 +1,6 @@
-import Library from "@/assets/icons/Library";
-import Player from "@/assets/icons/Player";
-import Search from "@/assets/icons/Search";
+import Library from "@/components/icons/Library";
+import Player from "@/components/icons/Player";
+import Search from "@/components/icons/Search";
 
 const SidePill = () => {
     return (

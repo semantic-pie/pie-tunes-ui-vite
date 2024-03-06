@@ -11,6 +11,7 @@
   "dependencies": {
     "@preact/compat": "^17.1.2",
     "@reduxjs/toolkit": "^2.2.1",
+    "@tanstack/react-router": "^1.19.1",
     "preact": "^10.19.5",
     "preact-router": "^4.1.2",
     "react-dom": "npm:@preact/compat@^17.1.2",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.8.1",
+    "@tanstack/router-vite-plugin": "^1.19.0",
     "@types/node": "^20.11.22",
     "autoprefixer": "^10.4.17",
     "postcss": "^8.4.35",

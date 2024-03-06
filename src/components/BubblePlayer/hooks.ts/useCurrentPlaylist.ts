@@ -3,6 +3,7 @@ import { logAndPipe, responseToObject } from "@/utils/hellpers"
 import { useEffect, useState } from "preact/hooks"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
 import useConditionalInterval from "./useConditionalInterval"
+import { api } from "@/api"
 
 
 export const useCurrentPlaylist = () => {
@@ -12,9 +13,9 @@ export const useCurrentPlaylist = () => {
 
     const [time, setTime] = useState<number>()
 
-    const { load, src, pause, play, playing, duration, getPosition, seek } = useGlobalAudioPlayer();
+    const { load, src, pause, play, playing, duration, getPosition, seek, volume, setVolume } = useGlobalAudioPlayer();
 
-    useConditionalInterval(() => setTime(getPosition()), 200, currentTrack )
+    useConditionalInterval(() => setTime(getPosition()), 200, currentTrack)
 
     const setStartTrack = (tracks: Track[]) => {
         if (tracks.length > 0) setTrackNum(0)
@@ -24,13 +25,13 @@ export const useCurrentPlaylist = () => {
 
     useEffect(() => {
         if (currentTrack) {
-            load(`http://localhost:8080/api/play/${currentTrack.uuid}.mp3`)
+            load(api.forTrackStream(currentTrack.uuid))
         }
     }, [currentTrack])
 
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/tracks")
+        fetch(api.forTracks())
             .then(responseToObject)
             .then(logAndPipe)
             .then(setStartTrack)
@@ -53,6 +54,8 @@ export const useCurrentPlaylist = () => {
         seek,
         time,
         playing,
-        duration
+        duration, 
+        volume, 
+        setVolume
     }
 }

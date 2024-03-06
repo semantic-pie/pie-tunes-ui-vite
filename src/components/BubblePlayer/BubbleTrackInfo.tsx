@@ -1,9 +1,10 @@
-import Like from "@/assets/icons/Like"
-import ThreeDots from "@/assets/icons/ThreeDots"
+import { api } from "@/api"
+import Like from "@/components/icons/Like"
+import ThreeDots from "@/components/icons/ThreeDots"
 import { Track } from "@/pieTunesApi"
 import { useRef } from "preact/hooks"
 
-type InfoProps = {
+type BubbleTrackInfoProps = {
     track?: Track
     time?: number
     duration?: number
@@ -16,8 +17,8 @@ const calcPositionInPercent = (time?: number, duration?: number) => {
 }
 
 
-const Info = (props: InfoProps) => {
-    const track = props.track ?? { title: 'Kek', musicBand: { name: "hehe" } } as Track
+const BubbleTrackInfo = (props: BubbleTrackInfoProps) => {
+    const track = props.track as Track  //?? { title: 'Kek', musicBand: { name: "hehe" } } as Track
 
     const progressContainer = useRef<HTMLDivElement>(null)
 
@@ -34,12 +35,12 @@ const Info = (props: InfoProps) => {
 
     }
 
-
     return (
+
         <div className="w-96 h-[74px] pt-2 bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative">
-            <div class='w-full flex justify-between pb-[5px]'>
+            <div class='w-full flex justify-between pb-[5px] px-1.5'>
                 <div className="justify-start items-center gap-3.5 flex">
-                    <img className="w-14 h-14 rounded-lg" src={`http://localhost:8080/api/tracks/covers/${track.uuid}`} />
+                    <img className="w-14 h-14 rounded-lg" src={api.forTrackCover(track.uuid)} />
                     <div className="flex-col justify-center items-start gap-1 inline-flex">
                         <div className="text-center text-white text-lg font-normal font-['Helvetica Neue'] text-nowrap">{track.title}</div>
                         <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{track.musicBand.name}</div>
@@ -63,4 +64,4 @@ const Info = (props: InfoProps) => {
     )
 }
 
-export default Info
+export default BubbleTrackInfo

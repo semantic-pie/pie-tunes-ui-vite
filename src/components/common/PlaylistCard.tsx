@@ -1,4 +1,4 @@
-const AlbumItem = () => {
+const PlaylistCard = () => {
     return (
         <div class="flex flex-col">
             <div class="w-52 h-52 rounded-2xl bg-lime-900"></div>
@@ -8,4 +8,4 @@ const AlbumItem = () => {
     )
 }
 
-export default AlbumItem
+export default PlaylistCard

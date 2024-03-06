@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
+import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 import path from "path";
 
 // https://vitejs.dev/config/
@@ -14,5 +15,5 @@ export default defineConfig({
       "@components": path.resolve(__dirname, "./src/components"),
     },
   },
-  plugins: [preact()],
+  plugins: [preact(), TanStackRouterVite()],
 });
