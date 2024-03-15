@@ -27,12 +27,7 @@ const BubbleTrackInfo = (props: BubbleTrackInfoProps) => {
     const position = calcPositionInPercent(time, duration);
 
     useEffect(() => {
-        if (position >= 99.5) {
-            console.log('if') 
-            dispatch(next())
-        } else {
-            console.log('else')
-        }
+        if (position >= 99.5) dispatch(next())
     }, [time])
 
     return (
