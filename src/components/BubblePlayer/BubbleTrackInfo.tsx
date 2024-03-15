@@ -1,14 +1,13 @@
 import { api } from "@/api"
 import Like from "@/components/icons/Like"
 import ThreeDots from "@/components/icons/ThreeDots"
-import { Track } from "@/pieTunesApi"
-import { useRef } from "preact/hooks"
+import { Track } from "@/api"
+import { useAudioTime } from "./hooks.ts/useAudioTime"
+import { useGlobalAudioPlayer } from "react-use-audio-player"
+import ProgresBar from "../common/ProgressBar"
 
 type BubbleTrackInfoProps = {
-    track?: Track
-    time?: number
-    duration?: number
-    seek: (position: number) => void
+    track: Track
 }
 
 const calcPositionInPercent = (time?: number, duration?: number) => {
@@ -18,25 +17,15 @@ const calcPositionInPercent = (time?: number, duration?: number) => {
 
 
 const BubbleTrackInfo = (props: BubbleTrackInfoProps) => {
-    const track = props.track as Track  //?? { title: 'Kek', musicBand: { name: "hehe" } } as Track
+    const track = props.track
 
-    const progressContainer = useRef<HTMLDivElement>(null)
+    const time = useAudioTime()
+    const { duration, seek } = useGlobalAudioPlayer()
 
-    const onClickSeek = (e: MouseEvent,) => {
-        if (e.target && props.duration && progressContainer.current) {
-            var rect = progressContainer.current.getBoundingClientRect()
-            var x = e.clientX - rect.left
 
-            console.log(rect)
-            console.log(e)
-            console.log('time: ', (x / rect.width) * props.duration)
-            props.seek((x / rect.width) * props.duration)
-        }
-
-    }
+    const position = calcPositionInPercent(time, duration);
 
     return (
-
         <div className="w-96 h-[74px] pt-2 bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative">
             <div class='w-full flex justify-between pb-[5px] px-1.5'>
                 <div className="justify-start items-center gap-3.5 flex">
@@ -55,11 +44,7 @@ const BubbleTrackInfo = (props: BubbleTrackInfoProps) => {
                     </div>
                 </div>
             </div>
-            <div ref={progressContainer} class='absolute w-full mt-[16px] bottom-0' onClick={onClickSeek} >
-                <div style={{ width: calcPositionInPercent(props.time, props.duration) + '%' }} class={`mr-auto h-1 bg-black`}>
-
-                </div>
-            </div>
+            <ProgresBar classes="w-full" value={position} setValue={seek} relativeValue={duration}/>
         </div>
     )
 }

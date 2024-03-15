@@ -1,4 +1,4 @@
-import { RouterProvider, createRootRoute, createRoute, createRouter, useLoaderData } from "@tanstack/react-router";
+import { RouterProvider, createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
 import MainPage from "./components/pages/MainPage";
 import SidePill from "./components/SidePill";
 import BubblePlayer from "./components/BubblePlayer";
@@ -7,11 +7,10 @@ import AlbumCard from "./components/common/AlbumCard";
 import TrackCard from "./components/common/TrackCard";
 import ArtistCard from "./components/common/ArtistCard";
 import PlaylistCard from "./components/common/PlaylistCard";
-import { api } from "./api";
+import { Track, api } from "./api";
 import { responseToObject } from "./utils/hellpers";
-import { Track } from "./pieTunesApi";
-
-
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 
 const rootRoute = createRootRoute({
@@ -23,7 +22,7 @@ const rootRoute = createRootRoute({
         <BubblePlayer />
       </div>
     </>
-  ),
+  )
 })
 
 const madeForYouRoute = createRoute({
@@ -38,7 +37,7 @@ const songsRoute = createRoute({
   component: ({ }) => {
     return <Page title="Songs" list={songsRoute.useLoaderData().map((track) => <TrackCard track={track} />)} col />
   },
-  loader: ({}) => fetch(api.forTracks()).then(responseToObject) as Promise<Track[]>
+  loader: () => fetch(api.forTracks()).then(responseToObject) as Promise<Track[]>
 })
 
 const albumsRoute = createRoute({
@@ -66,16 +65,8 @@ declare module '@tanstack/react-router' {
 
 export function App() {
   return (
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   )
 }
-
-
-// // {/* <>
-// {/* <RouterProvider router={router} /> */}
-//   <SidePill />
-//   <MainPage />
-//   <div class="absolute bottom-28 w-full">
-//     <Player />
-//   </div>
-// // </> */}

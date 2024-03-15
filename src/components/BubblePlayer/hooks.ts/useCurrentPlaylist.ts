@@ -1,31 +1,32 @@
-import { Track } from "@/pieTunesApi"
+import { Track } from "@/api"
 import { logAndPipe, responseToObject } from "@/utils/hellpers"
-import { useEffect, useState } from "preact/hooks"
+import { useEffect } from "preact/hooks"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
-import useConditionalInterval from "./useConditionalInterval"
 import { api } from "@/api"
+import { setQueue, useAppDispatch, useAppSelector } from "@/redux/store"
 
 
 export const useCurrentPlaylist = () => {
-    const [trackNum, setTrackNum] = useState<number>(-1)
-    const [tracks, setTracks] = useState<Track[]>([])
-    const currentTrack = trackNum != -1 ? tracks[trackNum] : undefined
+    const dispatch = useAppDispatch()
+    const tracks = useAppSelector(state => state.queue);
 
-    const [time, setTime] = useState<number>()
+    const currentTrack = useAppSelector(state => state.currentTrack)
 
-    const { load, src, pause, play, playing, duration, getPosition, seek, volume, setVolume } = useGlobalAudioPlayer();
+    const { load, seek, volume, setVolume } = useGlobalAudioPlayer();
 
-    useConditionalInterval(() => setTime(getPosition()), 200, currentTrack)
 
     const setStartTrack = (tracks: Track[]) => {
-        if (tracks.length > 0) setTrackNum(0)
-        else setTrackNum(-1)
+        if (tracks.length > 0) dispatch(setQueue(tracks))
         return tracks
     }
 
     useEffect(() => {
         if (currentTrack) {
-            load(api.forTrackStream(currentTrack.uuid))
+            load(api.forTrackStream(currentTrack.uuid), {
+                html5: true,
+                format: 'mp3',
+                autoplay: true
+            })
         }
     }, [currentTrack])
 
@@ -35,27 +36,13 @@ export const useCurrentPlaylist = () => {
             .then(responseToObject)
             .then(logAndPipe)
             .then(setStartTrack)
-            .then(setTracks)
     }, [])
-
-    const next = () => setTrackNum(prev => prev === (tracks.length - 1) ? prev : ++prev)
-
-    const prev = () => setTrackNum(prev => prev === 0 ? prev : --prev)
-
 
     return {
         currentTrack,
         trackList: tracks,
-        next,
-        prev,
-        pause,
-        resume: play,
-        src,
         seek,
-        time,
-        playing,
-        duration, 
-        volume, 
+        volume,
         setVolume
     }
 }
