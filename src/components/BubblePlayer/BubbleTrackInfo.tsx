@@ -5,6 +5,8 @@ import { Track } from "@/api"
 import { useAudioTime } from "./hooks.ts/useAudioTime"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
 import ProgresBar from "../common/ProgressBar"
+import { useEffect } from "preact/hooks"
+import { next, useAppDispatch } from "@/redux/store"
 
 type BubbleTrackInfoProps = {
     track: Track
@@ -18,12 +20,20 @@ const calcPositionInPercent = (time?: number, duration?: number) => {
 
 const BubbleTrackInfo = (props: BubbleTrackInfoProps) => {
     const track = props.track
+    const dispatch = useAppDispatch()
 
     const time = useAudioTime()
     const { duration, seek } = useGlobalAudioPlayer()
-
-
     const position = calcPositionInPercent(time, duration);
+
+    useEffect(() => {
+        if (position >= 99.5) {
+            console.log('if') 
+            dispatch(next())
+        } else {
+            console.log('else')
+        }
+    }, [time])
 
     return (
         <div className="w-96 h-[74px] pt-2 bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative">
