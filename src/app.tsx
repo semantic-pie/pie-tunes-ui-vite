@@ -11,6 +11,7 @@ import { Track, api } from "./api";
 import { responseToObject } from "./utils/hellpers";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import DevUploader from "./components/DevUploader";
 
 
 const rootRoute = createRootRoute({
@@ -52,8 +53,14 @@ const artistsRoute = createRoute({
   component: () => <Page title="Artists" list={[...Array(8).keys()].map(() => <ArtistCard />)} wrap />
 })
 
+const uploadRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/upload',
+  component: () => <DevUploader />
+})
 
-const routeTree = rootRoute.addChildren([madeForYouRoute, songsRoute, albumsRoute, artistsRoute])
+
+const routeTree = rootRoute.addChildren([madeForYouRoute, songsRoute, albumsRoute, artistsRoute, uploadRoute])
 
 const router = createRouter({ routeTree })
 

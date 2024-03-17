@@ -7,6 +7,7 @@ import Plus from "@/components/icons/Plus";
 import ThreeDots from "@/components/icons/ThreeDots";
 import User from "@/components/icons/User";
 import { Link } from "@tanstack/react-router";
+import UploadIcon from "../icons/UploadIcon";
 
 const SideBar = () => {
     return (
@@ -57,8 +58,8 @@ const SideBar = () => {
                     </div>
                 </Link>
                 <Link to="/upload" class='flex items-center gap-3' >
-                    <div class="flex items-center gap-3">
-                        <User class="w-8 h-8" />
+                    <div class="flex items-center gap-3 px-1.5">
+                        <UploadIcon />
                         Upload
                     </div>
                 </Link>
