@@ -56,6 +56,12 @@ const SideBar = () => {
                         Made for You
                     </div>
                 </Link>
+                <Link to="/upload" class='flex items-center gap-3' >
+                    <div class="flex items-center gap-3">
+                        <User class="w-8 h-8" />
+                        Upload
+                    </div>
+                </Link>
 
             </div>
 

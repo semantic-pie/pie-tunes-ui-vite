@@ -32,7 +32,7 @@ export const useCurrentPlaylist = () => {
 
 
     useEffect(() => {
-        fetch(api.forTracks())
+        fetch(api.forTracks({page: 0, limit: 1000}))
             .then(responseToObject)
             .then(logAndPipe)
             .then(setStartTrack)

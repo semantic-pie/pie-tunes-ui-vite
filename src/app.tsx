@@ -37,7 +37,7 @@ const songsRoute = createRoute({
   component: ({ }) => {
     return <Page title="Songs" list={songsRoute.useLoaderData().map((track) => <TrackCard track={track} />)} col />
   },
-  loader: () => fetch(api.forTracks()).then(responseToObject) as Promise<Track[]>
+  loader: () => fetch(api.forTracks({page: 0, limit: 1000})).then(responseToObject) as Promise<Track[]>
 })
 
 const albumsRoute = createRoute({
