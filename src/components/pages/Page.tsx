@@ -18,7 +18,7 @@ const Page = ({ title, list, col, wrap }: PageProps) => {
             </div>
             <SearchBar />
             {col &&
-                <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-4 overflow-y-scroll">
                     {list}
                     {/* {[...Array(8).keys()].map(() => <AlbumItem />)} */}
                 </div>
