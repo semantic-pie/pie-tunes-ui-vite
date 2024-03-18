@@ -12,21 +12,22 @@ const TracksSwitchingControls = () => {
     const dispatch = useAppDispatch()
 
     return (
-        <div class="flex flex-row gap-4 items-center justify-center">
-            <button onClick={() => dispatch(prev())} class="flex items-center justify-center bg-yellow-400  w-14 h-14">
+        <div class="flex flex-row gap-4 items-center justify-between ">
+            <button onClick={() => dispatch(prev())} class="flex items-center justify-center w-14 h-14 hover:opacity-80 transition-all duration-100">
                 <Backward width="35" height="35" class="fill-white" />
             </button>
+
             {playing ?
-                <button onClick={togglePlayPause} class="flex items-center justify-center bg-yellow-400  w-14 h-14">
+                <button onClick={togglePlayPause} class="flex items-center justify-center w-14 h-14 hover:opacity-80 transition-all duration-100">
                     <Pause width="35" height="35" class="fill-white" />
                 </button>
                 :
-                <button onClick={togglePlayPause} class="flex items-center justify-center bg-yellow-400  w-14 h-14">
+                <button onClick={togglePlayPause} class="flex items-center justify-center w-14 h-14 hover:opacity-80 transition-all duration-100">
                     <Play width="35" height="35" class="fill-white" />
                 </button>
             }
 
-            <button onClick={() => dispatch(next())} class="flex items-center justify-center bg-yellow-400  w-14 h-14">
+            <button onClick={() => dispatch(next())} class="flex items-center justify-center w-14 h-14 hover:opacity-80 transition-all duration-100">
                 <Forward width="35" height="35" class="fill-white" />
             </button>
         </div>

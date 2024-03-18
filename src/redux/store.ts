@@ -31,6 +31,7 @@ const playerSlice = createSlice({
             if (action.payload.length > 0) {
                 state.queue = action.payload
                 state.numberInQueue = 0
+                state.currentTrack = state.queue[0]
             }
         },
         prev: (state) => {

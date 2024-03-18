@@ -3,10 +3,13 @@ import SideBar from "../common/SideBar";
 
 const MainPage = () => {
     return (
-        <div class="flex justify-center mt-20 h-screen">
-            <div class="flex bg-emerald-600 h-[75vh] w-[80vw] rounded-3xl shadow-inner backdrop-blur-3xl">
+        <div class="flex justify-center mt-20 h-screen ">
+            <div class="flex h-[740px] w-[1140px] backdrop-blur-3xl">
                 <SideBar />
-                <Outlet />
+                <div class='flex w-full flex-col gap-3 p-6 mainview'>
+                    <Outlet />
+                </div>
+
             </div>
         </div>
 

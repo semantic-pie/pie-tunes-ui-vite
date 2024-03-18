@@ -5,9 +5,10 @@ type ProgresBarProps = {
     relativeValue: number // max value
     value: number // should be between 0 and 100 (percents)
     setValue: (value: number) => void
+    polzunok?: boolean 
 }
 
-const ProgresBar = ({ value, setValue, relativeValue, classes }: ProgresBarProps) => {
+const ProgresBar = ({ value, setValue, relativeValue, classes, polzunok }: ProgresBarProps) => {
     const container = useRef<HTMLDivElement>(null)
 
     const onClickChangeValue = (e: MouseEvent) => {
@@ -19,9 +20,11 @@ const ProgresBar = ({ value, setValue, relativeValue, classes }: ProgresBarProps
     }
 
     return (
-        <div ref={container} class={`${classes} cursor-pointer`} onClick={onClickChangeValue} >
-            <div style={{ width: value + '%' }} class={`mr-auto h-1 bg-black cursor-pointer`}>
+        <div ref={container} class={`${classes} h-[4px] cursor-pointer bg-black bg-opacity-20 flex justify-start `} onClick={onClickChangeValue} >
+            <div style={{ width: value + '%' }} class={`  bg-white bg-opacity-60 cursor-pointer`}>
+            
             </div>
+            {polzunok && <div  class='h-2 w-2 rounded-full bg-white mt-[-2px] ml-[-2px] '></div>}
         </div>
     )
 }

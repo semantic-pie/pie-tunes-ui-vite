@@ -44,7 +44,7 @@ const songsRoute = createRoute({
 const albumsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/albums',
-  component: () => <Page title="Albums" list={[...Array(8).keys()].map(() => <AlbumCard />)} wrap />
+  component: () => <Page title="Albums" list={[...Array(16).keys()].map(() => <AlbumCard />)} wrap />
 })
 
 const artistsRoute = createRoute({

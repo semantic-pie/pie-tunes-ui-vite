@@ -16,7 +16,7 @@ const ValumeControls = () => {
             <ProgresBar classes="w-20" value={kostyle * 100} setValue={val => {
                 setVolume(val / 100)
                 setKostyle(val / 100)
-            }} relativeValue={100} />
+            }} relativeValue={100} polzunok />
         </div>
     )
 }

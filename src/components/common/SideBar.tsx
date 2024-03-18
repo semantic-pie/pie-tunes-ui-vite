@@ -11,8 +11,7 @@ import UploadIcon from "../icons/UploadIcon";
 
 const SideBar = () => {
     return (
-        <div class="flex flex-col p-6 bg-cyan-500 w-64 gap-8 rounded-tl-3xl rounded-bl-3xl shadow-inner backdrop-blur-3xl">
-
+        <div class="w-[220px] flex flex-col p-6 gap-8  sidebar">
             <div class="flex justify-between">
                 <div class="flex flex-col">
                     <div className="text-center  text-3xl font-bold">Library</div>
