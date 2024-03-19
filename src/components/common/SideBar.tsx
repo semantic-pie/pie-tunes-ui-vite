@@ -24,39 +24,39 @@ const SideBar = () => {
             </div>
 
             <div class="flex flex-col gap-4">
-                <Link to="/" class='flex items-center gap-3' >
+                <Link to="/library" class='flex items-center gap-3' >
                     <div class="flex items-center gap-3">
                         <Clock class="w-8 h-8" />
                         <span class='hidden sm:inline'>Recently Added</span>
                     </div>
                 </Link>
-                <Link to="/artists" class='flex items-center gap-3' >
+                <Link to="/library/artists" class='flex items-center gap-3' >
                     <div class="flex items-center gap-3">
                         <MusicMicro class="w-8 h-8" />
                         <span class='hidden sm:inline'>Artist</span>
                     </div>
                 </Link>
 
-                <Link to="/albums" class='flex items-center gap-3' >
+                <Link to="/library/albums" class='flex items-center gap-3' >
                     <div class="flex items-center gap-3">
                         <Albums class="w-8 h-8" />
                         <span class='hidden sm:inline'>Albums</span>
                     </div>
                 </Link>
 
-                <Link to="/songs" class='flex items-center gap-3' >
+                <Link to="/library/songs" class='flex items-center gap-3' >
                     <div class="flex items-center gap-3">
                         <MusicNote class="w-8 h-8" />
                         <span class='hidden sm:inline'>Songs</span>
                     </div>
                 </Link>
-                <Link to="/made-for-you" class='flex items-center gap-3' >
+                <Link  to="/library/made-for-you" class='flex items-center gap-3' >
                     <div class="flex items-center gap-3">
                         <User class="w-8 h-8" />
                         <span class='hidden sm:inline'>Made for You</span>
                     </div>
                 </Link>
-                <Link to="/upload" class='flex items-center gap-3' >
+                <Link to="/library/upload" class='flex items-center gap-3' >
                     <div class="flex items-center gap-3 px-1.5">
                         <UploadIcon />
                         <span class='hidden sm:inline'>Upload</span>

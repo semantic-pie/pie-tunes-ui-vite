@@ -19,7 +19,7 @@ html {
 }
 
 .sidepill>.active {
-  @apply bg-white bg-opacity-10
+  @apply bg-white bg-opacity-10 rounded-full transition-all duration-200
 }
 
 .sidebar {
