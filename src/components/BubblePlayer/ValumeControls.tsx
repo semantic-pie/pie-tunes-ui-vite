@@ -11,7 +11,7 @@ const ValumeControls = () => {
     const [kostyle, setKostyle] = useState(volume)
 
     return (
-        <div class="flex flex-row items-center justify-center gap-1">
+        <div class="hidden sm:flex flex-row items-center justify-center gap-1">
             <Max class="w-7 h-7" />
             <ProgresBar classes="w-20" value={kostyle * 100} setValue={val => {
                 setVolume(val / 100)

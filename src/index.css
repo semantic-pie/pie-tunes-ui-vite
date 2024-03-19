@@ -10,8 +10,8 @@ html {
 .sidepill {
   border-radius: 118.526px;
   background: rgba(0, 0, 0, 0.10);
-  box-shadow: 0px 9.482px 7.112px 0px rgba(0, 0, 0, 0.05), 0px 1.185px 1.185px 0px rgba(255, 255, 255, 0.25) inset, 0px -1.185px 1.185px 0px rgba(255, 255, 255, 0.25) inset;
-  backdrop-filter: blur(59.262786865234375px);
+  box-shadow: 0px 9px 7px 0px rgba(0, 0, 0, 0.05), 0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset, 0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset;
+  backdrop-filter: blur(59);
 }
 
 .sidepill>div:hover {
@@ -23,31 +23,43 @@ html {
 }
 
 .sidebar {
-  border-radius: 28.446px 0px 0px 28.446px;
+  border-radius: 28px 0px 0px 28px;
   background: rgba(0, 0, 0, 0.10);
-  box-shadow: 1.185px -1.185px 1.185px 0px rgba(255, 255, 255, 0.15) inset, 0px 9.482px 7.112px 0px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(59.26283645629883px);
+  box-shadow: 1px -1px 1px 0px rgba(255, 255, 255, 0.15) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(59px);
 }
 
 .mainview {
-  border-radius: 0px 28.446px 28.446px 0px;
+  border-radius: 0px 28px 28px 0px;
   background: rgba(255, 255, 255, 0.14);
-  box-shadow: -1.185px 0px 4.741px 0px rgba(255, 255, 255, 0.15) inset, 0px 9.482px 7.112px 0px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(59.262786865234375px);
+  box-shadow: -1px 0px 5px 0px rgba(255, 255, 255, 0.15) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(59px);
 }
 
 .mainvew-search {
-  border-radius: 11.853px;
+  border-radius: 12px;
   background: rgba(0, 0, 0, 0.14);
-  box-shadow: 0px -1.185px 2.371px 0px rgba(255, 255, 255, 0.14) inset;
+  box-shadow: 0px -1px 2px 0px rgba(255, 255, 255, 0.14) inset;
 }
 
 .bubble-player {
-  border-radius: 45.04px;
+  border-radius: 45px;
   background: rgba(255, 255, 255, 0.14);
-  box-shadow: 0px 1.185px 1.185px 0px rgba(255, 255, 255, 0.25) inset, 0px -1.185px 1.185px 0px rgba(255, 255, 255, 0.25) inset, 0px 9.482px 7.112px 0px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(59.26283645629883px);
+  box-shadow: 0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset, 0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(59px);
 }
+
+
+@-webkit-keyframes movingtitle
+{
+    from {margin-left: 0px;}
+    to {margin-left: 100%;}
+}
+@keyframes movingtitle
+{
+    from {margin-left: 0px;}
+    to {margin-left: 100%;}
+} 
 
 html,
 body {

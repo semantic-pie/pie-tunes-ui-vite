@@ -19,7 +19,7 @@ const rootRoute = createRootRoute({
     <>
       <SidePill />
       <MainPage />
-      <div class="absolute bottom-28 w-full">
+      <div class="absolute bottom-0 sm:bottom-28 w-full">
         <BubblePlayer />
       </div>
     </>

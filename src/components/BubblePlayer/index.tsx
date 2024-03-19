@@ -11,24 +11,12 @@ const BubblePlayer = () => {
 
 
     return (
-        <div class={`w-[840px] h-[90px] flex flex-row mx-auto items-center justify-between p-4 bubble-player`}>
+        <div class={`flex-col-reverse sm:w-[840px] sm:h-[90px] flex sm:flex-row sm:gap-0 gap-5 sm:mx-auto sm:items-center justify-between p-4 bubble-player`}>
             {currentTrack != undefined && <>
                 <TracksSwitchingControls />
                 <BubbleTrackInfo track={currentTrack} />
                 <ValumeControls />
             </>}
-            {/* {currentTrack != undefined ?
-                <>
-                    <TracksSwitchingControls />
-                    <BubbleTrackInfo track={currentTrack} />
-                    <ValumeControls />
-                </> :
-                <div class='w-full flex justify-center p-5'>
-                    <button class='cursor-pointer'>
-                        <Play height={50} width={50} />
-                    </button>
-                </div>
-            } */}
         </div >
     );
 }
