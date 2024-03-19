@@ -11,58 +11,60 @@ import UploadIcon from "../icons/UploadIcon";
 
 const SideBar = () => {
     return (
-        <div class="sm:w-[220px] flex flex-col justify-between py-5 p-2 sm:p-6 gap-8  sidebar">
-            <div class="hidden sm:flex justify-between">
-                <div class="flex flex-col">
-                    <div className="text-center  text-3xl font-bold">Library</div>
-                    <div className="text-start  opacity-60 text-base font-normal ">Your Music</div>
+        <div class="sm:w-[260px] flex flex-col justify-between py-5 p-2 sm:p-6 gap-8 sidebar">
+            <div class='flex flex-col gap-8'>
+                <div class="hidden sm:flex justify-between">
+                    <div class="flex flex-col">
+                        <div className="text-center  text-3xl font-bold">Library</div>
+                        <div className="text-start  opacity-60 text-base font-normal ">Your Music</div>
+                    </div>
+
+                    <div class="w-8 h-8 bg-opacity-10 bg-white rounded-full flex items-center justify-center text-center">
+                        <ThreeDots width="15" height="5" />
+                    </div>
                 </div>
 
-                <div class="w-8 h-8 bg-opacity-10 bg-white rounded-full flex items-center justify-center text-center">
-                    <ThreeDots width="15" height="5" />
+                <div class="flex flex-col gap-1 sidebar-link-panel">
+                    <Link to="/library" class='sidebar-link'>
+                        <div class="h-12 flex items-center gap-3">
+                            <Clock class="w-8 h-8" />
+                            <span class='hidden sm:inline'>Recently Added</span>
+                        </div>
+                    </Link>
+                    <Link to="/library/artists" class='sidebar-link' >
+                        <div class="h-12 flex items-center gap-3">
+                            <MusicMicro class="w-8 h-8" />
+                            <span class='hidden sm:inline'>Artist</span>
+                        </div>
+                    </Link>
+
+                    <Link to="/library/albums" class='sidebar-link'>
+                        <div class="h-12 flex items-center gap-3">
+                            <Albums class="w-8 h-8" />
+                            <span class='hidden sm:inline'>Albums</span>
+                        </div>
+                    </Link>
+
+                    <Link to="/library/songs" class='sidebar-link' >
+                        <div class="h-12 flex items-center gap-3">
+                            <MusicNote class="w-8 h-8" />
+                            <span class='hidden sm:inline'>Songs</span>
+                        </div>
+                    </Link>
+                    <Link to="/library/made-for-you" class='sidebar-link' >
+                        <div class="h-12 flex items-center gap-3">
+                            <User class="w-8 h-8" />
+                            <span class='hidden sm:inline'>Made for You</span>
+                        </div>
+                    </Link>
+                    <Link to="/library/upload" class='sidebar-link'>
+                        <div class="h-12 flex items-center gap-3">
+                            <UploadIcon />
+                            <span class='hidden sm:inline'>Upload</span>
+                        </div>
+                    </Link>
+
                 </div>
-            </div>
-
-            <div class="flex flex-col gap-4">
-                <Link to="/library" class='flex items-center gap-3' >
-                    <div class="flex items-center gap-3">
-                        <Clock class="w-8 h-8" />
-                        <span class='hidden sm:inline'>Recently Added</span>
-                    </div>
-                </Link>
-                <Link to="/library/artists" class='flex items-center gap-3' >
-                    <div class="flex items-center gap-3">
-                        <MusicMicro class="w-8 h-8" />
-                        <span class='hidden sm:inline'>Artist</span>
-                    </div>
-                </Link>
-
-                <Link to="/library/albums" class='flex items-center gap-3' >
-                    <div class="flex items-center gap-3">
-                        <Albums class="w-8 h-8" />
-                        <span class='hidden sm:inline'>Albums</span>
-                    </div>
-                </Link>
-
-                <Link to="/library/songs" class='flex items-center gap-3' >
-                    <div class="flex items-center gap-3">
-                        <MusicNote class="w-8 h-8" />
-                        <span class='hidden sm:inline'>Songs</span>
-                    </div>
-                </Link>
-                <Link  to="/library/made-for-you" class='flex items-center gap-3' >
-                    <div class="flex items-center gap-3">
-                        <User class="w-8 h-8" />
-                        <span class='hidden sm:inline'>Made for You</span>
-                    </div>
-                </Link>
-                <Link to="/library/upload" class='flex items-center gap-3' >
-                    <div class="flex items-center gap-3 px-1.5">
-                        <UploadIcon />
-                        <span class='hidden sm:inline'>Upload</span>
-                    </div>
-                </Link>
-
             </div>
 
             <div>

@@ -22,12 +22,46 @@ html {
   @apply bg-white bg-opacity-10 rounded-full transition-all duration-200
 }
 
-.sidebar {
-  border-radius: 28px 0px 0px 28px;
-  background: rgba(0, 0, 0, 0.10);
-  box-shadow: 1px -1px 1px 0px rgba(255, 255, 255, 0.15) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(59px);
+
+
+@layer components {
+  .sidebar {
+    border-radius: 28px 0px 0px 28px;
+    background: rgba(0, 0, 0, 0.10);
+    box-shadow: 1px -1px 1px 0px rgba(255, 255, 255, 0.15) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(59px);
+  }
+
+  .sidebar-link-panel a {
+    @apply mx-[-10px] px-2 bg-white bg-opacity-0 rounded-xl transition-all duration-100 ease-in
+  }
+  .sidebar-link-panel .active {
+    @apply bg-opacity-20
+  }
+  .sidebar-link-panel a:hover {
+    @apply bg-opacity-20
+  }
 }
+
+
+
+
+/* .sidebar-active {
+  margin: 0 -10px 0 -10px;
+  padding: 0 8px 0 8px;
+  background-color:rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+
+  @apply transition-all duration-100 ease-in
+} */
+
+
+/* h-12 flex items-center gap-3 mx-[-10px] px-2 bg-white bg-opacity-0 hover:bg-opacity-[10%] rounded-xl transition-all duration-100 ease-in */
+/* .sidebar>div>div>.active {
+  @apply sidebar-active
+} */
+
+
 
 .mainview {
   border-radius: 0px 28px 28px 0px;

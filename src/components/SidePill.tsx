@@ -8,7 +8,7 @@ const SidePill = () => {
         <div class="absolute top-0 bottom-0 left-5 flex flex-col justify-center items-center">
             <div class="flex flex-col gap-3 p-3 rounded-full sidepill">
                 <Link to="/player">
-                    <div class="flex items-center justify-center rounded-full w-14 h-14">
+                    <div class="flex items-center justify-center rounded-full w-14 h-14 ">
                         <Player width="32" height="32" />
                     </div>
                 </Link>
