@@ -1,4 +1,4 @@
-import { Track, api } from "@/api"
+import { MusicAlbum, MusicBand, Track, api } from "@/api"
 import BubblePlayer from "@/components/BubblePlayer"
 import DevUploader from "@/components/DevUploader"
 import AlbumCard from "@/components/common/AlbumCard"
@@ -42,13 +42,15 @@ export const songsRoute = createRoute({
 export const albumsRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/albums',
-  component: () => <Page title="Albums" list={[...Array(16).keys()].map(() => <AlbumCard />)} wrap />
+  component: () => <Page title="Albums" list={albumsRoute.useLoaderData().map((album) => <AlbumCard album={album} />)} wrap />,
+  loader: () => fetch(api.forAlbums({ page: 0, limit: 1000 })).then(responseToObject) as Promise<MusicAlbum[]>
 })
 
 export const artistsRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/artists',
-  component: () => <Page title="Artists" list={[...Array(8).keys()].map(() => <ArtistCard />)} wrap />
+  component: () => <Page title="Artists" list={artistsRoute.useLoaderData().map((artist) => <ArtistCard band={artist} />)} wrap />,
+  loader: () => fetch(api.forArtsits({ page: 0, limit: 1000 })).then(responseToObject) as Promise<MusicBand[]>
 })
 
 export const uploadRoute = createRoute({

@@ -25,9 +25,8 @@ const Page = ({ title, list, col, wrap }: PageProps) => {
             }
 
             {wrap &&
-                <div class="flex flex-wrap justify-between gap-y-3 overflow-y-scroll">
+                <div class="flex flex-wrap flex-grow gap-x-3 gap-y-3 overflow-y-scroll">
                     {list}
-                    {/* {[...Array(8).keys()].map(() => <AlbumItem />)} */}
                 </div>
             }
 

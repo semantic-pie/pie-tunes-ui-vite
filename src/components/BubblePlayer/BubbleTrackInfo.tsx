@@ -10,6 +10,7 @@ import { next, useAppDispatch } from "@/redux/store"
 
 type BubbleTrackInfoProps = {
     track: Track
+    class?: string
 }
 
 const calcPositionInPercent = (time?: number, duration?: number) => {
@@ -31,7 +32,7 @@ const BubbleTrackInfo = (props: BubbleTrackInfoProps) => {
     }, [time])
 
     return (
-        <div className="sm:w-96 h-[74px] pt-2 bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative">
+        <div className={`${props.class}  h-[74px] pt-2 bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
             <div class='w-full flex justify-between pb-[5px] px-1.5'>
                 <div className="justify-start items-center gap-3.5 flex">
                     <img className="w-14 h-14 rounded-lg" src={api.forTrackCover(track.uuid)} />

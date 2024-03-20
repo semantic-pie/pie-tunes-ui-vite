@@ -22,6 +22,7 @@
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
     
+    "allowJs": true,
 
     /* Linting */
     "strict": true,

@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 html {
-  @apply bg-slate-800 font-sans text-white
+  /* @apply bg-slate-800 font-sans text-white */
+  background-image: linear-gradient(180deg, caret-yellow-100, sky-500);
+  @apply font-sans text-white transition-all duration-500
+  /* @apply  bg-gradient-to-r from-violet-500 to-fuchsia-500 */
+  /* @apply  bg-[url('/src/assets/master_cover.jpg')] */
+
 }
 
 
@@ -35,9 +40,11 @@ html {
   .sidebar-link-panel a {
     @apply mx-[-10px] px-2 bg-white bg-opacity-0 rounded-xl transition-all duration-100 ease-in
   }
+
   .sidebar-link-panel .active {
     @apply bg-opacity-20
   }
+
   .sidebar-link-panel a:hover {
     @apply bg-opacity-20
   }
@@ -61,7 +68,45 @@ html {
   @apply sidebar-active
 } */
 
+.playerview-info {
+  border-radius: 7.7px;
+  background: rgba(0, 0, 0, 0.14);
+}
 
+.playerview-info-nav-item {
+  border-radius: 11.853px;
+  color: rgba(255, 255, 255, 0.60);
+  background: rgba(0, 0, 0, 0.14);
+
+  width: 90px;
+  height: 35px;
+
+  @apply px-3 py-1
+}
+
+.playerview-info-nav-item:hover {
+  color: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(255, 255, 255, 0.50);
+}
+
+.playerview-info-nav-item-active {
+  color: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(255, 255, 255, 0.50); 
+}
+
+.playerview-buttom {
+  border-radius: 0px 0px 45px 45px;
+  background: rgba(0, 0, 0, 0.10);
+  box-shadow: 1px -1px 1px 0px rgba(255, 255, 255, 0.15) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(59px);
+}
+
+.playerview {
+  border-radius: 45px;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset, 0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(59px);
+}
 
 .mainview {
   border-radius: 0px 28px 28px 0px;
@@ -84,16 +129,25 @@ html {
 }
 
 
-@-webkit-keyframes movingtitle
-{
-    from {margin-left: 0px;}
-    to {margin-left: 100%;}
+@-webkit-keyframes movingtitle {
+  from {
+    margin-left: 0px;
+  }
+
+  to {
+    margin-left: 100%;
+  }
 }
-@keyframes movingtitle
-{
-    from {margin-left: 0px;}
-    to {margin-left: 100%;}
-} 
+
+@keyframes movingtitle {
+  from {
+    margin-left: 0px;
+  }
+
+  to {
+    margin-left: 100%;
+  }
+}
 
 html,
 body {

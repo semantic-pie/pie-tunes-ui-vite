@@ -14,7 +14,7 @@ const BubblePlayer = () => {
         <div class={`flex-col-reverse sm:w-[840px] sm:h-[90px] flex sm:flex-row sm:gap-0 gap-5 sm:mx-auto sm:items-center justify-between p-4 bubble-player`}>
             {currentTrack != undefined && <>
                 <TracksSwitchingControls />
-                <BubbleTrackInfo track={currentTrack} />
+                <BubbleTrackInfo class='sm:w-96' track={currentTrack} />
                 <ValumeControls />
             </>}
         </div >
