@@ -1,4 +1,4 @@
-import { Track } from "@/api"
+import { MusicAlbum, MusicBand, Track } from "@/api"
 import { PayloadAction, configureStore, createSlice } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
@@ -6,12 +6,16 @@ interface PlayerSlice {
     numberInQueue?: number
     currentTrack?: Track
     queue: Track[]
+    artists: MusicBand[]
+    albums: MusicAlbum[]
 }
 
 const initialState = {
     numberInQueue: undefined,
     currentTrack: undefined,
-    queue: []
+    queue: [],
+    albums: [],
+    artists: []
 } as PlayerSlice
 
 
@@ -34,6 +38,17 @@ const playerSlice = createSlice({
                 state.currentTrack = state.queue[0]
             }
         },
+        artists: (state, action: PayloadAction<MusicBand[]>) => {
+            if (action.payload.length > 0) {
+                state.artists = action.payload
+            }
+        },
+        albums: (state, action: PayloadAction<MusicAlbum[]>) => {
+            if (action.payload.length > 0) {
+                state.albums = action.payload
+            }
+        },
+
         prev: (state) => {
             if (state.currentTrack && state.numberInQueue != undefined) {
                 if (state.numberInQueue > 0)
@@ -53,7 +68,7 @@ const playerSlice = createSlice({
     }
 })
 
-export const { playTrack, addTrackToQueue, setQueue, next, prev } = playerSlice.actions
+export const { playTrack, addTrackToQueue, setQueue, albums, artists, next, prev } = playerSlice.actions
 
 // types configuration
 export const store = configureStore({ reducer: playerSlice.reducer })

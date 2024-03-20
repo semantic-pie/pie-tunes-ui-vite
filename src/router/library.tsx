@@ -1,4 +1,3 @@
-import { MusicAlbum, MusicBand, Track, api } from "@/api"
 import BubblePlayer from "@/components/BubblePlayer"
 import DevUploader from "@/components/DevUploader"
 import AlbumCard from "@/components/common/AlbumCard"
@@ -7,9 +6,9 @@ import PlaylistCard from "@/components/common/PlaylistCard"
 import TrackCard from "@/components/common/TrackCard"
 import MainPage from "@/components/pages/MainPage"
 import Page from "@/components/pages/Page"
-import { responseToObject } from "@/utils/hellpers"
 import { createRoute } from "@tanstack/react-router"
 import { rootRoute } from "."
+import { useAppSelector } from "@/redux/store"
 
 
 export const libraryScreen = createRoute({
@@ -34,23 +33,20 @@ export const songsRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/songs',
   component: ({ }) => {
-    return <Page title="Songs" list={songsRoute.useLoaderData().map((track) => <TrackCard track={track} />)} col />
-  },
-  loader: () => fetch(api.forTracks({ page: 0, limit: 1000 })).then(responseToObject) as Promise<Track[]>
+    return <Page title="Songs" list={useAppSelector(state => state.queue).map((track) => <TrackCard track={track} />)} col />
+  }
 })
 
 export const albumsRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/albums',
-  component: () => <Page title="Albums" list={albumsRoute.useLoaderData().map((album) => <AlbumCard album={album} />)} wrap />,
-  loader: () => fetch(api.forAlbums({ page: 0, limit: 1000 })).then(responseToObject) as Promise<MusicAlbum[]>
+  component: () => <Page title="Albums" list={useAppSelector(state => state.albums).map((album) => <AlbumCard album={album} />)} wrap />,
 })
 
 export const artistsRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/artists',
-  component: () => <Page title="Artists" list={artistsRoute.useLoaderData().map((artist) => <ArtistCard band={artist} />)} wrap />,
-  loader: () => fetch(api.forArtsits({ page: 0, limit: 1000 })).then(responseToObject) as Promise<MusicBand[]>
+  component: () => <Page title="Artists" list={useAppSelector(state => state.artists).map((artist) => <ArtistCard band={artist} />)} wrap />,
 })
 
 export const uploadRoute = createRoute({

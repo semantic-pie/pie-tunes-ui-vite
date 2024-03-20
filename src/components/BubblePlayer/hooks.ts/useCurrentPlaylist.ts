@@ -7,7 +7,7 @@ import { setQueue, useAppDispatch, useAppSelector } from "@/redux/store"
 
 
 export const useCurrentPlaylist = () => {
-    const dispatch = useAppDispatch()
+    // const dispatch = useAppDispatch()
     const tracks = useAppSelector(state => state.queue);
 
     const currentTrack = useAppSelector(state => state.currentTrack)
@@ -15,17 +15,17 @@ export const useCurrentPlaylist = () => {
     const { seek, volume, setVolume } = useGlobalAudioPlayer();
 
 
-    const setStartTrack = (tracks: Track[]) => {
-        if (tracks.length > 0) dispatch(setQueue(tracks))
-        return tracks
-    }
+    // const setStartTrack = (tracks: Track[]) => {
+    //     if (tracks.length > 0) dispatch(setQueue(tracks))
+    //     return tracks
+    // }
 
-    useEffect(() => {
-        fetch(api.forTracks({page: 0, limit: 1000}))
-            .then(responseToObject)
-            .then(logAndPipe)
-            .then(setStartTrack)
-    }, [])
+    // useEffect(() => {
+    //     fetch(api.forTracks({page: 0, limit: 1000}))
+    //         .then(responseToObject)
+    //         .then(logAndPipe)
+    //         .then(setStartTrack)
+    // }, [])
 
     return {
         currentTrack,
