@@ -7,6 +7,7 @@ const DevUploader = () => {
     }
 
     function uploadFile() {
+        _("loaded_n_total").innerHTML = "";
         _("progressBar").style.display = "block";
         // _("progressBar").style.visibility = "visible";
 
@@ -48,6 +49,7 @@ const DevUploader = () => {
         var percent = (event.loaded / event.total) * 100;
         (_("progressBar") as any).value = Math.round(percent);
         _("status").innerHTML = Math.round(percent) + "% uploaded";
+
       }
 
       function errorHandler() {

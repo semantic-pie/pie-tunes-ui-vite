@@ -1,6 +1,5 @@
 import BubblePlayer from "@/components/BubblePlayer"
 import DevUploader from "@/components/DevUploader"
-import AlbumCard from "@/components/common/AlbumCard"
 import ArtistCard from "@/components/common/ArtistCard"
 import PlaylistCard from "@/components/common/PlaylistCard"
 import TrackCard from "@/components/common/TrackCard"
@@ -9,6 +8,8 @@ import Page from "@/components/pages/Page"
 import { createRoute } from "@tanstack/react-router"
 import { rootRoute } from "."
 import { useAppSelector } from "@/redux/store"
+import AlbumPage from "@/components/pages/AlbumPage"
+import AlbumsPage from "@/components/pages/AlbumsPage"
 
 
 export const libraryScreen = createRoute({
@@ -33,14 +34,21 @@ export const songsRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/songs',
   component: ({ }) => {
+    // return <Page title="Songs" list={useAppSelector(state => state.queue.length > 1 ? [...state.queue].sort((o1,o2) => o1.title.localeCompare(o2.title)) : state.queue).map((track) => <TrackCard track={track} />)} col />
     return <Page title="Songs" list={useAppSelector(state => state.queue).map((track) => <TrackCard track={track} />)} col />
   }
 })
 
 export const albumsRoute = createRoute({
   getParentRoute: () => libraryScreen,
-  path: '/albums',
-  component: () => <Page title="Albums" list={useAppSelector(state => state.albums).map((album) => <AlbumCard album={album} />)} wrap />,
+  path: '/albums/',
+  component: () => <AlbumsPage />
+})
+
+export const albumViewRoute = createRoute({
+  getParentRoute: () => albumsRoute,
+  path:'/$albumId',
+  component: () => <AlbumPage />
 })
 
 export const artistsRoute = createRoute({

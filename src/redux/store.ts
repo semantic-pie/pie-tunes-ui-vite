@@ -1,5 +1,5 @@
-import { MusicAlbum, MusicBand, Track } from "@/api"
-import { PayloadAction, configureStore, createSlice } from "@reduxjs/toolkit"
+import { LikeTrackBody, MusicAlbum, MusicBand, Track, api } from "@/api"
+import { PayloadAction, asyncThunkCreator, configureStore, createSlice } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 interface PlayerSlice {
@@ -18,11 +18,41 @@ const initialState = {
     artists: []
 } as PlayerSlice
 
+export const fetchToLike = (track_uuid: string) => async (dispatch: AppDispatch) => {
+    const headers = new Headers()
+    headers.append('Content-Type', 'application/json')
+    const user_uuid = '768b9113-5036-40c6-a440-127fc054337a'
+    await fetch(api.forLike(), {method: 'POST', headers, body: JSON.stringify({type: "LIKE_TRACK", track_uuid, user_uuid})})
+    dispatch(like(track_uuid))
+  }
+
+export const fetchToUnlike = (track_uuid: string) => async (dispatch: AppDispatch) => {
+    const headers = new Headers()
+    headers.append('Content-Type', 'application/json')
+    const user_uuid = '768b9113-5036-40c6-a440-127fc054337a'
+    await fetch(api.forLike(), {method: 'POST', headers, body: JSON.stringify({type: "REMOVE_LIKE", track_uuid, user_uuid})})
+    dispatch(unlike(track_uuid))
+  }
+
 
 const playerSlice = createSlice({
     name: 'player',
     initialState,
     reducers: {
+        like: (state, action: PayloadAction<string>) => {
+            const track = state.queue.find(t => t.uuid === action.payload)
+            if (track) {
+                track.isLiked = true
+                state.queue = [...state.queue.filter(t => t.uuid !== track.uuid), track].sort((o1,o2) => o1.title.localeCompare(o2.title))
+            }
+        },
+        unlike: (state, action: PayloadAction<string>) => {
+            const track = state.queue.find(t => t.uuid === action.payload)
+            if (track) {
+                track.isLiked = false
+                state.queue = [...state.queue.filter(t => t.uuid !== track.uuid), track].sort((o1,o2) => o1.title.localeCompare(o2.title))
+            }
+        },
         playTrack: (state, action: PayloadAction<Track>) => {
             state.currentTrack = action.payload
             state.numberInQueue = state.queue.findIndex((t) => t.uuid === action.payload.uuid)
@@ -33,7 +63,7 @@ const playerSlice = createSlice({
         },
         setQueue: (state, action: PayloadAction<Track[]>) => {
             if (action.payload.length > 0) {
-                state.queue = action.payload
+                state.queue = [...action.payload].sort((o1,o2) => o1.title.localeCompare(o2.title))
                 state.numberInQueue = 0
                 state.currentTrack = state.queue[0]
             }
@@ -68,7 +98,7 @@ const playerSlice = createSlice({
     }
 })
 
-export const { playTrack, addTrackToQueue, setQueue, albums, artists, next, prev } = playerSlice.actions
+export const { playTrack, addTrackToQueue, setQueue, albums, artists, next, prev, like, unlike } = playerSlice.actions
 
 // types configuration
 export const store = configureStore({ reducer: playerSlice.reducer })

@@ -1,5 +1,6 @@
 export interface Track {
     uuid: string
+    isLiked: boolean
     version: number
     title: string
     releaseYear: any

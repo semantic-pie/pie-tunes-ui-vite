@@ -1,6 +1,11 @@
 import Search from "@/components/icons/Search";
 
-const SearchBar = () => {
+type SearchBarProps = {
+    query: string
+    setQuery: (q: string) => void
+}
+
+const SearchBar = (props: SearchBarProps) => {
     return (
         <form class='' method="GET">
             <div class="relative ">
@@ -9,7 +14,7 @@ const SearchBar = () => {
                         <Search class="w-5 h-5 "/>
                     </button>
                 </span>
-                <input type="search" name="q" class="py-2 text-sm pl-10 w-full mainvew-search outline-none" placeholder="Search..." autocomplete="off" />
+                <input value={props.query} onInput={(e) => props.setQuery(e.currentTarget.value)} type="search" name="q" class="py-2 text-sm pl-10 w-full mainvew-search outline-none" placeholder="Search..." autocomplete="off" />
             </div>
         </form>
     )

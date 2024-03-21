@@ -34,7 +34,8 @@ export const colorHook = () => {
 
         if ( rgbs1 && rgbs2) {
             console.log('update background gradient')
-            document.getElementsByTagName('html')[0].style.backgroundImage = createLinearGradient(rgbs1[3], rgbs1[Math.floor(rgbs1.length/2)], rgbs2[rgbs2.length-2])
+            const html = document.getElementsByTagName('html')[0]
+            html.style.backgroundImage = createLinearGradient(rgbs1[3], rgbs1[Math.floor(rgbs1.length/2)], rgbs2[rgbs2.length-2])
         }
     }, [rgbs1, rgbs2])
 

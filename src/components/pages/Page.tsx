@@ -8,7 +8,7 @@ type PageProps = {
     col?: boolean
     wrap?: boolean
 }
-// HTMLProps<HTMLDivElement> &
+
 const Page = ({ title, list, col, wrap }: PageProps) => {
     return (
         <div class="flex flex-col gap-3 overflow-hidden">
@@ -29,8 +29,6 @@ const Page = ({ title, list, col, wrap }: PageProps) => {
                     {list}
                 </div>
             }
-
-
         </div>
     )
 }

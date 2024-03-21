@@ -1,5 +1,4 @@
 import { api } from "@/api"
-import Like from "@/components/icons/Like"
 import ThreeDots from "@/components/icons/ThreeDots"
 import { Track } from "@/api"
 import { useAudioTime } from "./hooks.ts/useAudioTime"
@@ -7,6 +6,7 @@ import { useGlobalAudioPlayer } from "react-use-audio-player"
 import ProgresBar from "../common/ProgressBar"
 import { useEffect } from "preact/hooks"
 import { next, useAppDispatch } from "@/redux/store"
+import Like from "../common/Like"
 
 type BubbleTrackInfoProps = {
     track: Track
@@ -46,7 +46,7 @@ const BubbleTrackInfo = (props: BubbleTrackInfoProps) => {
                         <ThreeDots class="w-4 h-4" />
                     </div>
                     <div>
-                        <Like class="w-7 h-7" />
+                        <Like entity={track} />
                     </div>
                 </div>
             </div>

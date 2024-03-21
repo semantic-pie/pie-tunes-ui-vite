@@ -4,10 +4,10 @@ import ProgresBar from "../common/ProgressBar"
 import { useAudioTime } from "../BubblePlayer/hooks.ts/useAudioTime"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
 import ThreeDots from "../icons/ThreeDots"
-import Like from "../icons/Like"
 import TracksSwitchingControls from "../BubblePlayer/TracksSwitchingControls"
 import ValumeControls from "../BubblePlayer/ValumeControls"
 import { useState } from "preact/hooks"
+import Like from "../common/Like"
 
 const calcPositionInPercent = (time?: number, duration?: number) => {
     if (time && duration) return (time / duration) * 100
@@ -74,6 +74,7 @@ A taste of the divine
     const pages: PlayerInfoPage[] = [
         {
             label: 'Up Next', content: <>
+                {/* {tracks.length > 1 && [...tracks].sort((o1,o2) => o1.title.localeCompare(o2.title)).map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 playerview-info cursor-pointer'> */}
                 {tracks.map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 playerview-info cursor-pointer'>
                     <img class='rounded-md w-[54px] h-[54px]' src={api.forTrackCover(t.musicAlbum.uuid)} alt="" />
                     <div class='flex flex-col'>
@@ -121,7 +122,7 @@ Sleep Token are a British rock band from London, formed in 2016. The group are a
                                         <ThreeDots class="w-4 h-4" />
                                     </div>
                                     <div>
-                                        <Like class="w-7 h-7" />
+                                        <Like entity={track} />
                                     </div>
                                 </div>
                             </div>
