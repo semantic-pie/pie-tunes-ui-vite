@@ -20,7 +20,7 @@ export const colorHook = () => {
     useEffect(() => {
         if (track) {
             console.log('start fetch')
-            fetch(api.forTrackCover(track.uuid))
+            fetch(api.forTrackCover(track.musicAlbum.uuid))
                 .then(res => res.blob())
                 .then(blob => {
                     console.log('fetched')

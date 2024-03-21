@@ -75,7 +75,7 @@ A taste of the divine
         {
             label: 'Up Next', content: <>
                 {tracks.map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 playerview-info cursor-pointer'>
-                    <img class='rounded-md w-[54px] h-[54px]' src={api.forTrackCover(t.uuid)} alt="" />
+                    <img class='rounded-md w-[54px] h-[54px]' src={api.forTrackCover(t.musicAlbum.uuid)} alt="" />
                     <div class='flex flex-col'>
                         <span class='text-white'>{t.title.substring(0, 15)}</span>
                         <span class='text-white opacity-45'>{t.musicBand.name.substring(0, 15)}</span>
@@ -105,7 +105,7 @@ Sleep Token are a British rock band from London, formed in 2016. The group are a
             {track &&
                 <div class='w-full flex justify-between p-[50px]'>
                     <div class='w-[330px] h-[450px] flex flex-col justify-between'>
-                        <img class='rounded-md' src={api.forTrackCover(track.uuid)} alt="" />
+                        <img class='rounded-md' src={api.forTrackCover(track.musicAlbum.uuid)} alt="" />
 
                         <div className={`h-[74px] justify-center bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
                             <div class='w-full flex justify-between pb-[5px] px-3'>
