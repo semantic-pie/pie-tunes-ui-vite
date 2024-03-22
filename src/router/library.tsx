@@ -10,6 +10,7 @@ import { rootRoute } from "."
 import { useAppSelector } from "@/redux/store"
 import AlbumPage from "@/components/pages/AlbumPage"
 import AlbumsPage from "@/components/pages/AlbumsPage"
+import TracksPage from "@/components/pages/TracksPage"
 
 
 export const libraryScreen = createRoute({
@@ -35,7 +36,8 @@ export const songsRoute = createRoute({
   path: '/songs',
   component: ({ }) => {
     // return <Page title="Songs" list={useAppSelector(state => state.queue.length > 1 ? [...state.queue].sort((o1,o2) => o1.title.localeCompare(o2.title)) : state.queue).map((track) => <TrackCard track={track} />)} col />
-    return <Page title="Songs" list={useAppSelector(state => state.queue).map((track) => <TrackCard track={track} />)} col />
+    // return <Page title="Songs" list={useAppSelector(state => state.queue).map((track) => <TrackCard track={track} />)} col />
+    return <TracksPage />
   }
 })
 

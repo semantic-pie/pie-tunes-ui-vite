@@ -1,3 +1,4 @@
+import { useState } from "preact/hooks";
 import SearchBar from "../common/SearchBar";
 import SortByIcon from "../icons/SortByIcon";
 
@@ -10,13 +11,14 @@ type PageProps = {
 }
 
 const Page = ({ title, list, col, wrap }: PageProps) => {
+    const [query, setQuery] = useState('')
     return (
         <div class="flex flex-col gap-3 overflow-hidden">
             <div class="justify-between items-start inline-flex">
                 <div className="text-start text-white text-3xl font-bold">{title}</div>
                 <SortByIcon />
             </div>
-            <SearchBar />
+            <SearchBar query={query} setQuery={setQuery} />
             {col &&
                 <div class="flex flex-col gap-4 overflow-y-scroll">
                     {list}

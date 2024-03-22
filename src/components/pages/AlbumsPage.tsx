@@ -14,21 +14,21 @@ type AlbumsPageProps = {
 
 const AlbumsPage = (props: AlbumsPageProps) => {
     const [query, setQury] = useState<string>('')
-    const [albums, setAlbums] = useState<MusicAlbum[]>([])
+    // const [albums, setAlbums] = useState<MusicAlbum[]>([])
 
-    // const albums = useAppSelector(state => query.length > 0 ? state.albums.filter(a => a.name.includes(query)) : state.albums)
+    const albums = useAppSelector(state => query.length > 0 ? state.albums.filter(a => a.name.includes(query)) : state.albums)
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        fetch(api.forAlbums({ page: 0, limit: 1000, query  }))
-        .then(responseToObject)
-        .then(data => {
-            setAlbums(data)
-            console.log(data)
-        })
+    //     fetch(api.forAlbums({ page: 0, limit: 1000, query  }))
+    //     .then(responseToObject)
+    //     .then(data => {
+    //         setAlbums(data)
+    //         console.log(data)
+    //     })
 
         
-    }, [query])
+    // }, [query])
 
     const { albumId } = albumViewRoute.useParams()
 
