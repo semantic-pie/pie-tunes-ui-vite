@@ -45,7 +45,7 @@ export const colorHook = () => {
     }
 }
 
-const createLinearGradient = (c1: string, c2: string, c3: string) => `linear-gradient(175deg, ${c1}, ${c2}, ${c3})`
+const createLinearGradient = (c1: string, c2: string, c3: string) => `linear-gradient(180deg, ${c1}, ${c2}, ${c3})`
 
 export const toRgb = (kek: { r: number, g: number, b: number }) =>
     `rgb(${kek.r},${kek.g},${kek.b})`

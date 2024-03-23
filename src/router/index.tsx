@@ -6,7 +6,7 @@ import { searchScreen } from "./search";
 import { useEffect } from "preact/hooks";
 import { api } from "@/api";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
-import { ENTITY_PER_PAGE, albums, artists, setQueue, tracks, useAppDispatch, useAppSelector } from "@/redux/store";
+import { ENTITY_PER_PAGE, albums, artists, tracks, useAppDispatch, useAppSelector } from "@/redux/store";
 import { colorHook } from "@/utils/colorHook";
 import { responseToObject } from "@/utils/hellpers";
 

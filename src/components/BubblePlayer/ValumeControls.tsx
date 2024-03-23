@@ -5,8 +5,6 @@ import ProgresBar from "../common/ProgressBar"
 
 
 const ValumeControls = () => {
-
-
     const { volume, setVolume, } = useGlobalAudioPlayer()
     const [kostyle, setKostyle] = useState(volume)
 

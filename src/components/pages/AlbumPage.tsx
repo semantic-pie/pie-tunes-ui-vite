@@ -1,17 +1,15 @@
 import { api } from "@/api"
 import { useAppSelector } from "@/redux/store"
 import { albumViewRoute } from "@/router/library"
-import { useParams } from "@tanstack/react-router"
 import ThreeDots from "../icons/ThreeDots"
 import Like from "../icons/LikeIcon"
 import TrackCard from "../common/TrackCard"
-import { useSelector } from "react-redux"
 
 type AlbumPageProps = {
     // uuid: string
 }
 
-const AlbumPage = (props: AlbumPageProps) => {
+const AlbumPage = () => {
     const { albumId } = albumViewRoute.useParams()
     const albumTracks = useAppSelector(state => state.queue.filter(t => t.musicAlbum.uuid === albumId))
     const album = useAppSelector(state => state.library.albums.find(a => a.uuid === albumId))
