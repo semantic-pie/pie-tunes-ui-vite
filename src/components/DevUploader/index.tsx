@@ -1,121 +1,88 @@
 import { api } from "@/api";
+import { useRef, useState } from "preact/hooks";
 
 const DevUploader = () => {
+  const [filesCount, setFilesCount] = useState<number>(0)
+  const [uploadedFilesCount, setUploadedFilesCount] = useState<number>(0)
+  const [uploadedFilesStatus, setUploadedFilesStatus] = useState<number[]>([])
 
-    function _(el: string) {
-        return document.getElementById(el)!;
+  const [result, setResult] = useState<string>()
+
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+
+  async function uploadFile() {
+    // setResult(undefined)
+    setUploadedFilesCount(0)
+
+    if (fileInputRef.current && fileInputRef.current.files) {
+      const selectedFiles = fileInputRef.current.files;
+
+      for (const element of selectedFiles) {
+        const formData = new FormData();
+        formData.append("file", element);
+
+        await fetch(api.forUpload(), { method: 'POST', body: formData }).then((response) => {
+          setUploadedFilesCount(prev => prev + 1)
+          setUploadedFilesStatus(prev => [...prev, response.status])
+          // setResult(`${uploadedFilesCount}/${filesCount} files uploaded`)
+        })
+        
+      }
+      
+      console.log('Uploading result: ')
+      console.log('filesCount: ', filesCount)
+      console.log('uploadedFilesCount: ', uploadedFilesCount)
+      console.log('uploadedFilesStatus: ', uploadedFilesStatus)
+      console.log('result: ', result)
     }
+  }
 
-    // function uploadFile() {
-    //   _("loaded_n_total").innerHTML = "";
-    //   _("progressBar").style.display = "block";
-    //   // _("progressBar").style.visibility = "visible";
+  const onFilesSelect = (e: any) => {
+    if (e.currentTarget && e.currentTarget.files && e.currentTarget.files.length) {
+      console.log('kek: ', e.currentTarget.files.length)
 
-    //   const fileInput = _("fileInput") as any;
-    //   const formData = new FormData();
+      setFilesCount(e.currentTarget.files.length)
+      setUploadedFilesCount(0)
+      setUploadedFilesStatus([])
+    }
+  }
 
-    //   const selectedFiles = fileInput.files;
-    //   for (const element of selectedFiles) {
-    //     formData.append("file", element);
-    //   }
+  const getFileName = (num: number) => {
+    if (fileInputRef.current && fileInputRef.current.files) {
+      return fileInputRef.current.files[num].name
+    } else {
+      return undefined
+    }
+  }
 
-    //   console.log("data: ", formData);
+  console.log('filesCount: ', filesCount)
+  console.log('uploadedFilesCount: ', uploadedFilesCount)
+  console.log('uploadedFilesStatus: ', uploadedFilesStatus)
 
-    //   const xhr = new XMLHttpRequest();
-    //   console.log('upload: ', api.forUpload())
-    //   xhr.open("POST", api.forUpload(), true);
-    //   xhr.upload.addEventListener("progress", progressHandler, false);
-    //   xhr.addEventListener("load", completeHandler, false);
-    //   xhr.addEventListener("error", errorHandler, false);
-    //   xhr.addEventListener("abort", abortHandler, false);
-    //   xhr.onload = function () {
-    //     _("response").innerText = xhr.responseText;
-    //   };
-    //   xhr.send(formData);
-    // }
-    async function uploadFile() {
-        _("loaded_n_total").innerHTML = "";
-        _("progressBar").style.display = "block";
-        // _("progressBar").style.visibility = "visible";
+  const last = filesCount - uploadedFilesCount
 
-        const fileInput = _("fileInput") as any;
-        
-
-        const selectedFiles = fileInput.files;
-
-        let i = 1
-        for (const element of selectedFiles) {
-          const formData = new FormData();
-          formData.append("file", element);
-
-          console.log("data: ", formData);
-
-          const response = await fetch(api.forUpload(), { method: 'POST', body: formData})
-
-
-          console.log(`response[${i}]: `, response)
-          // const xhr = new XMLHttpRequest();
-          // console.log('upload: ', api.forUpload())
-          // xhr.open("POST", api.forUpload(), true);
-          // xhr.upload.addEventListener("progress", progressHandler, false);
-          // xhr.addEventListener("load", completeHandler, false);
-          // xhr.addEventListener("error", errorHandler, false);
-          // xhr.addEventListener("abort", abortHandler, false);
-          // xhr.onload = function () {
-          //   _("response").innerText = xhr.responseText + 'tack ' + i;
-          // };
-          // xhr.send(formData);
-        
-          i++;
-        }
-      }
-
-      function progressHandler(event: any) {
-        _("loaded_n_total").innerHTML =
-          "Uploaded " + event.loaded + " bytes of " + event.total;
-        var percent = (event.loaded / event.total) * 100;
-        (_("progressBar") as any).value = Math.round(percent);
-        _("status").innerHTML =
-          Math.round(percent) + "% uploaded... please wait";
-      }
-
-      function completeHandler(event: any) {
-        _("loaded_n_total").innerHTML =
-          "Uploaded " + event.loaded + " bytes of " + event.total;
-        var percent = (event.loaded / event.total) * 100;
-        (_("progressBar") as any).value = Math.round(percent);
-        _("status").innerHTML = Math.round(percent) + "% uploaded";
-
-      }
-
-      function errorHandler() {
-        _("status").innerHTML = "Upload Failed";
-      }
-
-      function abortHandler() {
-        _("status").innerHTML = "Upload Aborted";
-      }
-
-    return (
-        <div class='w-full'>
-            <form id="myForm" class='flex flex-col mt-[30%] gap-3 items-center'>
-                <input class="w-[250px] bg-green-600" type="file" name="resources" id="fileInput" multiple />
-                <input class="w-[250px] bg-green-600 h-[30px] cursor-pointer" type="button" value="Upload" onClick={uploadFile} />
-                <br />
-                <progress
-                    id="progressBar"
-                    value="0"
-                    max="100"
-                    style="width: 300px; display: none;"
-                ></progress>
-                <h4 id="status"></h4>
-                <br />
-                <p id="loaded_n_total"></p>
-                <br />
-                <p id="response"></p>
-            </form>
+  return (
+    <div class='w-full overflow-y-scroll'>
+      <form id="myForm" class='flex flex-col mb-[10%] gap-3 items-center'>
+        <div class='w-full flex justify-between items-center'>
+          <input ref={fileInputRef} onChange={onFilesSelect} class="w-[250px]" type="file" name="resources" id="fileInput" multiple />
+          {/* {result && <span>{result}</span>} */}
+          <button class="w-[250px] bg-cyan-500 hover:bg-cyan-600 transition-colors rounded-md h-[30px] cursor-pointer" type='button' onClick={uploadFile}>Upload</button>
         </div>
-    )
+
+        <div class='mx-5 flex flex-wrap gap-1'>
+          {filesCount > 0 && [...Array(filesCount).keys()].map((ignore, i, arr) => {
+            const status = uploadedFilesStatus[i]
+            return (
+              <div data-tooltip={status >= 400 ? getFileName(i) : undefined}
+                data-tooltip-position="bottom" class={`w-10 h-10 flex justify-center items-center text-center bg-opacity-80 ${arr.length - i <= last ? 'bg-slate-300' : status > 400 ? 'bg-red-300' : 'bg-green-300'}`}>{status >= 400 ? status : ''}</div>
+            )
+          })}
+        </div>
+      </form>
+    </div>
+  )
 }
 
 export default DevUploader
