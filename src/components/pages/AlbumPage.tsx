@@ -14,7 +14,7 @@ type AlbumPageProps = {
 const AlbumPage = (props: AlbumPageProps) => {
     const { albumId } = albumViewRoute.useParams()
     const albumTracks = useAppSelector(state => state.queue.filter(t => t.musicAlbum.uuid === albumId))
-    const album = useAppSelector(state => state.albums.find(a => a.uuid === albumId))
+    const album = useAppSelector(state => state.library.albums.find(a => a.uuid === albumId))
     return (
         <>
             {album &&

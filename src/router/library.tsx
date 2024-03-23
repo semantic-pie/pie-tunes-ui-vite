@@ -56,7 +56,7 @@ export const albumViewRoute = createRoute({
 export const artistsRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/artists',
-  component: () => <Page title="Artists" list={useAppSelector(state => state.artists).map((artist) => <ArtistCard band={artist} />)} wrap />,
+  component: () => <Page title="Artists" list={useAppSelector(state => state.library.artists).map((artist) => <ArtistCard band={artist} />)} wrap />,
 })
 
 export const uploadRoute = createRoute({

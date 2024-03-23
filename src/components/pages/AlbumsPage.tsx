@@ -16,8 +16,10 @@ const AlbumsPage = (props: AlbumsPageProps) => {
     const [query, setQury] = useState<string>('')
     // const [albums, setAlbums] = useState<MusicAlbum[]>([])
 
-    const albums = useAppSelector(state => query.length > 0 ? state.albums.filter(a => a.name.includes(query)) : state.albums)
+    const albums = useAppSelector(state => query.length > 0 ? state.library.albums.filter(a => a.name.includes(query)) : state.library.albums)
+    
 
+    
     // useEffect(() => {
 
     //     fetch(api.forAlbums({ page: 0, limit: 1000, query  }))

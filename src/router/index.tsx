@@ -6,13 +6,14 @@ import { searchScreen } from "./search";
 import { useEffect } from "preact/hooks";
 import { api } from "@/api";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
-import { albums, artists, setQueue, useAppDispatch, useAppSelector } from "@/redux/store";
+import { ENTITY_PER_PAGE, albums, artists, setQueue, tracks, useAppDispatch, useAppSelector } from "@/redux/store";
 import { colorHook } from "@/utils/colorHook";
 import { responseToObject } from "@/utils/hellpers";
 
 export const rootRoute = createRootRoute({
   component: () => {
     const dispatch = useAppDispatch()
+    const songsPages = useAppSelector(state => state.library.songsPages)
 
     const { load } = useGlobalAudioPlayer()
     colorHook()
@@ -26,12 +27,13 @@ export const rootRoute = createRootRoute({
       fetch(api.forAlbums({ page: 0, limit: 1000 }))
         .then(responseToObject)
         .then(data => dispatch(albums(data)))
-      
-      fetch(api.forTracks({ page: 0, limit: 1000 }))
-        .then(responseToObject)
-        .then(data => dispatch(setQueue(data)))
-      
     }, [])
+
+    useEffect(() => {
+      fetch(api.forTracks({ page: songsPages, limit: ENTITY_PER_PAGE }))
+      .then(responseToObject)
+      .then(data => dispatch(tracks(data)))
+    }, [songsPages])
 
     useEffect(() => {
       if (currentTrack) {
