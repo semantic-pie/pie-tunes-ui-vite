@@ -6,32 +6,68 @@ const DevUploader = () => {
         return document.getElementById(el)!;
     }
 
-    function uploadFile() {
+    // function uploadFile() {
+    //   _("loaded_n_total").innerHTML = "";
+    //   _("progressBar").style.display = "block";
+    //   // _("progressBar").style.visibility = "visible";
+
+    //   const fileInput = _("fileInput") as any;
+    //   const formData = new FormData();
+
+    //   const selectedFiles = fileInput.files;
+    //   for (const element of selectedFiles) {
+    //     formData.append("file", element);
+    //   }
+
+    //   console.log("data: ", formData);
+
+    //   const xhr = new XMLHttpRequest();
+    //   console.log('upload: ', api.forUpload())
+    //   xhr.open("POST", api.forUpload(), true);
+    //   xhr.upload.addEventListener("progress", progressHandler, false);
+    //   xhr.addEventListener("load", completeHandler, false);
+    //   xhr.addEventListener("error", errorHandler, false);
+    //   xhr.addEventListener("abort", abortHandler, false);
+    //   xhr.onload = function () {
+    //     _("response").innerText = xhr.responseText;
+    //   };
+    //   xhr.send(formData);
+    // }
+    async function uploadFile() {
         _("loaded_n_total").innerHTML = "";
         _("progressBar").style.display = "block";
         // _("progressBar").style.visibility = "visible";
 
         const fileInput = _("fileInput") as any;
-        const formData = new FormData();
+        
 
         const selectedFiles = fileInput.files;
+
+        let i = 1
         for (const element of selectedFiles) {
+          const formData = new FormData();
           formData.append("file", element);
+
+          console.log("data: ", formData);
+
+          const response = await fetch(api.forUpload(), { method: 'POST', body: formData})
+
+
+          console.log(`response[${i}]: `, response)
+          // const xhr = new XMLHttpRequest();
+          // console.log('upload: ', api.forUpload())
+          // xhr.open("POST", api.forUpload(), true);
+          // xhr.upload.addEventListener("progress", progressHandler, false);
+          // xhr.addEventListener("load", completeHandler, false);
+          // xhr.addEventListener("error", errorHandler, false);
+          // xhr.addEventListener("abort", abortHandler, false);
+          // xhr.onload = function () {
+          //   _("response").innerText = xhr.responseText + 'tack ' + i;
+          // };
+          // xhr.send(formData);
+        
+          i++;
         }
-
-        console.log("data: ", formData);
-
-        const xhr = new XMLHttpRequest();
-        console.log('upload: ', api.forUpload())
-        xhr.open("POST", api.forUpload(), true);
-        xhr.upload.addEventListener("progress", progressHandler, false);
-        xhr.addEventListener("load", completeHandler, false);
-        xhr.addEventListener("error", errorHandler, false);
-        xhr.addEventListener("abort", abortHandler, false);
-        xhr.onload = function () {
-          _("response").innerText = xhr.responseText;
-        };
-        xhr.send(formData);
       }
 
       function progressHandler(event: any) {
