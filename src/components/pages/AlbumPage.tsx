@@ -19,14 +19,14 @@ const AlbumPage = () => {
             {album &&
                 <div class={`flex ${track ? 'h-[30rem]' : 'h-[40rem]'}  sm:h-[44rem] flex-col gap-5 overflow-y-scroll sm:overflow-hidden`}>
                     <div class='p-1 sm:p-5 gap-5 flex flex-col sm:flex-row justify-between'>
-                        <img class='w-full sm:w-[200px] sm:h-[200px] rounded-md' src={api.forTrackCover(albumId)} alt="" />
+                        <img class='w-full sm:w-[200px] sm:h-[200px] rounded-md' src={api.urlForTrackCoverById({id: albumId})} alt="" />
                         <div class='flex flex-col w-full  justify-between'>
                             <h3 class="text-[18px]">Album</h3>
                             <div class='flex flex-col p-2.5 albumview-info justify-between h-[140px]'>
                                 <h2 class='text-[24px] sm:text-[42px]'>{album.name}</h2>
                                 <div class='flex justify-between'>
                                     <div class='flex items-center gap-2.5'>
-                                        <img class='w-10 h-10 rounded-md' src={api.forTrackCover(albumId)} alt="" />
+                                        <img class='w-10 h-10 rounded-md' src={api.urlForTrackCoverById({id: albumId})} alt="" />
                                         <span>Group Name</span>
                                     </div>
                                     <div class='flex justify-between items-center w-[80px] mx-5'>
