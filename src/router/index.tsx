@@ -8,36 +8,36 @@ import { api } from "@/api";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
 import { ENTITY_PER_PAGE, albums, artists, tracks, useAppDispatch, useAppSelector } from "@/redux/store";
 import { colorHook } from "@/utils/colorHook";
-import { responseToObject } from "@/utils/hellpers";
+import { pieApiClient } from "@/api/client";
 
 export const rootRoute = createRootRoute({
   component: () => {
+    colorHook()
+
     const dispatch = useAppDispatch()
+
     const songsPages = useAppSelector(state => state.library.songsPages)
+    const currentTrack = useAppSelector(state => state.currentTrack)
 
     const { load } = useGlobalAudioPlayer()
-    colorHook()
-    const currentTrack = useAppSelector(state => state.currentTrack)
-    
-    useEffect(() => {
-      fetch(api.forArtsits({ page: 0, limit: 1000 }))
-        .then(responseToObject)
-        .then(data => dispatch(artists(data)))
 
-      fetch(api.forAlbums({ page: 0, limit: 1000 }))
-        .then(responseToObject)
-        .then(data => dispatch(albums(data)))
+
+    useEffect(() => {
+      pieApiClient.findArtistsByDate({ page: 0, limit: 1000 })
+        .then(({ data }) => dispatch(artists(data)))
+
+      pieApiClient.findAlbumsByDate({ page: 0, limit: 1000 })
+        .then(({ data }) => dispatch(albums(data)))
     }, [])
 
     useEffect(() => {
-      fetch(api.forTracks({ page: songsPages, limit: ENTITY_PER_PAGE }))
-      .then(responseToObject)
-      .then(data => dispatch(tracks(data)))
+      pieApiClient.findTrackByDate({ page: songsPages, limit: ENTITY_PER_PAGE })
+        .then(({ data }) => dispatch(tracks(data)))
     }, [songsPages])
 
     useEffect(() => {
       if (currentTrack) {
-        load(api.forTrackStream(currentTrack.uuid), {
+        load(api.urlForTrackStreamById({ id: currentTrack.uuid }), {
           html5: true,
           format: 'mp3',
           autoplay: true
