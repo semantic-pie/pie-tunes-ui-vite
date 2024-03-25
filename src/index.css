@@ -66,31 +66,15 @@ html {
 
 
 
-
-/* .sidebar-active {
-  margin: 0 -10px 0 -10px;
-  padding: 0 8px 0 8px;
-  background-color:rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-
-  @apply transition-all duration-100 ease-in
-} */
-
-
-/* h-12 flex items-center gap-3 mx-[-10px] px-2 bg-white bg-opacity-0 hover:bg-opacity-[10%] rounded-xl transition-all duration-100 ease-in */
-/* .sidebar>div>div>.active {
-  @apply sidebar-active
-} */
-
 .playerview-info {
   border-radius: 7.7px;
-  background: rgba(0, 0, 0, 0.14);
+  background: rgba(0, 0, 0, 0.15);
 }
 
 .playerview-info-nav-item {
   border-radius: 11.853px;
   color: rgba(255, 255, 255, 0.60);
-  background: rgba(0, 0, 0, 0.14);
+  background: rgba(0, 0, 0, 0.15);
 
   width: 90px;
   height: 35px;

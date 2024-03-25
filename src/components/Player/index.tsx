@@ -74,8 +74,7 @@ A taste of the divine
     const pages: PlayerInfoPage[] = [
         {
             label: 'Up Next', content: <>
-                {/* {tracks.length > 1 && [...tracks].sort((o1,o2) => o1.title.localeCompare(o2.title)).map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 playerview-info cursor-pointer'> */}
-                {tracks.map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 playerview-info cursor-pointer'>
+                {tracks.map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
                     <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({id: t.musicAlbum.uuid})} alt="" />
                     <div class='flex flex-col'>
                         <span class='text-white'>{t.title.substring(0, 15)}</span>
@@ -86,7 +85,7 @@ A taste of the divine
         },
         {
             label: 'Lyrics', content: <>
-                <div class='flex flex-col gap-5 opacity-70 px-5'>
+                <div class='flex flex-col gap-5 text-gray-300 px-5'>
                     {lyrics.map(l => <p>{l}</p>)}
                     </div>     
                 </>
@@ -143,7 +142,6 @@ Sleep Token are a British rock band from London, formed in 2016. The group are a
                         <div class='absolute right-5 self-center'>
                             <ValumeControls />
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -164,12 +162,10 @@ const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
     const [current, setCurrent] = useState(props.pages[0] ?? undefined)
 
     return (
-        <div class='w-[370px] h-[450px] flex flex-col gap-[10px] justify-start playerview-info p-[10px]'>
+        <div class='w-[370px] h-[450px] flex flex-col justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px]'>
             <div class='flex justify-between'>
-                {props.pages.map(p => (<button onClick={() => setCurrent(p)} class={`playerview-info-nav-item ${p.label === current.label ? 'playerview-info-nav-item-active' : ''}`}>{p.label}</button>))}
-                {/* <button class='playerview-info-nav-item'>Up Next</button>
-                <button class='playerview-info-nav-item'>Lyrics</button>
-                <button class='playerview-info-nav-item'>Info</button> */}
+                {props.pages.map(p => (<button onClick={() => setCurrent(p)} class={`w-[5.6rem] h-[1.8rem] rounded-lg text-white text-opacity-50 bg-black bg-opacity-15 border-opacity-50 ${p.label === current.label ? 'border-white border-[1px] text-opacity-100' : ''}`}>{p.label}</button>))}
+
             </div>
 
 
