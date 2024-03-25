@@ -19,11 +19,10 @@ export const colorHook = () => {
 
     useEffect(() => {
         if (track) {
-            console.log('start fetch')
-            fetch(api.forTrackCover(track.musicAlbum.uuid))
+            // will be refactored
+            fetch(api.urlForTrackCoverById({ id: track.musicAlbum.uuid }))
                 .then(res => res.blob())
                 .then(blob => {
-                    console.log('fetched')
                     const file = new File([blob], 'img', blob)
                     getKek(file, changeRgbs1, changeRgbs2)
                 })
@@ -32,10 +31,11 @@ export const colorHook = () => {
 
     useEffect(() => {
 
-        if ( rgbs1 && rgbs2) {
+        if (rgbs1 && rgbs2) {
             console.log('update background gradient')
             const html = document.getElementsByTagName('html')[0]
-            html.style.backgroundImage = createLinearGradient(rgbs1[3], rgbs1[Math.floor(rgbs1.length/2)], rgbs2[rgbs2.length-2])
+            // html.style.backgroundImage = createLinearGradient(rgbs1[3], rgbs1[Math.floor(rgbs1.length/2)], rgbs2[rgbs2.length-2])
+            html.style.backgroundImage = createLinearGradient(rgbs1[Math.floor(rgbs1.length / 2)], rgbs1[3], rgbs1[Math.floor(rgbs1.length / 2)])
         }
     }, [rgbs1, rgbs2])
 

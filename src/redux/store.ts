@@ -1,5 +1,5 @@
-import { MusicAlbum, MusicBand, Track, api } from "@/api"
-import { responseToObject } from "@/utils/hellpers"
+import { MusicAlbum, MusicBand, Track } from "@/api"
+import { pieApiClient } from "@/api/client"
 import { PayloadAction, configureStore, createSlice } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
@@ -32,28 +32,18 @@ const initialState = {
 } as PlayerSlice
 
 export const searchTracks = (query: string) => async (dispatch: AppDispatch) => {
-    const headers = new Headers()
-    headers.append('Content-Type', 'application/json')
-    const ts = await fetch(api.forTracks({ page: 0, limit: 10, query }))
-        .then(responseToObject)
-
-    dispatch(searchSongs(ts))
+    pieApiClient.findTrackByTitle({ page: 0, limit: 10, query })
+        .then(({ data }) => dispatch(searchSongs(data)))
 }
 
 export const fetchToLike = (track_uuid: string) => async (dispatch: AppDispatch) => {
-    const headers = new Headers()
-    headers.append('Content-Type', 'application/json')
-    const user_uuid = '768b9113-5036-40c6-a440-127fc054337a'
-    await fetch(api.forLike(), { method: 'POST', headers, body: JSON.stringify({ type: "LIKE_TRACK", track_uuid, user_uuid }) })
-    dispatch(like(track_uuid))
+    pieApiClient.postEvent({type: 'LIKE_TRACK', track_uuid, user_uuid: '768b9113-5036-40c6-a440-127fc054337a'})
+        .then(({}) =>  dispatch(like(track_uuid)))
 }
 
 export const fetchToUnlike = (track_uuid: string) => async (dispatch: AppDispatch) => {
-    const headers = new Headers()
-    headers.append('Content-Type', 'application/json')
-    const user_uuid = '768b9113-5036-40c6-a440-127fc054337a'
-    await fetch(api.forLike(), { method: 'POST', headers, body: JSON.stringify({ type: "REMOVE_LIKE", track_uuid, user_uuid }) })
-    dispatch(unlike(track_uuid))
+    pieApiClient.postEvent({type: 'REMOVE_LIKE', track_uuid, user_uuid: '768b9113-5036-40c6-a440-127fc054337a'})
+        .then(({}) =>  dispatch(like(track_uuid)))
 }
 
 const playerSlice = createSlice({
@@ -98,24 +88,12 @@ const playerSlice = createSlice({
             } else {
                 state.library.searchSongs = []
             }
-           
+
         },
         tracks: (state, action: PayloadAction<Track[]>) => {
             if (action.payload.length > 0) {
-                // const n = [...state.library.songs.filter(old => !!action.payload.find(newItem => old.title === newItem.title))]
-                // const oldTracks = [...state.library.songs]
-                // const old = [...state.library.songs]
-                // const newTracks = []
-                // for (const t of action.payload) {
-                //     if (old.findIndex(o => o.title === t.title) === -1) {
-                //         newTracks.push(t)
-                //     }
-                // }
-                // console.log('kek: ' + newTracks)
                 state.library.songs = [...state.library.songs, ...action.payload]
                 state.queue = state.library.songs
-                // state.library.songs = [...state.library.songs, ...newTracks]
-                // state.queue = [...state.library.songs, ...newTracks]
             }
         },
         artists: (state, action: PayloadAction<MusicBand[]>) => {
@@ -146,7 +124,7 @@ const playerSlice = createSlice({
     }
 })
 
-export const { playTrack, addTrackToQueue, setQueue, albums, artists, next, prev, like, unlike, loadNextPage, tracks, searchSongs} = playerSlice.actions
+export const { playTrack, addTrackToQueue, setQueue, albums, artists, next, prev, like, unlike, loadNextPage, tracks, searchSongs } = playerSlice.actions
 
 // types configuration
 export const store = configureStore({ reducer: playerSlice.reducer })

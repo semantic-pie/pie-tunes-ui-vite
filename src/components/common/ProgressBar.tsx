@@ -31,5 +31,3 @@ const ProgresBar = ({ value, setValue, relativeValue, classes, classesInner, pol
 }
 
 export default ProgresBar
-
-// fi1psa9js&pweR

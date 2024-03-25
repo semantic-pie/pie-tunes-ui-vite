@@ -1,4 +1,4 @@
-import { api } from "@/api";
+import { pieApiClient } from "@/api/client";
 import { useRef, useState } from "preact/hooks";
 
 const DevUploader = () => {
@@ -22,14 +22,14 @@ const DevUploader = () => {
         const formData = new FormData();
         formData.append("file", element);
 
-        await fetch(api.forUpload(), { method: 'POST', body: formData }).then((response) => {
+        await pieApiClient.uploadMp3(formData).then(({ meta }) => {
           setUploadedFilesCount(prev => prev + 1)
-          setUploadedFilesStatus(prev => [...prev, response.status])
+          setUploadedFilesStatus(prev => [...prev, meta.status])
           // setResult(`${uploadedFilesCount}/${filesCount} files uploaded`)
         })
-        
+
       }
-      
+
       console.log('Uploading result: ')
       console.log('filesCount: ', filesCount)
       console.log('uploadedFilesCount: ', uploadedFilesCount)
