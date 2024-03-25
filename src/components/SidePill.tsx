@@ -5,7 +5,7 @@ import { Link } from "@tanstack/react-router";
 
 const SidePill = () => {
     return (
-        <div class="hidden sm:flex flex-col justify-center items-center">
+        <div class="hidden sm:flex flex-col justify-center items-center z-10">
             <div class="flex sm:flex-col gap-6 sm:gap-3 p-2.5 sm:p-3 rounded-full sidepill">
                 <Link to="/player">
                     <div class="flex items-center justify-center rounded-full w-14 h-14 ">

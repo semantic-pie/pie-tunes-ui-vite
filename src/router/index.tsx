@@ -6,13 +6,15 @@ import { searchScreen } from "./search";
 import { useEffect } from "preact/hooks";
 import { api } from "@/api";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
-import { ENTITY_PER_PAGE, albums, artists, tracks, useAppDispatch, useAppSelector } from "@/redux/store";
+import { ENTITY_PER_PAGE, albums, artists, playTrack, tracks, useAppDispatch, useAppSelector } from "@/redux/store";
 import { colorHook } from "@/utils/colorHook";
 import { pieApiClient } from "@/api/client";
+import { blureBackgroundHook } from "@/utils/blureBackgroundHook";
 
 export const rootRoute = createRootRoute({
   component: () => {
-    colorHook()
+    // colorHook()
+    blureBackgroundHook()
 
     const dispatch = useAppDispatch()
 
@@ -31,7 +33,10 @@ export const rootRoute = createRootRoute({
 
     useEffect(() => {
       pieApiClient.findTrackDeprecated({ page: songsPages, limit: ENTITY_PER_PAGE, query: 'iqnore'})
-        .then(({ data }) => dispatch(tracks(data)))
+        .then(({ data }) => {
+          dispatch(tracks(data))
+          dispatch(playTrack(data[1]))
+        })
     }, [songsPages])
 
     useEffect(() => {
@@ -39,7 +44,7 @@ export const rootRoute = createRootRoute({
         load(api.urlForTrackStreamById({ id: currentTrack.uuid }), {
           html5: true,
           format: 'mp3',
-          autoplay: true
+          // autoplay: true
         })
       }
     }, [currentTrack])
