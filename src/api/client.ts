@@ -21,7 +21,7 @@ interface PieApiClient {
 
     findArtistsByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<MusicBand[]>>
     findArtistsByDate: (params: FindByDateParams) => Promise<PieApiResponse<MusicBand[]>>
-    findArtistsDeprecated: (params: FindByTitleParams) => Promise<PieApiResponse<MusicAlbum[]>>
+    findArtistsDeprecated: (params: FindByTitleParams) => Promise<PieApiResponse<MusicBand[]>>
 
 
     uploadMp3: (body: FormData) => Promise<PieApiResponse<string>>
@@ -50,7 +50,7 @@ export const pieApiClient: PieApiClient = {
         fetch(api.urlForAlbumsByDate(params), get)
             .then(responseToPieApiResponse),
     findAlbumsDeprecated: async (params) =>
-        fetch(api.urlForArtistsDeprecated(params), get)
+        fetch(api.urlForAlbumsDeprecated(params), get)
             .then(responseToPieApiResponse),
     findArtistsByTitle: async (params) =>
         fetch(api.urlForArtistsByTitle(params), get)
