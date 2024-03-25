@@ -17,9 +17,9 @@ export const libraryScreen = createRoute({
   path: '/library',
   component: () => {
     const track = useAppSelector(state => state.currentTrack)
-    return (<div class='flex flex-col h-full justify-between sm:gap-5'>
+    return (<div class='relative flex flex-col my-auto sm:gap-5'>
       <MainPage />
-      {track && <div class="w-full">
+      {track && <div class="absolute bottom-[-100px] w-full">
         <BubblePlayer />
       </div>}
 
