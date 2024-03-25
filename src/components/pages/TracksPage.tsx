@@ -23,6 +23,7 @@ const TracksPage = (props: TracksPageProps) => {
     const searched = useAppSelector(state => state.library.searchSongs)
 
     const tracks = query.length > 0 ? searched : songs
+    const track = useAppSelector(state => state.currentTrack)
 
     const dispatch = useAppDispatch()
 
@@ -64,9 +65,7 @@ const TracksPage = (props: TracksPageProps) => {
 
 
     return (
-        <div class="flex flex-col gap-3 h-[680px]">
-
-
+        <div class={`flex flex-col gap-3 ${track ? 'h-[30rem]' : 'h-[40rem]'}  sm:h-[44rem]`}>
             <div class="justify-between items-start inline-flex">
                 <div className="text-start text-white text-3xl font-bold">Songs</div>
                 <SortByIcon />

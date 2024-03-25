@@ -5,21 +5,21 @@ import { Link } from "@tanstack/react-router";
 
 const SidePill = () => {
     return (
-        <div class="absolute top-0 bottom-0 left-5 flex flex-col justify-center items-center">
-            <div class="flex flex-col gap-3 p-3 rounded-full sidepill">
+        <div class="hidden sm:flex flex-col justify-center items-center">
+            <div class="flex sm:flex-col gap-6 sm:gap-3 p-2.5 sm:p-3 rounded-full sidepill">
                 <Link to="/player">
                     <div class="flex items-center justify-center rounded-full w-14 h-14 ">
-                        <Player width="32" height="32" />
+                        <Player class='w-6 h-6 sm:w-8 sm:h-8' />
                     </div>
                 </Link>
                 <Link to="/library">
                     <div class="flex items-center justify-center rounded-full w-14 h-14">
-                        <Library width="35" height="35" />
+                        <Library class='w-6 h-6 sm:w-8 sm:h-8' />
                     </div>
                 </Link>
                 <Link to="/serach">
                     <div class="flex items-center justify-center rounded-full w-14 h-14">
-                        <Search width="35" height="35" class="fill-white" />
+                        <Search class='w-6 h-6 sm:w-8 sm:h-8 fill-white' />
                     </div>
                 </Link>
             </div>

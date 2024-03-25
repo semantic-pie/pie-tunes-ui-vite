@@ -11,18 +11,19 @@ type AlbumPageProps = {
 
 const AlbumPage = () => {
     const { albumId } = albumViewRoute.useParams()
+    const track = useAppSelector(state => state.currentTrack)
     const albumTracks = useAppSelector(state => state.queue.filter(t => t.musicAlbum.uuid === albumId))
     const album = useAppSelector(state => state.library.albums.find(a => a.uuid === albumId))
     return (
         <>
             {album &&
-                <div class='flex h-[680px] flex-col gap-5 overflow-hidden'>
-                    <div class='p-5 gap-5 flex justify-between'>
-                        <img class='w-[200px] h-[200px] rounded-md' src={api.forTrackCover(albumId)} alt="" />
+                <div class={`flex ${track ? 'h-[30rem]' : 'h-[40rem]'}  sm:h-[44rem] flex-col gap-5 overflow-y-scroll sm:overflow-hidden`}>
+                    <div class='p-1 sm:p-5 gap-5 flex flex-col sm:flex-row justify-between'>
+                        <img class='w-full sm:w-[200px] sm:h-[200px] rounded-md' src={api.forTrackCover(albumId)} alt="" />
                         <div class='flex flex-col w-full  justify-between'>
                             <h3 class="text-[18px]">Album</h3>
                             <div class='flex flex-col p-2.5 albumview-info justify-between h-[140px]'>
-                                <h2 class='text-[42px]'>{album.name}</h2>
+                                <h2 class='text-[24px] sm:text-[42px]'>{album.name}</h2>
                                 <div class='flex justify-between'>
                                     <div class='flex items-center gap-2.5'>
                                         <img class='w-10 h-10 rounded-md' src={api.forTrackCover(albumId)} alt="" />
@@ -39,7 +40,7 @@ const AlbumPage = () => {
                     </div>
 
 
-                    <div class="p-5 flex flex-col overflow-y-scroll">
+                    <div class="p-5 flex flex-col sm:overflow-y-scroll">
                         {albumTracks.map((track, i) => <TrackCard class={`p-2.5 ${i !== 0 ? 'border-t-[0.75px] border-white border-opacity-50' : ''} `} track={track} />)}
                     </div>
                 </div>

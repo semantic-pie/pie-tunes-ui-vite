@@ -122,8 +122,14 @@ html {
   backdrop-filter: blur(59px);
 }
 
-.mainview {
+/* .mainview {
   border-radius: 0px 28px 28px 0px;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: -1px 0px 5px 0px rgba(255, 255, 255, 0.15) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(59px);
+} */
+
+.mainview {
   background: rgba(255, 255, 255, 0.14);
   box-shadow: -1px 0px 5px 0px rgba(255, 255, 255, 0.15) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(59px);
@@ -136,7 +142,6 @@ html {
 }
 
 .bubble-player {
-  border-radius: 45px;
   background: rgba(255, 255, 255, 0.14);
   box-shadow: 0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset, 0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(59px);

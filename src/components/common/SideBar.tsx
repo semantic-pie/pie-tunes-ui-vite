@@ -8,11 +8,14 @@ import ThreeDots from "@/components/icons/ThreeDots";
 import User from "@/components/icons/User";
 import { Link } from "@tanstack/react-router";
 import UploadIcon from "../icons/UploadIcon";
+import Player from "../icons/Player";
+import Library from "../icons/Library";
+import Search from "../icons/Search";
 
 const SideBar = () => {
     return (
-        <div class="sm:w-[260px] flex flex-col justify-between py-5 p-2 sm:p-6 gap-8 sidebar">
-            <div class='flex flex-col gap-8'>
+        <div class="sm:w-[260px] flex flex-col justify-between sm:py-5 p-2 sm:p-6 sm:gap-8 sm:sidebar">
+            <div class='flex flex-row sm:flex-col'>
                 <div class="hidden sm:flex justify-between">
                     <div class="flex flex-col">
                         <div className="text-center  text-3xl font-bold">Library</div>
@@ -24,7 +27,7 @@ const SideBar = () => {
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-1 sidebar-link-panel">
+                <div class="sm:mx-0 mx-5 w-full sm:w-auto justify-between flex flex-row sm:flex-col gap-1 sidebar-link-panel">
                     <Link to="/library" class='sidebar-link'>
                         <div class="h-12 flex items-center gap-3">
                             <Clock class="w-8 h-8" />
@@ -69,7 +72,7 @@ const SideBar = () => {
 
             <div>
                 <div className="hidden sm:inline text-start text-white text-2xl font-medium mt-8">Playlist</div>
-                <div class="flex flex-col gap-4">
+                <div class="hidden sm:flex flex-row sm:flex-col gap-4">
                     <div class="flex items-center gap-3">
                         <Playlists class="w-8 h-8" />
                         <span class='hidden sm:inline'>All Playlists</span>

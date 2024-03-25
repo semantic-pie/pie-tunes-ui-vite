@@ -15,12 +15,17 @@ import TracksPage from "@/components/pages/TracksPage"
 export const libraryScreen = createRoute({
   getParentRoute: () => rootRoute,
   path: '/library',
-  component: () => (<>
-    <MainPage />
-    <div class="absolute bottom-0 sm:bottom-28 w-full">
-      <BubblePlayer />
-    </div>
-  </>)
+  component: () => {
+    const track = useAppSelector(state => state.currentTrack)
+    return (<div class='flex flex-col h-full justify-between sm:gap-5'>
+      <MainPage />
+      {track && <div class="w-full">
+        <BubblePlayer />
+      </div>}
+
+    </div>)
+  }
+
 })
 
 
@@ -34,8 +39,6 @@ export const songsRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/songs',
   component: ({ }) => {
-    // return <Page title="Songs" list={useAppSelector(state => state.queue.length > 1 ? [...state.queue].sort((o1,o2) => o1.title.localeCompare(o2.title)) : state.queue).map((track) => <TrackCard track={track} />)} col />
-    // return <Page title="Songs" list={useAppSelector(state => state.queue).map((track) => <TrackCard track={track} />)} col />
     return <TracksPage />
   }
 })
@@ -48,7 +51,7 @@ export const albumsRoute = createRoute({
 
 export const albumViewRoute = createRoute({
   getParentRoute: () => albumsRoute,
-  path:'/$albumId',
+  path: '/$albumId',
   component: () => <AlbumPage />
 })
 

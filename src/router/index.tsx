@@ -21,7 +21,6 @@ export const rootRoute = createRootRoute({
 
     const { load } = useGlobalAudioPlayer()
 
-
     useEffect(() => {
       pieApiClient.findArtistsByDate({ page: 0, limit: 1000 })
         .then(({ data }) => dispatch(artists(data)))
@@ -46,12 +45,10 @@ export const rootRoute = createRootRoute({
     }, [currentTrack])
 
     return (
-      <>
+      <div class='flex flex-col sm:flex-row justify-start sm:mx-[2%] sm:gap-[2%] xl:mx-[5%] xl:gap-[5%] h-[100dvh]'>
         <SidePill />
-        <div class='flex h-screen'>
-          <Outlet />
-        </div>
-      </>
+        <Outlet />
+      </div>
     )
   }
 
