@@ -22,15 +22,15 @@ export const rootRoute = createRootRoute({
     const { load } = useGlobalAudioPlayer()
 
     useEffect(() => {
-      pieApiClient.findArtistsByDate({ page: 0, limit: 1000 })
+      pieApiClient.findArtistsDeprecated({ page: 0, limit: 1000, query: 'iqnore' })
         .then(({ data }) => dispatch(artists(data)))
 
-      pieApiClient.findAlbumsByDate({ page: 0, limit: 1000 })
+      pieApiClient.findAlbumsDeprecated({ page: 0, limit: 1000, query: 'iqnore' })
         .then(({ data }) => dispatch(albums(data)))
     }, [])
 
     useEffect(() => {
-      pieApiClient.findTrackByDate({ page: songsPages, limit: ENTITY_PER_PAGE })
+      pieApiClient.findTrackDeprecated({ page: songsPages, limit: ENTITY_PER_PAGE, query: 'iqnore'})
         .then(({ data }) => dispatch(tracks(data)))
     }, [songsPages])
 

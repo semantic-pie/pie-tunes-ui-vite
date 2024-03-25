@@ -13,12 +13,16 @@ export interface PieApiResponse<T> {
 interface PieApiClient {
     findTrackByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<Track[]>>
     findTrackByDate: (params: FindByDateParams) => Promise<PieApiResponse<Track[]>>
+    findTrackDeprecated: (params: FindByTitleParams) => Promise<PieApiResponse<Track[]>>
 
     findAlbumsByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<MusicAlbum[]>>
     findAlbumsByDate: (params: FindByDateParams) => Promise<PieApiResponse<MusicAlbum[]>>
+    findAlbumsDeprecated: (params: FindByTitleParams) => Promise<PieApiResponse<MusicAlbum[]>>
 
     findArtistsByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<MusicBand[]>>
     findArtistsByDate: (params: FindByDateParams) => Promise<PieApiResponse<MusicBand[]>>
+    findArtistsDeprecated: (params: FindByTitleParams) => Promise<PieApiResponse<MusicAlbum[]>>
+
 
     uploadMp3: (body: FormData) => Promise<PieApiResponse<string>>
 
@@ -36,17 +40,26 @@ export const pieApiClient: PieApiClient = {
     findTrackByDate: async (params) =>
         fetch(api.urlForTracksByDate(params), get)
             .then(responseToPieApiResponse),
+    findTrackDeprecated: async (params) =>
+        fetch(api.urlForTracksDeprecated(params), get)
+            .then(responseToPieApiResponse),
     findAlbumsByTitle: async (params) =>
         fetch(api.urlForAlbumsByTitle(params), get)
             .then(responseToPieApiResponse),
     findAlbumsByDate: async (params) =>
         fetch(api.urlForAlbumsByDate(params), get)
             .then(responseToPieApiResponse),
+    findAlbumsDeprecated: async (params) =>
+        fetch(api.urlForArtistsDeprecated(params), get)
+            .then(responseToPieApiResponse),
     findArtistsByTitle: async (params) =>
         fetch(api.urlForArtistsByTitle(params), get)
             .then(responseToPieApiResponse),
     findArtistsByDate: async (params) =>
         fetch(api.urlForArtistsByDate(params), get)
+            .then(responseToPieApiResponse),
+    findArtistsDeprecated: async (params) =>
+        fetch(api.urlForArtistsDeprecated(params), get)
             .then(responseToPieApiResponse),
     uploadMp3: async (body) =>
         fetch(api.urlForSingleUpload(), { method: 'POST', body })
