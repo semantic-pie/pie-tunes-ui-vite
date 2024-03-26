@@ -6,8 +6,7 @@ import { searchScreen } from "./search";
 import { useEffect } from "preact/hooks";
 import { api } from "@/api";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
-import { ENTITY_PER_PAGE, albums, artists, playTrack, tracks, useAppDispatch, useAppSelector } from "@/redux/store";
-import { colorHook } from "@/utils/colorHook";
+import { ENTITY_PER_PAGE, albums, artists, next, playTrack, prev, tracks, useAppDispatch, useAppSelector } from "@/redux/store";
 import { pieApiClient } from "@/api/client";
 import { blureBackgroundHook } from "@/utils/blureBackgroundHook";
 
@@ -16,6 +15,8 @@ export const rootRoute = createRootRoute({
     // colorHook()
     blureBackgroundHook()
 
+    const { pause, play, } = useGlobalAudioPlayer()
+
     const dispatch = useAppDispatch()
 
     const songsPages = useAppSelector(state => state.library.songsPages)
@@ -23,29 +24,68 @@ export const rootRoute = createRootRoute({
 
     const { load } = useGlobalAudioPlayer()
 
+    
+
+    const actionHandlers = [
+      ['play',          play],
+      ['pause',         pause],
+      ['previoustrack', () => dispatch(prev())],
+      ['nexttrack',     () => dispatch(next())],
+      // ['stop',          () => { /* ... */ }],
+      // ['seekbackward',  (details: any) => { /* ... */ }],
+      // ['seekforward',   (details: any) => { /* ... */ }],
+      ['seekto',        (details: any) => { /* ... */ }],
+      /* Video conferencing actions */
+      // ['togglemicrophone', () => { /* ... */ }],
+      ['togglecamera',     () => { /* ... */ }],
+      ['hangup',                () => { /* ... */ }],
+      /* Presenting slides actions */
+      ['previousslide', () => { /* ... */ }],
+      ['nextslide',     () => { /* ... */ }],
+    ];
+
     useEffect(() => {
       pieApiClient.findArtistsDeprecated({ page: 0, limit: 1000, query: 'iqnore' })
         .then(({ data }) => dispatch(artists(data)))
 
       pieApiClient.findAlbumsDeprecated({ page: 0, limit: 1000, query: 'iqnore' })
         .then(({ data }) => dispatch(albums(data)))
+
+      for (const [action, handler] of actionHandlers) {
+        try {
+          navigator.mediaSession.setActionHandler(action, handler);
+        } catch (error) {
+          console.log(`The media session action "${action}" is not supported yet.`);
+        }
+      }
     }, [])
 
     useEffect(() => {
-      pieApiClient.findTrackDeprecated({ page: songsPages, limit: ENTITY_PER_PAGE, query: 'iqnore'})
+      pieApiClient.findTrackDeprecated({ page: songsPages, limit: ENTITY_PER_PAGE, query: 'iqnore' })
         .then(({ data }) => {
           dispatch(tracks(data))
           dispatch(playTrack(data[1]))
         })
     }, [songsPages])
 
+
+
     useEffect(() => {
       if (currentTrack) {
         load(api.urlForTrackStreamById({ id: currentTrack.uuid }), {
           html5: true,
           format: 'mp3',
-          // autoplay: true
+          autoplay: true
         })
+        if ('mediaSession' in navigator) {
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: currentTrack.title,
+            artist: currentTrack.musicBand.name,
+            album: currentTrack.musicAlbum.name,
+            artwork: [{ src: api.urlForTrackCoverById({ id: currentTrack.musicAlbum.uuid }), type: 'image/png' }]
+
+          });
+        }
       }
     }, [currentTrack])
 
