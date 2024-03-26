@@ -48,6 +48,7 @@ export type FindById = {
 // }
 
 export const api = {
+    urlForGlobalSearch: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/search', { queryParams: {page, limit, query }})!,
     urlForTracksByTitle: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/tracks/find-by-title', { queryParams: { page: page, limit, query } })!,
     urlForTracksByDate: ({ page, limit, order }: FindByDateParams) => buildUrl(pieDomainHost + '/api/tracks/find-by-date', { queryParams: { page: page, limit, order } })!,
     

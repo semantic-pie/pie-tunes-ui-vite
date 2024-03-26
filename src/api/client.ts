@@ -10,6 +10,18 @@ export interface PieApiResponse<T> {
     }
 }
 
+export type SearchResponse = {
+    uuid: string
+    name: string 
+    entity_type: 'BAND' | 'ALBUM' | 'TRACK'
+    bandName: string
+}
+export type SearchResponseRoot = {
+    tracks: SearchResponse[]
+    albums: SearchResponse[]
+    bands: SearchResponse[]
+} 
+
 interface PieApiClient {
     findTrackByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<Track[]>>
     findTrackByDate: (params: FindByDateParams) => Promise<PieApiResponse<Track[]>>
@@ -23,6 +35,7 @@ interface PieApiClient {
     findArtistsByDate: (params: FindByDateParams) => Promise<PieApiResponse<MusicBand[]>>
     findArtistsDeprecated: (params: FindByTitleParams) => Promise<PieApiResponse<MusicBand[]>>
 
+    searchByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<SearchResponseRoot>>
 
     uploadMp3: (body: FormData) => Promise<PieApiResponse<string>>
 
@@ -66,5 +79,8 @@ export const pieApiClient: PieApiClient = {
             .then(responseToPieApiResponse),
     postEvent: async (body) =>
         fetch(api.urlForSingleUpload(), postWithBody(body))
+            .then(responseToPieApiResponse),
+    searchByTitle: async (params) =>
+        fetch(api.urlForGlobalSearch(params), get)
             .then(responseToPieApiResponse),
 }
