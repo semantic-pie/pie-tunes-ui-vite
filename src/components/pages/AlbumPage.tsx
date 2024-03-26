@@ -14,6 +14,8 @@ const AlbumPage = () => {
     const track = useAppSelector(state => state.currentTrack)
     const albumTracks = useAppSelector(state => state.queue.filter(t => t.musicAlbum.uuid === albumId))
     const album = useAppSelector(state => state.library.albums.find(a => a.uuid === albumId))
+
+    const twoRows = album?.name.length > 20 ? true : false
     return (
         <>
             {album &&
@@ -22,8 +24,8 @@ const AlbumPage = () => {
                         <img class='w-full sm:w-[200px] sm:h-[200px] rounded-md' src={api.urlForTrackCoverById({id: albumId})} alt="" />
                         <div class='flex flex-col w-full  justify-between'>
                             <h3 class="text-[18px]">Album</h3>
-                            <div class='flex flex-col p-2.5 albumview-info justify-between h-[140px]'>
-                                <h2 class='text-[24px] sm:text-[42px]'>{album.name}</h2>
+                            <div class={`flex flex-col p-2.5 albumview-info justify-between h-fit gap-4 leading-tight`}>
+                                <h2 class={`${twoRows ? 'text-[16px] sm:text-[28px]' : 'text-[24px] sm:text-[42px]'}`}>{album.name}</h2>
                                 <div class='flex justify-between'>
                                     <div class='flex items-center gap-2.5'>
                                         <img class='w-10 h-10 rounded-md' src={api.urlForTrackCoverById({id: albumId})} alt="" />

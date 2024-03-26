@@ -23,7 +23,7 @@ const AlbumsPage = () => {
                         <SortByIcon />
                     </div>
                     <SearchBar query={query} setQuery={setQury} />
-                    <div class="flex flex-col sm:flex-wrap flex-grow gap-x-3 gap-y-3 overflow-y-scroll">
+                    <div class="flex sm:flex-wrap flex-grow gap-x-3 gap-y-3 overflow-y-scroll">
                         {albums.map((album) => <AlbumCard album={album} />)}
                     </div>
                 </>
