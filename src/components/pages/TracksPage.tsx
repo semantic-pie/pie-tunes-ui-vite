@@ -10,7 +10,7 @@ type TracksPageProps = {
 
 const TracksPage = (props: TracksPageProps) => {
     const [query, setQury] = useState<string>('')
-    const [isLoadNeed, setIsLoadNeed] = useState(false)
+    
     const ref = useRef<HTMLDivElement>(null)
     // const [albums, setAlbums] = useState<MusicAlbum[]>([])
 
@@ -27,9 +27,10 @@ const TracksPage = (props: TracksPageProps) => {
 
     const dispatch = useAppDispatch()
 
+    const [isLoadNeed, setIsLoadNeed] = useState(false)
+
     useEffect(() => {
         if (isLoadNeed) {
-          console.log('loadNextPage')
           dispatch(loadNextPage())
           setTimeout(() => {
             setIsLoadNeed(false)
@@ -40,14 +41,12 @@ const TracksPage = (props: TracksPageProps) => {
 
 
       const handleScroll = () => {
-        console.log('handle scroll')
         if (!ref.current) return
 
         const { scrollTop, scrollHeight } = ref.current
         // play around with the trigger factor instead of fixed px
         const trigger = 1
         if (scrollHeight - (scrollTop + window.innerHeight) < window.innerHeight * trigger) {
-            console.log('setIsLoadNeed(true)')
           setIsLoadNeed(true)
         }
       }

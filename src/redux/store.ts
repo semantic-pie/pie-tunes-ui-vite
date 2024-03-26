@@ -12,7 +12,9 @@ interface PlayerSlice {
         songs: Track[]
         searchSongs: Track[],
         artists: MusicBand[]
+        artistsPages: number
         albums: MusicAlbum[]
+        albumsPages: number
     }
 }
 
@@ -27,7 +29,9 @@ const initialState = {
         songs: [],
         searchSongs: [],
         artists: [],
+        artistsPages: 0,
         albums: [],
+        albumsPages: 0,
     }
 } as PlayerSlice
 
@@ -82,6 +86,12 @@ const playerSlice = createSlice({
         loadNextPage: (state) => {
             state.library.songsPages++
         },
+        loadNextPageArtists: (state) => {
+            state.library.artistsPages++
+        },
+        loadNextPageAlbums: (state) => {
+            state.library.albumsPages++
+        },
         searchSongs: (state, action: PayloadAction<Track[]>) => {
             if (action.payload.length > 0) {
                 state.library.searchSongs = action.payload
@@ -98,12 +108,14 @@ const playerSlice = createSlice({
         },
         artists: (state, action: PayloadAction<MusicBand[]>) => {
             if (action.payload.length > 0) {
-                state.library.artists = action.payload
+                state.library.artists = [...state.library.artists, ...action.payload]
+                state.queue = state.library.songs
             }
         },
         albums: (state, action: PayloadAction<MusicAlbum[]>) => {
             if (action.payload.length > 0) {
-                state.library.albums = action.payload
+                state.library.albums = [...state.library.albums, ...action.payload]
+                state.queue = state.library.songs
             }
         },
 
@@ -124,7 +136,7 @@ const playerSlice = createSlice({
     }
 })
 
-export const { playTrack, addTrackToQueue, setQueue, albums, artists, next, prev, like, unlike, loadNextPage, tracks, searchSongs } = playerSlice.actions
+export const { playTrack, addTrackToQueue, setQueue, albums, artists, next, prev, like, unlike, loadNextPage, loadNextPageAlbums, loadNextPageArtists, tracks, searchSongs } = playerSlice.actions
 
 // types configuration
 export const store = configureStore({ reducer: playerSlice.reducer })

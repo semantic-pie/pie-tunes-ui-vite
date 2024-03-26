@@ -21,15 +21,24 @@ export const rootRoute = createRootRoute({
     const dispatch = useAppDispatch()
 
     const songsPages = useAppSelector(state => state.library.songsPages)
+    const artistsPages = useAppSelector(state => state.library.artistsPages)
+    const albumsPages = useAppSelector(state => state.library.albumsPages)
+
     const currentTrack = useAppSelector(state => state.currentTrack)
 
     useEffect(() => {
-      pieApiClient.findArtistsDeprecated({ page: 0, limit: 1000, query: 'iqnore' })
-        .then(({ data }) => dispatch(artists(data)))
+      pieApiClient.findArtistsDeprecated({ page: artistsPages * ENTITY_PER_PAGE, limit: ENTITY_PER_PAGE, query: 'iqnore' })
+        .then(({ data }) => {
+          dispatch(artists(data))
+        })
+    }, [artistsPages])
 
-      pieApiClient.findAlbumsDeprecated({ page: 0, limit: 1000, query: 'iqnore' })
-        .then(({ data }) => dispatch(albums(data)))
-    }, [])
+    useEffect(() => {
+      pieApiClient.findAlbumsDeprecated({ page: albumsPages * ENTITY_PER_PAGE, limit: ENTITY_PER_PAGE, query: 'iqnore' })
+        .then(({ data }) => {
+          dispatch(albums(data))
+        })
+    }, [albumsPages])
 
     useEffect(() => {
       pieApiClient.findTrackDeprecated({ page: songsPages, limit: ENTITY_PER_PAGE, query: 'iqnore' })

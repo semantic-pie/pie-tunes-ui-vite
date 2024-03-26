@@ -1,10 +1,10 @@
-import { useAppSelector } from "@/redux/store";
+import { loadNextPageAlbums, useAppDispatch, useAppSelector } from "@/redux/store";
 import SearchBar from "../common/SearchBar";
 import SortByIcon from "../icons/SortByIcon";
 import AlbumCard from "../common/AlbumCard";
 import { Outlet } from "@tanstack/react-router";
 import { albumViewRoute } from "@/router/library";
-import { useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 
 const AlbumsPage = () => {
     const [query, setQury] = useState<string>('')
@@ -13,6 +13,45 @@ const AlbumsPage = () => {
 
     const { albumId } = albumViewRoute.useParams()
     const track = useAppSelector(state => state.currentTrack)
+
+    const [isLoadNeed, setIsLoadNeed] = useState(false)
+
+    const ref = useRef<HTMLDivElement>(null)
+    const dispatch = useAppDispatch()
+
+
+    useEffect(() => {
+        if (isLoadNeed) {
+          dispatch(loadNextPageAlbums())
+          setTimeout(() => {
+            setIsLoadNeed(false)
+          }, 200)
+          
+        }
+      }, [isLoadNeed])
+
+
+      const handleScroll = () => {
+        if (!ref.current) return
+
+        const { scrollTop, scrollHeight } = ref.current
+        // play around with the trigger factor instead of fixed px
+        const trigger = 1
+        if (scrollHeight - (scrollTop + window.innerHeight) < window.innerHeight * trigger) {
+          setIsLoadNeed(true)
+        }
+      }
+    
+      useEffect(() => {
+        if (!ref.current) return
+        // const app = document.querySelector('#app')
+        // if (!app) return
+
+        ref.current.addEventListener('scroll', handleScroll)
+        return () => {
+            ref.current.removeEventListener('scroll', handleScroll)
+        }
+      }, [])
 
     return (
         <div class={`flex flex-col ${track ? 'h-[30rem]' : 'h-[40rem]'} gap-3  sm:h-[44rem]`}>
@@ -23,7 +62,7 @@ const AlbumsPage = () => {
                         <SortByIcon />
                     </div>
                     <SearchBar query={query} setQuery={setQury} />
-                    <div class="flex sm:flex-wrap flex-grow gap-x-3 gap-y-3 overflow-y-scroll">
+                    <div ref={ref} class="flex sm:flex-wrap flex-grow gap-x-3 gap-y-3 overflow-y-scroll">
                         {albums.map((album) => <AlbumCard album={album} />)}
                     </div>
                 </>
