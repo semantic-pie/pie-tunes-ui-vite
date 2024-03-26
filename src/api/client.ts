@@ -37,7 +37,7 @@ interface PieApiClient {
 
     searchByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<SearchResponseRoot>>
 
-    uploadMp3: (body: FormData) => Promise<PieApiResponse<string>>
+    uploadMp3: (body: FormData) => Promise<any>
 
     postEvent: (body: EventBody) => Promise<PieApiResponse<void>>
 }
