@@ -35,7 +35,8 @@ export const rootRoute = createRootRoute({
       pieApiClient.findTrackDeprecated({ page: songsPages, limit: ENTITY_PER_PAGE, query: 'iqnore' })
         .then(({ data }) => {
           dispatch(tracks(data))
-          dispatch(playTrack(data[1]))
+          if (songsPages === 0)
+            dispatch(playTrack(data[1]))
         })
     }, [songsPages])
 
