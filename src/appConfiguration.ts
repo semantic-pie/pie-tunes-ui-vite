@@ -1,6 +1,6 @@
 
 export const config = {
-    https: import.meta.env.VITE_API_HTTPS ? true : false,
+    https: import.meta.env.VITE_API_HTTPS === 'enable' ? true : false,
     host: {
         domain: import.meta.env.VITE_API_HOST_DOMAIN ?? 'localhost:8080',
         streaming: import.meta.env.VITE_API_HOST_STREAMING ?? 'localhost:9999',

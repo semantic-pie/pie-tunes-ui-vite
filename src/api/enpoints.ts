@@ -4,8 +4,8 @@ import buildUrl from "build-url-ts"
 const { host, https } = config
 
 
-const pieDomainHost = (https ? 'https' : 'https') + '://' + host.domain
-const pieStreamingHost = (https ? 'https' : 'https') + '://' + host.streaming
+const pieDomainHost = (https ? 'https' : 'http') + '://' + host.domain
+const pieStreamingHost = (https ? 'https' : 'http') + '://' + host.streaming
 
 export type LikeTrackBody = {
     type: 'LIKE_TRACK',
