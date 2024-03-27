@@ -70,7 +70,9 @@ export const rootRoute = createRootRoute({
 
     const nav = useNavigate()
 
-    nav({ from: '/', to: '/library/songs'})
+    useEffect(() => {
+      nav({ from: '/', to: '/library/songs'})
+    }, [])
 
     return (
       <div class='flex flex-col sm:flex-row justify-start sm:mx-[2%] sm:gap-[2%] xl:mx-[5%] xl:gap-[5%] h-dvh'>
