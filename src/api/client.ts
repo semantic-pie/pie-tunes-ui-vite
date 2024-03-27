@@ -78,7 +78,7 @@ export const pieApiClient: PieApiClient = {
         fetch(api.urlForSingleUpload(), { method: 'POST', body })
             .then(responseToPieApiResponse),
     postEvent: async (body) =>
-        fetch(api.urlForSingleUpload(), postWithBody(body))
+        fetch(api.urlForLike(), postWithBody(body))
             .then(responseToPieApiResponse),
     searchByTitle: async (params) =>
         fetch(api.urlForGlobalSearch(params), get)

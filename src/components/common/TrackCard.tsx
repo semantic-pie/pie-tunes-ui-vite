@@ -7,6 +7,14 @@ type TrackCardProps = {
     track: Track
 } & HTMLProps<HTMLDivElement>
 
+const toMinSec = (ms: number) => {
+    const min = Math.floor((ms/1000/60) << 0)
+    const sec = Math.floor((ms/1000) % 60)
+
+    return `${min}:${sec < 10 ? '0' + sec : sec}`
+} 
+
+
 const TrackCard = (props: TrackCardProps) => {
 
     const { track } = props
@@ -18,8 +26,17 @@ const TrackCard = (props: TrackCardProps) => {
                 <img class="w-12 h-12 rounded-md" src={api.urlForTrackCoverById({ id: track.musicAlbum.uuid })} /> :
                 <div class="w-12 h-12 rounded-md bg-fuchsia-100 bg-opacity-40" />}
 
-            <div class="text-start text-white text-base font-normal capitalize">{track.title}</div>
-            <div class="text-stasrt text-white text-opacity-60 text-sm font-normal capitalize">{track.musicBand.name}</div>
+            <div class='w-full flex justify-between items-center'>
+                <div>
+                    <div class="text-start text-white text-base font-normal capitalize">{track.title}</div>
+                    <div class="text-stasrt text-white text-opacity-60 text-sm font-normal capitalize">{track.musicBand.name}</div>
+                </div>
+                <span class='test-white text-[14px] opacity-50'>
+                    {toMinSec(track.lengthInMilliseconds)}
+                </span>
+            </div>
+
+
         </div>
     )
 }

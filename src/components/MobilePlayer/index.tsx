@@ -113,7 +113,7 @@ A taste of the divine
     }
 
     return (
-        <div class='w-full h-dvh flex flex-col justify-start p-2 gap-2'>
+        <div class='w-full h-dvh flex flex-col justify-start p-2 gap-2 z-10'>
             <div class={`flex ${current ? 'flex-row' : 'flex-col'}  justify-between gap-2`}>
                 <img class={`rounded-xl ${current ? 'w-20 h-20' : ''}`} src={api.urlForTrackCoverById({ id: track.musicAlbum.uuid })} alt="" />
 
@@ -130,7 +130,7 @@ A taste of the divine
                 </div>
             </div>
 
-            <div class={`flex flex-col justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px]  `}>
+            <div class={`flex flex-col justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px] `}>
                 {current && <div style={{ height: window.innerHeight - 300 }} class='flex flex-col overflow-y-scroll gap-3' >
                     {current.content}
                 </div>}

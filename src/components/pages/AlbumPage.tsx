@@ -42,7 +42,7 @@ const AlbumPage = () => {
                     </div>
 
 
-                    <div class="p-5 flex flex-col sm:overflow-y-scroll">
+                    <div class="sm:p-5 flex flex-col sm:overflow-y-scroll">
                         {albumTracks.map((track, i) => <TrackCard class={`p-2.5 ${i !== 0 ? 'border-t-[0.75px] border-white border-opacity-50' : ''} `} track={track} />)}
                     </div>
                 </div>

@@ -75,8 +75,8 @@ A taste of the divine
                 {tracks.map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
                     <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: t.musicAlbum.uuid })} alt="" />
                     <div class='flex flex-col'>
-                        <span class='text-white'>{t.title.substring(0, 15)}</span>
-                        <span class='text-white opacity-45'>{t.musicBand.name.substring(0, 15)}</span>
+                        <span class='text-white'>{t?.title.substring(0, 15)}</span>
+                        <span class='text-white opacity-45'>{t?.musicBand.name.substring(0, 15)}</span>
                     </div>
                 </div>))}
             </>
@@ -128,7 +128,7 @@ A taste of the divine
                     <PlayerInfoContainer pages={pages} />
                 </div>
             }
-            <div class='flex flex-col w-full h-[130px] playerview-buttom bg-black bg-opacity-10 backdrop-blur-[60px] rounded-t-0 rounded-b-[45px] pt-[30px] px-5 sm:px-[55px] gap-[14px] '>
+            <div class='flex flex-col w-full h-[130px] playerview-buttom bg-black bg-opacity-10 backdrop-blur-[60px] rounded-t-0 rounded-b-[45px] pt-[30px] px-5 sm:px-[55px] gap-[14px]'>
                 <ProgresBar classes="w-full rounded-full" classesInner="rounded-full" value={position} setValue={seek} relativeValue={duration} polzunok />
                 <div class='relative'>
                     <div class='flex mx-auto w-[210px]'>
