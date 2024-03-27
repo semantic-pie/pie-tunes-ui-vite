@@ -5,7 +5,6 @@ import { useAudioTime } from "../BubblePlayer/hooks.ts/useAudioTime"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
 import ThreeDots from "../icons/ThreeDots"
 import TracksSwitchingControls from "../BubblePlayer/TracksSwitchingControls"
-import ValumeControls from "../BubblePlayer/ValumeControls"
 import { useState } from "preact/hooks"
 import Like from "../common/Like"
 
@@ -14,6 +13,10 @@ const calcPositionInPercent = (time?: number, duration?: number) => {
     else return 0
 }
 
+type PlayerInfoPage = {
+    label: string
+    content: any
+}
 
 const MobilePlayer = () => {
     const track = useAppSelector(state => state.currentTrack)
@@ -100,13 +103,19 @@ A taste of the divine
 
     if (!track) return <div>No Track</div>
 
+
+
+    const [current, setCurrent] = useState<PlayerInfoPage>()
+
+    const toggleCurrent = (v: PlayerInfoPage) => {
+        if (current?.label === v.label) setCurrent(undefined)
+        else setCurrent(v)
+    }
+
     return (
         <div class='w-full h-dvh flex flex-col justify-start p-2 gap-2'>
-
-
-            <div class='sm:w-[330px] sm:h-[450px] flex flex-col justify-between gap-2 sm:gap-0'>
-                <img class='rounded-xl' src={api.urlForTrackCoverById({ id: track.musicAlbum.uuid })} alt="" />
-
+            <div class={`flex ${current ? 'flex-row' : 'flex-col'}  justify-between gap-2`}>
+                <img class={`rounded-xl ${current ? 'w-20 h-20' : ''}`} src={api.urlForTrackCoverById({ id: track.musicAlbum.uuid })} alt="" />
 
                 <div class='w-full flex justify-between pb-[5px] px-3 py-1 bg-black bg-opacity-15 rounded-xl'>
                     <div className="flex flex-col justify-center items-start gap-1">
@@ -121,38 +130,20 @@ A taste of the divine
                 </div>
             </div>
 
-            <PlayerInfoContainer pages={pages} />
+            <div class={`flex flex-col justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px]  `}>
+                {current && <div style={{ height: window.innerHeight - 300 }} class='flex flex-col overflow-y-scroll gap-3' >
+                    {current.content}
+                </div>}
+
+                <div class='flex justify-between'>
+                    {pages.map(p => (<button onClick={() => toggleCurrent(p)} class={`w-[5.6rem] h-[1.8rem] rounded-lg text-white text-opacity-50 bg-black bg-opacity-15 border-opacity-50 ${p.label === current?.label ? 'border-white border-[1px] text-opacity-100' : ''}`}>{p.label}</button>))}
+                </div>
+            </div>
+
             <div class='flex flex-col w-full flex-grow bg-black bg-opacity-10 backdrop-blur-[60px] rounded-xl sm:rounded-t-0 sm:rounded-b-[45px] pt-[30px] px-5 gap-5'>
                 <ProgresBar classes="w-full rounded-full" classesInner="rounded-full" value={position} setValue={seek} relativeValue={duration} polzunok />
                 <TracksSwitchingControls class='w-[300px] mx-auto' />
             </div>
-        </div>
-    )
-}
-
-type PlayerInfoPage = {
-    label: string
-    content: any
-}
-
-type PlayerInfoContainerProps = {
-    pages: PlayerInfoPage[]
-}
-
-const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
-    const [current, setCurrent] = useState(props.pages[0] ?? undefined)
-
-    const isMobile = window.innerWidth < 640
-
-    return (
-        <div class={`flex flex-col justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px]  `}>
-            <div class='flex justify-between'>
-                {props.pages.map(p => (<button onClick={() => setCurrent(p)} class={`w-[5.6rem] h-[1.8rem] rounded-lg text-white text-opacity-50 bg-black bg-opacity-15 border-opacity-50 ${p.label === current.label ? 'border-white border-[1px] text-opacity-100' : ''}`}>{p.label}</button>))}
-            </div>
-
-            {!isMobile && <div class='flex flex-col overflow-y-scroll gap-3' >
-                {current.content}
-            </div>}
         </div>
     )
 }
