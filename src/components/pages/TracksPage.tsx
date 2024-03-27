@@ -62,19 +62,16 @@ const TracksPage = (props: TracksPageProps) => {
         }
       }, [])
 
-
     return (
-        <div class={`flex flex-col gap-3 ${track ? 'h-[30rem]' : 'h-[40rem]'}  sm:h-[44rem]`}>
+        <div style={{maxHeight: window.innerHeight - 290}} class={`flex flex-col gap-3`}>
             <div class="justify-between items-start inline-flex">
                 <div className="text-start text-white text-3xl font-bold">Songs</div>
                 <SortByIcon />
             </div>
             <SearchBar query={query} setQuery={changeQuery} />
-            <div ref={ref} class="flex flex-col gap-4 overflow-y-scroll">
+            <div ref={ref}  class={`flex flex-col max-h-[100%] flex-1  gap-4 overflow-y-scroll`}>
                 {tracks.map((track) => <TrackCard track={track} />)}
             </div>
-
-
         </div>
     )
 }

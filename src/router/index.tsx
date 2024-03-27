@@ -69,7 +69,7 @@ export const rootRoute = createRootRoute({
     }, [currentTrack])
 
     return (
-      <div class='flex flex-col sm:flex-row justify-start sm:mx-[2%] sm:gap-[2%] xl:mx-[5%] xl:gap-[5%] h-[100dvh]'>
+      <div class='flex flex-col sm:flex-row justify-start sm:mx-[2%] sm:gap-[2%] xl:mx-[5%] xl:gap-[5%] h-dvh'>
         <SidePill />
         <Outlet />
       </div>

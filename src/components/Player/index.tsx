@@ -101,10 +101,10 @@ Sleep Token are a British rock band from London, formed in 2016. The group are a
     ]
 
     return (
-        <div class='flex flex-col m-auto w-[900px] justify-between playerview'>
+        <div class='flex flex-col  sm:m-auto sm:w-[900px] justify-between sm:playerview sm:rounded-[45px] bg-white bg-opacity-15 z-10 overflow-y-scroll'>
             {track &&
-                <div class='w-full flex justify-between p-[50px]'>
-                    <div class='w-[330px] h-[450px] flex flex-col justify-between'>
+                <div class='w-full flex flex-col sm:flex-row justify-between sm:p-[50px]'>
+                    <div class='sm:w-[330px] sm:h-[450px] flex flex-col justify-between gap-2 sm:gap-0'>
                         <img class='rounded-md' src={api.urlForTrackCoverById({id: track.musicAlbum.uuid})} alt="" />
 
                         <div className={`h-[74px] justify-center bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
@@ -134,12 +134,12 @@ Sleep Token are a British rock band from London, formed in 2016. The group are a
                     <PlayerInfoContainer pages={pages} />
                 </div>
             }
-            <div class='flex flex-col w-full h-[130px] playerview-buttom pt-[30px] px-[55px] gap-[14px] '>
+            <div class='absolute bottom-0 sm:bottom-auto sm:flex flex-col w-full h-[130px] sm:playerview-buttom bg-black bg-opacity-10 backdrop-blur-[60px] rounded-t-xl sm:rounded-t-0 sm:rounded-b-[45px] pt-[30px] px-5 sm:px-[55px] gap-[14px] '>
                 <ProgresBar classes="w-full rounded-full" classesInner="rounded-full" value={position} setValue={seek} relativeValue={duration} polzunok />
                 <div class='relative'>
                     <div class='flex mx-auto w-[210px]'>
                         <TracksSwitchingControls />
-                        <div class='absolute right-5 self-center'>
+                        <div class='hidden sm:block absolute right-5 self-center'>
                             <ValumeControls />
                         </div>
                     </div>
@@ -162,7 +162,7 @@ const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
     const [current, setCurrent] = useState(props.pages[0] ?? undefined)
 
     return (
-        <div class='w-[370px] h-[450px] flex flex-col justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px]'>
+        <div class='sm:w-[370px] h-[450px] flex flex-col justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px] mt-2 sm:mt-0 mb-[138px] sm:mb-0'>
             <div class='flex justify-between'>
                 {props.pages.map(p => (<button onClick={() => setCurrent(p)} class={`w-[5.6rem] h-[1.8rem] rounded-lg text-white text-opacity-50 bg-black bg-opacity-15 border-opacity-50 ${p.label === current.label ? 'border-white border-[1px] text-opacity-100' : ''}`}>{p.label}</button>))}
 

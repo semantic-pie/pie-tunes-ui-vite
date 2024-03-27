@@ -1,28 +1,24 @@
-import { loadNextPageAlbums, useAppDispatch, useAppSelector } from "@/redux/store";
+import { loadNextPageArtists, useAppDispatch, useAppSelector } from "@/redux/store";
 import SearchBar from "../common/SearchBar";
 import SortByIcon from "../icons/SortByIcon";
-import AlbumCard from "../common/AlbumCard";
-import { Outlet } from "@tanstack/react-router";
-import { albumViewRoute } from "@/router/library";
 import { useEffect, useRef, useState } from "preact/hooks";
+import ArtistCard from "../common/ArtistCard";
 
-const AlbumsPage = () => {
+const ArtistsPage = () => {
     const [query, setQury] = useState<string>('')
 
-    const albums = useAppSelector(state => query.length > 0 ? state.library.albums.filter(a => a.name.includes(query)) : state.library.albums)
-
-    const { albumId } = albumViewRoute.useParams()
-    const track = useAppSelector(state => state.currentTrack)
+    const artists = useAppSelector(state => query.length > 0 ? state.library.artists.filter(a => a.name.includes(query)) : state.library.artists)
 
     const [isLoadNeed, setIsLoadNeed] = useState(false)
 
     const ref = useRef<HTMLDivElement>(null)
+
     const dispatch = useAppDispatch()
 
 
     useEffect(() => {
         if (isLoadNeed) {
-          dispatch(loadNextPageAlbums())
+          dispatch(loadNextPageArtists())
           setTimeout(() => {
             setIsLoadNeed(false)
           }, 200)
@@ -56,20 +52,20 @@ const AlbumsPage = () => {
 
     return (
         <div style={{maxHeight: window.innerHeight - 290}} class={`flex flex-col gap-3`}>
-            {albumId ? <Outlet /> :
+            {/* {albumId ? <Outlet /> : */}
                 <>
                     <div class="justify-between items-start inline-flex">
-                        <div className="text-start text-white text-3xl font-bold">Albums</div>
+                        <div className="text-start text-white text-3xl font-bold">Artists</div>
                         <SortByIcon />
                     </div>
                     <SearchBar query={query} setQuery={setQury} />
                     <div ref={ref} class="flex max-h-[100%] flex-col sm:flex-row sm:flex-wrap gap-x-3 gap-y-3 overflow-y-scroll">
-                        {albums.map((album) => <AlbumCard album={album} />)}
+                        {artists.map((a) => <ArtistCard band={a} />)}
                     </div>
                 </>
-            }
+            {/* } */}
         </div>
     )
 }
 
-export default AlbumsPage;
+export default ArtistsPage;

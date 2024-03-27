@@ -10,6 +10,7 @@ import { useAppSelector } from "@/redux/store"
 import AlbumPage from "@/components/pages/AlbumPage"
 import AlbumsPage from "@/components/pages/AlbumsPage"
 import TracksPage from "@/components/pages/TracksPage"
+import ArtistsPage from "@/components/pages/ArtistsPage"
 
 
 export const libraryScreen = createRoute({
@@ -17,9 +18,11 @@ export const libraryScreen = createRoute({
   path: '/library',
   component: () => {
     const track = useAppSelector(state => state.currentTrack)
-    return (<div class='relative flex flex-col my-auto sm:gap-5'>
+    return (<div class=' flex flex-col justify-between sm:gap-5 h-dvh'>
+
       <MainPage />
-      {track && <div class="absolute bottom-[-100px] w-full">
+
+      {track && <div class="w-full">
         <BubblePlayer />
       </div>}
 
@@ -58,7 +61,7 @@ export const albumViewRoute = createRoute({
 export const artistsRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/artists',
-  component: () => <Page title="Artists" list={useAppSelector(state => state.library.artists).map((artist) => <ArtistCard band={artist} />)} wrap />,
+  component: () => <ArtistsPage />
 })
 
 export const uploadRoute = createRoute({

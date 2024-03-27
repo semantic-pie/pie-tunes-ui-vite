@@ -13,7 +13,7 @@ type PageProps = {
 const Page = ({ title, list, col, wrap }: PageProps) => {
     const [query, setQuery] = useState('')
     return (
-        <div class="flex flex-col gap-3 overflow-hidden">
+        <div style={{maxHeight: window.innerHeight - 290}} class={`flex flex-col gap-3`}>
             <div class="justify-between items-start inline-flex">
                 <div className="text-start text-white text-3xl font-bold">{title}</div>
                 <SortByIcon />

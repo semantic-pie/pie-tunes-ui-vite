@@ -87,6 +87,7 @@ const playerSlice = createSlice({
             state.library.songsPages++
         },
         loadNextPageArtists: (state) => {
+            console.log('next artists page')
             state.library.artistsPages++
         },
         loadNextPageAlbums: (state) => {
