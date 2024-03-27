@@ -55,7 +55,7 @@ const AlbumsPage = () => {
       }, [])
 
     return (
-        <div style={{maxHeight: window.innerHeight - 290}} class={`flex flex-col gap-3`}>
+        <>
             {albumId ? <Outlet /> :
                 <>
                     <div class="justify-between items-start inline-flex">
@@ -68,7 +68,7 @@ const AlbumsPage = () => {
                     </div>
                 </>
             }
-        </div>
+        </>
     )
 }
 

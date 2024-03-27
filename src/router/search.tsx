@@ -29,7 +29,7 @@ export const searchScreen = createRoute({
 
                 )
         }
-        return (<div class='w-[950px]  flex flex-col my-auto gap-[50px] z-10'>
+        return (<div class='w-[950px]  flex flex-col m-auto gap-[50px] z-10'>
             <div class='w-full h-[70px] flex items-center rounded-[29px] bg-black bg-opacity-10 px-5 gap-5 search'>
                 <Search class='w-6 h-6 opacity-50' />
                 <input value={query} onInput={(e) => onChnage(e.currentTarget.value)} placeholder={'Search'} class='w-full text-white text-[24px] text-opacity-75 bg-transparent !outline-none' type="text" />

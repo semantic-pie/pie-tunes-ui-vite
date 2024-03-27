@@ -73,9 +73,9 @@ export const rootRoute = createRootRoute({
     useEffect(() => {
       nav({ from: '/', to: '/library/songs'})
     }, [])
-
+    // sm:mx-[2%] sm:gap-[2%] xl:mx-[5%] xl:gap-[15%] 
     return (
-      <div class='flex flex-col sm:flex-row justify-start sm:mx-[2%] sm:gap-[2%] xl:mx-[5%] xl:gap-[5%] h-dvh'>
+      <div class='relative flex flex-col w-full sm:flex-row h-dvh'> 
         <SidePill />
         <Outlet />
       </div>

@@ -1,6 +1,5 @@
 import BubblePlayer from "@/components/BubblePlayer"
 import DevUploader from "@/components/DevUploader"
-import ArtistCard from "@/components/common/ArtistCard"
 import PlaylistCard from "@/components/common/PlaylistCard"
 import MainPage from "@/components/pages/MainPage"
 import Page from "@/components/pages/Page"
@@ -18,7 +17,7 @@ export const libraryScreen = createRoute({
   path: '/library',
   component: () => {
     const track = useAppSelector(state => state.currentTrack)
-    return (<div class=' flex flex-col justify-between sm:gap-5 h-dvh'>
+    return (<div class=' flex flex-col sm:gap-5 sm:mx-auto sm:my-auto'>
 
       <MainPage />
 

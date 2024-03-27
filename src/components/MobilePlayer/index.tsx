@@ -15,7 +15,7 @@ const calcPositionInPercent = (time?: number, duration?: number) => {
 }
 
 
-const Player = () => {
+const MobilePlayer = () => {
     const track = useAppSelector(state => state.currentTrack)
 
     const tracks = useAppSelector(state => state.queue)
@@ -98,46 +98,33 @@ A taste of the divine
         },
     ]
 
+    if (!track) return <div>No Track</div>
+
     return (
-        <div class='flex flex-col m-auto w-[900px] justify-between playerview rounded-[45px] bg-white bg-opacity-15 z-10 overflow-y-scroll'>
-            {track &&
-                <div class='w-full flex flex-row justify-between p-12'>
-                    <div class='w-[330px] h-[450px] flex flex-col justify-between gap-2'>
-                        <img class='rounded-md' src={api.urlForTrackCoverById({ id: track.musicAlbum.uuid })} alt="" />
+        <div class='w-full h-dvh flex flex-col justify-start p-2 gap-2'>
 
-                        <div className={`h-[74px] justify-center bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
-                            <div class='w-full flex justify-between pb-[5px] px-3'>
-                                <div className="flex justify-start items-center gap-3.5">
 
-                                    <div className="flex-col justify-center items-start gap-1 inline-flex">
-                                        <div className="text-center text-white text-lg font-normal font-['Helvetica Neue'] text-nowrap track-title">{track.title.length > 18 ? track.title.substring(0, 18) + '...' : track.title}</div>
-                                        <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{track.musicBand.name}</div>
-                                    </div>
-                                </div>
-                                <div class="flex flex-row gap-5 items-center justify-center">
-                                    <div class="w-4 h-4">
-                                        <ThreeDots class="w-4 h-4" />
-                                    </div>
-                                    <div>
-                                        <Like entity={track} />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class='sm:w-[330px] sm:h-[450px] flex flex-col justify-between gap-2 sm:gap-0'>
+                <img class='rounded-xl' src={api.urlForTrackCoverById({ id: track.musicAlbum.uuid })} alt="" />
+
+
+                <div class='w-full flex justify-between pb-[5px] px-3 py-1 bg-black bg-opacity-15 rounded-xl'>
+                    <div className="flex flex-col justify-center items-start gap-1">
+                        <div className="text-center text-white text-[24px] font-semibold text-opacity-80 font-['Helvetica Neue'] text-nowrap track-title">{track.title.length > 18 ? track.title.substring(0, 18) + '...' : track.title}</div>
+                        <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{track.musicBand.name}</div>
                     </div>
-                    <PlayerInfoContainer pages={pages} />
+
+                    <div class="flex flex-row gap-5 items-center justify-center">
+                        <ThreeDots class="w-4 h-4" />
+                        <Like entity={track} />
+                    </div>
                 </div>
-            }
-            <div class='flex flex-col w-full h-[130px] playerview-buttom bg-black bg-opacity-10 backdrop-blur-[60px] rounded-t-0 rounded-b-[45px] pt-[30px] px-5 sm:px-[55px] gap-[14px] '>
+            </div>
+
+            <PlayerInfoContainer pages={pages} />
+            <div class='flex flex-col w-full flex-grow bg-black bg-opacity-10 backdrop-blur-[60px] rounded-xl sm:rounded-t-0 sm:rounded-b-[45px] pt-[30px] px-5 gap-5'>
                 <ProgresBar classes="w-full rounded-full" classesInner="rounded-full" value={position} setValue={seek} relativeValue={duration} polzunok />
-                <div class='relative'>
-                    <div class='flex mx-auto w-[210px]'>
-                        <TracksSwitchingControls />
-                        <div class='absolute right-5 self-center'>
-                            <ValumeControls />
-                        </div>
-                    </div>
-                </div>
+                <TracksSwitchingControls class='w-[300px] mx-auto' />
             </div>
         </div>
     )
@@ -155,17 +142,19 @@ type PlayerInfoContainerProps = {
 const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
     const [current, setCurrent] = useState(props.pages[0] ?? undefined)
 
+    const isMobile = window.innerWidth < 640
+
     return (
-        <div class={`sm:w-[370px] h-[450px] flex flex-col justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px] mt-2 sm:mt-0 mb-[138px] sm:mb-0`}>
+        <div class={`flex flex-col justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px]  `}>
             <div class='flex justify-between'>
                 {props.pages.map(p => (<button onClick={() => setCurrent(p)} class={`w-[5.6rem] h-[1.8rem] rounded-lg text-white text-opacity-50 bg-black bg-opacity-15 border-opacity-50 ${p.label === current.label ? 'border-white border-[1px] text-opacity-100' : ''}`}>{p.label}</button>))}
             </div>
 
-            <div class='flex flex-col overflow-y-scroll gap-3' >
+            {!isMobile && <div class='flex flex-col overflow-y-scroll gap-3' >
                 {current.content}
-            </div>
+            </div>}
         </div>
     )
 }
 
-export default Player
+export default MobilePlayer
