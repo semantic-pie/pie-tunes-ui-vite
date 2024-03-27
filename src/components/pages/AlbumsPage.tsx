@@ -49,6 +49,7 @@ const AlbumsPage = () => {
 
         ref.current.addEventListener('scroll', handleScroll)
         return () => {
+            if (!ref.current) return
             ref.current.removeEventListener('scroll', handleScroll)
         }
       }, [])
