@@ -76,10 +76,10 @@ A taste of the divine
         {
             label: 'Up Next', content: <>
                 {tracks.map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
-                    <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: t.musicAlbum.uuid })} alt="" />
+                    <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: t.album.uuid })} alt="" />
                     <div class='flex flex-col'>
                         <span class='text-white'>{t.title.substring(0, 15)}</span>
-                        <span class='text-white opacity-45'>{t.musicBand.name.substring(0, 15)}</span>
+                        <span class='text-white opacity-45'>{t.band.name.substring(0, 15)}</span>
                     </div>
                 </div>))}
             </>
@@ -115,12 +115,12 @@ A taste of the divine
     return (
         <div class='w-full h-dvh flex flex-col justify-start p-2 gap-2 z-10'>
             <div class={`flex ${current ? 'flex-row' : 'flex-col'}  justify-between gap-2`}>
-                <img class={`rounded-xl ${current ? 'w-20 h-20' : ''}`} src={api.urlForTrackCoverById({ id: track.musicAlbum.uuid })} alt="" />
+                <img class={`rounded-xl ${current ? 'w-20 h-20' : ''}`} src={api.urlForTrackCoverById({ id: track.album.uuid })} alt="" />
 
                 <div class='w-full flex justify-between pb-[5px] px-3 py-1 bg-black bg-opacity-15 rounded-xl'>
                     <div className="flex flex-col justify-center items-start gap-1">
                         <div className="text-center text-white text-[24px] font-semibold text-opacity-80 font-['Helvetica Neue'] text-nowrap track-title">{track.title.length > 18 ? track.title.substring(0, 18) + '...' : track.title}</div>
-                        <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{track.musicBand.name}</div>
+                        <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{track.band.name}</div>
                     </div>
 
                     <div class="flex flex-row gap-5 items-center justify-center">
