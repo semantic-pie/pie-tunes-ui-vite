@@ -48,15 +48,15 @@ export type FindById = {
 // }
 
 export const api = {
-    urlForGlobalSearch: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/search', { queryParams: {page, limit, query }})!,
-    urlForTracksByTitle: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/tracks/find-by-title', { queryParams: { page: page, limit, query } })!,
-    urlForTracksByDate: ({ page, limit, order }: FindByDateParams) => buildUrl(pieDomainHost + '/api/tracks/find-by-date', { queryParams: { page: page, limit, order } })!,
+    urlForGlobalSearch: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/search', { queryParams: {page, limit, q: query }})!,
+    urlForTracksByTitle: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-title', { queryParams: { page: page, limit, q: query } })!,
+    urlForTracksByDate: ({ page, limit, order }: FindByDateParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-date', { queryParams: { page: page, limit, order } })!,
     
-    urlForArtistsByTitle: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/artists/find-by-title', { queryParams: { page: page, limit, query } })!,
-    urlForArtistsByDate: ({ page, limit, order }: FindByDateParams) => buildUrl(pieDomainHost + '/api/artists/find-by-date', { queryParams: { page: page, limit, order } })!,
+    urlForArtistsByTitle: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/artists/find-by-title', { queryParams: { page: page, limit, q: query } })!,
+    urlForArtistsByDate: ({ page, limit, order }: FindByDateParams) => buildUrl(pieDomainHost + '/api/v1/library/artists/find-by-date', { queryParams: { page: page, limit, order } })!,
 
-    urlForAlbumsByTitle: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/albums/find-by-title', { queryParams: { page: page, limit, query } })!,
-    urlForAlbumsByDate: ({ page, limit, order }: FindByDateParams) => buildUrl(pieDomainHost + '/api/albums/find-by-date', { queryParams: { page: page, limit, order } })!,
+    urlForAlbumsByTitle: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/albums/find-by-title', { queryParams: { page: page, limit, q: query } })!,
+    urlForAlbumsByDate: ({ page, limit, order }: FindByDateParams) => buildUrl(pieDomainHost + '/api/v1/library/albums/find-by-date', { queryParams: { page: page, limit, order } })!,
 
 
     urlForTrackStreamById: ({ id }: FindById) => buildUrl(pieStreamingHost + '/api/play', { path: id + '.mp3' })!,
@@ -64,9 +64,9 @@ export const api = {
     
     urlForSingleUpload: () => pieDomainHost + '/api/track-loader/upload-one',
 
-    urlForLike: () => pieStreamingHost + '/api/tracks/events',
+    urlForLike: () => pieStreamingHost + '/api/library/tracks/events',
 
-    urlForTracksDeprecated: ({ page, limit }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/tracks', { queryParams: { page: page, limit } })!,
-    urlForArtistsDeprecated: ({ page, limit }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/artists', { queryParams: { page: page, limit } })!,
-    urlForAlbumsDeprecated: ({ page, limit }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/albums', { queryParams: { page: page, limit } })!,
+    urlForTracksDeprecated: ({ page, limit }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks', { queryParams: { page: page, limit } })!,
+    urlForArtistsDeprecated: ({ page, limit }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/artists', { queryParams: { page: page, limit } })!,
+    urlForAlbumsDeprecated: ({ page, limit }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/albums', { queryParams: { page: page, limit } })!,
 }

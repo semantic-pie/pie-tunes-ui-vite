@@ -12,7 +12,7 @@ type AlbumPageProps = {
 const AlbumPage = () => {
     const { albumId } = albumViewRoute.useParams()
     const track = useAppSelector(state => state.currentTrack)
-    const albumTracks = useAppSelector(state => state.queue.filter(t => t.musicAlbum.uuid === albumId))
+    const albumTracks = useAppSelector(state => state.queue.filter(t => t.album.uuid === albumId))
     const album = useAppSelector(state => state.library.albums.find(a => a.uuid === albumId))
 
     const twoRows = album?.name.length > 20 ? true : false

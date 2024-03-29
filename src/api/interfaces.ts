@@ -8,8 +8,8 @@ export interface Track {
     lengthInMilliseconds: number
     playlist: any
     genres: Genre[]
-    musicBand: MusicBand
-    musicAlbum: MusicAlbum
+    band: MusicBand
+    album: MusicAlbum
   }
   
   export interface Genre {

@@ -22,14 +22,14 @@ const TrackCard = (props: TrackCardProps) => {
 
     return (
         <div onClick={() => dispatch(playTrack(track))} class={`w-full flex flex-row justify-start items-center gap-3 cursor-pointer ${props.class}`}>
-            {track.musicAlbum ?
-                <img class="w-12 h-12 rounded-md" src={api.urlForTrackCoverById({ id: track.musicAlbum.uuid })} /> :
+            {track.album ?
+                <img class="w-12 h-12 rounded-md" src={api.urlForTrackCoverById({ id: track.album.uuid })} /> :
                 <div class="w-12 h-12 rounded-md bg-fuchsia-100 bg-opacity-40" />}
 
             <div class='w-full flex justify-between items-center'>
                 <div>
                     <div class="text-start text-white text-base font-normal capitalize">{track.title}</div>
-                    <div class="text-stasrt text-white text-opacity-60 text-sm font-normal capitalize">{track.musicBand.name}</div>
+                    <div class="text-stasrt text-white text-opacity-60 text-sm font-normal capitalize">{track.band.name}</div>
                 </div>
                 <span class='test-white text-[14px] opacity-50'>
                     {toMinSec(track.lengthInMilliseconds)}

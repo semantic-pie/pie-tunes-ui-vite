@@ -10,7 +10,7 @@ export const blureBackgroundHook = () => {
         if (track) {
             // const html = document.getElementsByTagName('html')[0]
             const html = document.getElementById('bgCover')!
-            html.style.backgroundImage = `url('${api.urlForTrackCoverById({id: track.musicAlbum.uuid})}')`  
+            html.style.backgroundImage = `url('${api.urlForTrackCoverById({id: track.album.uuid})}')`  
             html.style.filter = 'blur(200px)'
         }
         

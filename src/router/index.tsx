@@ -59,9 +59,9 @@ export const rootRoute = createRootRoute({
         if ('mediaSession' in navigator) {
           navigator.mediaSession.metadata = new MediaMetadata({
             title: currentTrack.title,
-            artist: currentTrack.musicBand.name,
-            album: currentTrack.musicAlbum.name,
-            artwork: [{ src: api.urlForTrackCoverById({ id: currentTrack.musicAlbum.uuid }), type: 'image/png' }]
+            artist: currentTrack.band.name,
+            album: currentTrack.album.name,
+            artwork: [{ src: api.urlForTrackCoverById({ id: currentTrack.album.uuid }), type: 'image/png' }]
 
           });
         }

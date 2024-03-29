@@ -41,7 +41,7 @@ export const searchScreen = createRoute({
                         <h2 class='text-[28px] font-bold'>Tracks</h2>
                         <div>
                             <div class={`w-full ${res.tracks.length > 4 ? 'h-[250px]' : 'h-fit'}  flex flex-col gap-4 overflow-y-scroll`}>
-                                {res.tracks.map(t => (<TrackCard track={{ musicBand: { name: t.band_name }, title: t.name, uuid: t.uuid }} />))}
+                                {res.tracks.map(t => (<TrackCard track={{ band: { name: t.band_name }, title: t.name, uuid: t.uuid }} />))}
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@ export const searchScreen = createRoute({
                         <h2 class='w-fit text-[28px] font-bold'>Albums</h2>
                         {/* <div class=''> */}
                         <div class={`w-fit flex flex-row  h-72 gap-3 overflow-x-scroll `}>
-                            {res.albums.map((album) => <AlbumCard album={{ name: album.name, uuid: album.uuid, musicBand: { name: album.bandName } }} />)}
+                            {res.albums.map((album) => <AlbumCard album={{ name: album.name, uuid: album.uuid, band: { name: album.bandName } }} />)}
                         </div>
                         {/* </div> */}
                     </div>
