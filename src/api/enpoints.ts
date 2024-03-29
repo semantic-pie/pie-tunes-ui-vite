@@ -64,7 +64,7 @@ export const api = {
     
     urlForSingleUpload: () => pieDomainHost + '/api/track-loader/upload-one',
 
-    urlForLike: () => pieStreamingHost + '/api/library/tracks/events',
+    urlForLike: () => pieStreamingHost + '/api/tracks/events',
 
     urlForTracksDeprecated: ({ page, limit }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks', { queryParams: { page: page, limit } })!,
     urlForArtistsDeprecated: ({ page, limit }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/artists', { queryParams: { page: page, limit } })!,
