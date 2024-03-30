@@ -1,4 +1,4 @@
-import { loadNextPage, searchTracks, useAppDispatch, useAppSelector } from "@/redux/store";
+import { loadNextPage, searchTracksFetch, useAppDispatch, useAppSelector } from "@/redux/store";
 import SearchBar from "../common/SearchBar";
 import SortByIcon from "../icons/SortByIcon";
 import { useEffect, useRef, useState } from "preact/hooks";
@@ -15,7 +15,7 @@ const TracksPage = (props: TracksPageProps) => {
   // const [albums, setAlbums] = useState<MusicAlbum[]>([])
 
   const changeQuery = (q: string) => {
-    dispatch(searchTracks(q))
+    dispatch(searchTracksFetch(q))
     setQury(q)
   }
 
@@ -23,7 +23,6 @@ const TracksPage = (props: TracksPageProps) => {
   const searched = useAppSelector(state => state.library.searchSongs)
 
   const tracks = query.length > 0 ? searched : songs
-  const track = useAppSelector(state => state.currentTrack)
 
   const dispatch = useAppDispatch()
 

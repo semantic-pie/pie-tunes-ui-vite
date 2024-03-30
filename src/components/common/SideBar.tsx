@@ -8,8 +8,6 @@ import ThreeDots from "@/components/icons/ThreeDots";
 import User from "@/components/icons/User";
 import { Link } from "@tanstack/react-router";
 import UploadIcon from "../icons/UploadIcon";
-import Player from "../icons/Player";
-import Library from "../icons/Library";
 import Search from "../icons/Search";
 
 const SideBar = () => {
@@ -64,6 +62,12 @@ const SideBar = () => {
                         <div class="h-12 flex items-center gap-3">
                             <UploadIcon />
                             <span class='hidden sm:inline'>Upload</span>
+                        </div>
+                    </Link>
+
+                    <Link to="/search" class='block sm:hidden sidebar-link'>
+                        <div class="flex h-12 w-7 justify-center items-center gap-3">
+                            <Search class={'h-5 w-5'} />
                         </div>
                     </Link>
 

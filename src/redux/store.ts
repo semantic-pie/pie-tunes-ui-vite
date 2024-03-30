@@ -1,5 +1,6 @@
-import { MusicAlbum, MusicBand, Track } from "@/api"
+import { MusicAlbum, MusicBand, SearchResult, Track } from "@/api"
 import { pieApiClient } from "@/api/client"
+import { userUuid } from "@/appConfiguration"
 import { PayloadAction, configureStore, createSlice } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
@@ -7,13 +8,20 @@ interface PlayerSlice {
     numberInQueue?: number
     currentTrack?: Track
     queue: Track[]
+    search: {
+        songs: Track[]
+        albums: MusicAlbum[]
+        bands: MusicBand[]
+    }
     library: {
         songsPages: number
         songs: Track[]
         searchSongs: Track[],
         artists: MusicBand[]
+        searchArtists: MusicBand[]
         artistsPages: number
         albums: MusicAlbum[]
+        searchAlbums: MusicAlbum[]
         albumsPages: number
     }
 }
@@ -24,29 +32,42 @@ const initialState = {
     numberInQueue: undefined,
     currentTrack: undefined,
     queue: [],
+    search: {
+        songs: [],
+        albums: [],
+        bands: []
+    },
     library: {
         songsPages: 0,
         songs: [],
         searchSongs: [],
         artists: [],
+        searchArtists: [],
         artistsPages: 0,
         albums: [],
+        searchAlbums: [],
         albumsPages: 0,
     }
 } as PlayerSlice
 
-export const searchTracks = (query: string) => async (dispatch: AppDispatch) => {
-    pieApiClient.findTrackByTitle({ page: 0, limit: 10, query })
+export const searchTracksFetch = (query: string) => async (dispatch: AppDispatch) => {
+    pieApiClient.findTrackByTitle({ page: 0, limit: 10, query, userUuid })
         .then(({ data }) => dispatch(searchSongs(data)))
 }
 
+export const searchAlbumsFetch = (query: string) => async (dispatch: AppDispatch) => {
+    pieApiClient.findAlbumsByTitle({ page: 0, limit: 10, query, userUuid })
+        .then(({ data }) => dispatch(searchAlbums(data)))
+}
+
+
 export const fetchToLike = (track_uuid: string) => async (dispatch: AppDispatch) => {
-    pieApiClient.postEvent({type: 'LIKE_TRACK', track_uuid, user_uuid: '768b9113-5036-40c6-a440-127fc054337a'})
+    pieApiClient.postEvent({type: 'LIKE_TRACK', track_uuid, user_uuid: userUuid})
         .then(({}) =>  dispatch(like(track_uuid)))
 }
 
 export const fetchToUnlike = (track_uuid: string) => async (dispatch: AppDispatch) => {
-    pieApiClient.postEvent({type: 'REMOVE_LIKE', track_uuid, user_uuid: '768b9113-5036-40c6-a440-127fc054337a'})
+    pieApiClient.postEvent({type: 'REMOVE_LIKE', track_uuid, user_uuid: userUuid})
         .then(({}) =>  dispatch(like(track_uuid)))
 }
 
@@ -55,18 +76,14 @@ const playerSlice = createSlice({
     initialState,
     reducers: {
         like: (state, action: PayloadAction<string>) => {
-            const track = state.queue.find(t => t.uuid === action.payload)
-            if (track) {
-                track.isLiked = true
-                state.queue = [...state.queue.filter(t => t.uuid !== track.uuid), track].sort((o1, o2) => o1.title.localeCompare(o2.title))
-            }
+            state.search.songs = state.search.songs.map(s => s.uuid === action.payload ? {...s, liked: true} : s )
         },
         unlike: (state, action: PayloadAction<string>) => {
-            const track = state.queue.find(t => t.uuid === action.payload)
-            if (track) {
-                track.isLiked = false
-                state.queue = [...state.queue.filter(t => t.uuid !== track.uuid), track].sort((o1, o2) => o1.title.localeCompare(o2.title))
-            }
+            // const track = state.queue.find(t => t.uuid === action.payload)
+            // if (track) {
+            //     track.liked = false
+            //     state.queue = [...state.queue.filter(t => t.uuid !== track.uuid), track].sort((o1, o2) => o1.title.localeCompare(o2.title))
+            // }
         },
         playTrack: (state, action: PayloadAction<Track>) => {
             state.currentTrack = action.payload
@@ -99,7 +116,18 @@ const playerSlice = createSlice({
             } else {
                 state.library.searchSongs = []
             }
-
+        },
+        searchAlbums: (state, action: PayloadAction<MusicAlbum[]>) => {
+            if (action.payload.length > 0) {
+                state.library.searchAlbums = action.payload
+            } else {
+                state.library.searchAlbums = []
+            }
+        },
+        search: (state, action: PayloadAction<SearchResult>) => {
+            state.search.songs = action.payload.tracks
+            state.search.albums = action.payload.albums
+            state.search.bands = action.payload.bands
         },
         tracks: (state, action: PayloadAction<Track[]>) => {
             if (action.payload.length > 0) {
@@ -137,7 +165,7 @@ const playerSlice = createSlice({
     }
 })
 
-export const { playTrack, addTrackToQueue, setQueue, albums, artists, next, prev, like, unlike, loadNextPage, loadNextPageAlbums, loadNextPageArtists, tracks, searchSongs } = playerSlice.actions
+export const { playTrack, addTrackToQueue, setQueue, albums, artists, next, prev, like, unlike, loadNextPage, loadNextPageAlbums, loadNextPageArtists, tracks, search, searchSongs, searchAlbums } = playerSlice.actions
 
 // types configuration
 export const store = configureStore({ reducer: playerSlice.reducer })

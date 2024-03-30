@@ -10,6 +10,7 @@ import { ENTITY_PER_PAGE, albums, artists, playTrack, tracks, useAppDispatch, us
 import { pieApiClient } from "@/api/client";
 import { blureBackgroundHook } from "@/utils/blureBackgroundHook";
 import { useNavigatorMediaSessionHook } from "@/utils/useNavigatorMediaSessionHook";
+import { userUuid } from "@/appConfiguration";
 
 export const rootRoute = createRootRoute({
   component: () => {
@@ -41,12 +42,18 @@ export const rootRoute = createRootRoute({
     }, [albumsPages])
 
     useEffect(() => {
-      pieApiClient.findTrackDeprecated({ page: songsPages, limit: ENTITY_PER_PAGE, query: 'iqnore' })
-        .then(({ data }) => {
-          dispatch(tracks(data))
-          if (songsPages === 0)
-            dispatch(playTrack(data[1]))
-        })
+      // pieApiClient.findTrackDeprecated({ page: songsPages, limit: ENTITY_PER_PAGE, query: 'iqnore' })
+      //   .then(({ data }) => {
+      //     dispatch(tracks(data))
+      //     if (songsPages === 0)
+      //       dispatch(playTrack(data[5]))
+      //   })
+      pieApiClient.findTrackByDate({ page: songsPages, limit: ENTITY_PER_PAGE, userUuid})
+      .then(({ data }) => {
+        dispatch(tracks(data))
+        if (songsPages === 0)
+          dispatch(playTrack(data[5]))
+      })
     }, [songsPages])
 
     useEffect(() => {

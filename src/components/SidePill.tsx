@@ -17,7 +17,7 @@ const SidePill = () => {
                         <Library class='w-6 h-6 sm:w-8 sm:h-8' />
                     </div>
                 </Link>
-                <Link to="/serach">
+                <Link to="/search">
                     <div class="flex items-center justify-center rounded-full w-14 h-14">
                         <Search class='w-6 h-6 sm:w-8 sm:h-8 fill-white' />
                     </div>

@@ -14,9 +14,7 @@ const BubblePlayer = () => {
             {currentTrack != undefined &&
                 <>
                     <TracksSwitchingControls />
-                    <Link to={'/player'}>
-                        <BubbleTrackInfo class='sm:w-96' track={currentTrack} />
-                    </Link>
+                    <BubbleTrackInfo class='sm:w-96' track={currentTrack} />
                     <ValumeControls />
                 </>
             }

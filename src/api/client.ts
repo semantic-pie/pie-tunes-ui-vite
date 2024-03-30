@@ -1,5 +1,5 @@
 import { responseToPieApiResponse } from "@/utils/hellpers"
-import { EventBody, FindByDateParams, FindByTitleParams, MusicAlbum, MusicBand, Track, api } from "."
+import { EventBody, FindByDateParams, FindByTitleParams, FindByUuid, MusicAlbum, MusicBand, SearchResult, Track, api } from "."
 
 
 export interface PieApiResponse<T> {
@@ -25,6 +25,7 @@ export type SearchResponseRoot = {
 interface PieApiClient {
     findTrackByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<Track[]>>
     findTrackByDate: (params: FindByDateParams) => Promise<PieApiResponse<Track[]>>
+    findTrackByAlbum: (params: FindByUuid) => Promise<PieApiResponse<Track[]>>
     findTrackDeprecated: (params: FindByTitleParams) => Promise<PieApiResponse<Track[]>>
 
     findAlbumsByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<MusicAlbum[]>>
@@ -35,7 +36,7 @@ interface PieApiClient {
     findArtistsByDate: (params: FindByDateParams) => Promise<PieApiResponse<MusicBand[]>>
     findArtistsDeprecated: (params: FindByTitleParams) => Promise<PieApiResponse<MusicBand[]>>
 
-    searchByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<SearchResponseRoot>>
+    searchByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<SearchResult>>
 
     uploadMp3: (body: FormData) => Promise<any>
 
@@ -53,6 +54,9 @@ export const pieApiClient: PieApiClient = {
     findTrackByDate: async (params) =>
         fetch(api.urlForTracksByDate(params), get)
             .then(responseToPieApiResponse),
+    findTrackByAlbum: async (params) =>
+            fetch(api.urlForTracksByAlbum(params), get)
+                .then(responseToPieApiResponse),
     findTrackDeprecated: async (params) =>
         fetch(api.urlForTracksDeprecated(params), get)
             .then(responseToPieApiResponse),

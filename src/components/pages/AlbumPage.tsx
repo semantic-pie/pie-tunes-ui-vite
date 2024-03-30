@@ -1,9 +1,11 @@
-import { api } from "@/api"
+import { Track, api } from "@/api"
 import { useAppSelector } from "@/redux/store"
 import { albumViewRoute } from "@/router/library"
 import ThreeDots from "../icons/ThreeDots"
 import Like from "../icons/LikeIcon"
 import TrackCard from "../common/TrackCard"
+import { useEffect, useState } from "preact/hooks"
+import { pieApiClient } from "@/api/client"
 
 type AlbumPageProps = {
     // uuid: string
@@ -11,11 +13,19 @@ type AlbumPageProps = {
 
 const AlbumPage = () => {
     const { albumId } = albumViewRoute.useParams()
-    const track = useAppSelector(state => state.currentTrack)
-    const albumTracks = useAppSelector(state => state.queue.filter(t => t.album.uuid === albumId))
+
+  
+    const [albumTracks, setAlbumTracks] = useState<Track[]>([])
+
+    useEffect(() => {
+       pieApiClient.findTrackByAlbum({uuid: albumId})
+        .then(data => setAlbumTracks(data.data))
+    }, [])
     const album = useAppSelector(state => state.library.albums.find(a => a.uuid === albumId))
 
     const twoRows = album?.name.length > 20 ? true : false
+
+
     return (
         <>
             {album &&
