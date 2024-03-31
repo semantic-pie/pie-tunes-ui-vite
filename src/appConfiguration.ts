@@ -4,6 +4,7 @@ export const config = {
     host: {
         domain: import.meta.env.VITE_API_HOST_DOMAIN ?? 'localhost:8080',
         streaming: import.meta.env.VITE_API_HOST_STREAMING ?? 'localhost:9999',
+        snoopy: import.meta.env.VITE_API_HOST_SNOOPY ?? 'localhost:8886',
         // self: import.meta.env.VITE_API_HOST ?? '0.0.0.0',
     },
     // port: {

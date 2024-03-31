@@ -1,11 +1,12 @@
 import { config } from "@/appConfiguration"
 import buildUrl from "build-url-ts"
 
-const { host, https } = config
+const { host, https} = config
 
 
 const pieDomainHost = (https ? 'https' : 'http') + '://' + host.domain
 const pieStreamingHost = (https ? 'https' : 'http') + '://' + host.streaming
+const pieSnoopyHost= (https ? 'https' : 'http') + '://' + host.snoopy
 
 export type LikeTrackBody = {
     type: 'LIKE_TRACK',
@@ -30,7 +31,7 @@ export type FindByDateParams = {
 export type EventBody = {
     type: "LIKE_TRACK" | "REMOVE_LIKE"
     track_uuid: string,
-    user_uuid: string 
+    user_uuid: string
 }
 
 
@@ -42,6 +43,9 @@ export type FindByUuid = {
     uuid: string
 }
 
+export type FindByQuery = {
+    q: string
+}
 
 // export const api = {
 //     forTracks: (props: {page: number; limit: number; query?: string}) => `http://${host.domain}:${port.domain}/api/tracks?page=${props.page}&limit=${props.limit}${props.query ? '&q=' + props.query : ''}`,
@@ -54,13 +58,13 @@ export type FindByUuid = {
 // }
 
 export const api = {
-    urlForGlobalSearch: ({ page, limit, query, userUuid }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/search', { queryParams: {page, limit, q: query, userUuid }})!,
+    urlForGlobalSearch: ({ page, limit, query, userUuid }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/search', { queryParams: { page, limit, q: query, userUuid } })!,
 
     urlForTracksByTitle: ({ page, limit, query, userUuid }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-title', { queryParams: { page: page, limit, q: query, userUuid } })!,
     urlForTracksByDate: ({ page, limit, order, userUuid }: FindByDateParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-date', { queryParams: { page: page, limit, order, userUuid } })!,
     urlForTracksByAlbum: (params: FindByUuid) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-album', { path: params.uuid })!,
-    
-    urlForArtistsByTitle: ({ page, limit, query, userUuid }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/artists/find-by-title', { queryParams: { page: page, limit, q: query , userUuid} })!,
+
+    urlForArtistsByTitle: ({ page, limit, query, userUuid }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/artists/find-by-title', { queryParams: { page: page, limit, q: query, userUuid } })!,
     urlForArtistsByDate: ({ page, limit, order, userUuid }: FindByDateParams) => buildUrl(pieDomainHost + '/api/v1/library/artists/find-by-date', { queryParams: { page: page, limit, order, userUuid } })!,
 
     urlForAlbumsByTitle: ({ page, limit, query, userUuid }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/albums/find-by-title', { queryParams: { page: page, limit, q: query, userUuid } })!,
@@ -69,7 +73,7 @@ export const api = {
 
     urlForTrackStreamById: ({ id }: FindById) => buildUrl(pieStreamingHost + '/api/play', { path: id + '.mp3' })!,
     urlForTrackCoverById: ({ id }: FindById) => buildUrl(pieStreamingHost + '/api/tracks/covers', { path: id })!,
-    
+
     urlForSingleUpload: () => pieDomainHost + '/api/track-loader/upload-one',
 
     urlForLike: () => pieDomainHost + '/api/tracks/events',
@@ -77,4 +81,8 @@ export const api = {
     urlForTracksDeprecated: ({ page, limit }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks', { queryParams: { page: page, limit } })!,
     urlForArtistsDeprecated: ({ page, limit }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/artists', { queryParams: { page: page, limit } })!,
     urlForAlbumsDeprecated: ({ page, limit }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/albums', { queryParams: { page: page, limit } })!,
+
+    urlForSnoopySearch: ({ q }: FindByQuery) => buildUrl(pieSnoopyHost + '/api/v1/snoopy/search', { queryParams: { q } })!,
+    urlForSnoopyUpload: ({ query }: {query: string}) => buildUrl(pieSnoopyHost + '/api/v1/snoopy/spotify/download', { queryParams: { query } })!,
 }
+// http://192.168.192.70:8886/api/v1/snoopy/search?q=l

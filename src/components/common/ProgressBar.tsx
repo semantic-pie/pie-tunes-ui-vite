@@ -56,7 +56,7 @@ const ProgresBar = ({ value, setValue, relativeValue, classes, classesInner, pol
             onMouseMove={onMouseMove}
             onMouseLeave={() => setPressed(false)}
         >
-            <div style={{ width: value + '%' }} class={`${classesInner} bg-white bg-opacity-60 cursor-pointer`}>
+            <div style={{ width: value + '%' }} class={`${classesInner} bg-white bg-opacity-60 ${polzunok ? '' : 'hover:bg-opacity-80'} cursor-pointer`}>
 
             </div>
             {polzunok && <div class={` h-2 w-2 rounded-full bg-white mt-[-2px] ml-[-2px] hover:scale-125`}></div>}

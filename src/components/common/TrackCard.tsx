@@ -3,23 +3,13 @@ import { Track } from "@/api"
 import { playTrack, useAppDispatch, useAppSelector } from "@/redux/store"
 import { HTMLProps, useState } from "preact/compat"
 import Like from "./Like"
-import { useSelector } from "react-redux"
+import { toMinSec } from "@/utils/hellpers"
 
 type TrackCardProps = {
     track: Track
     addButton?: boolean
 } & HTMLProps<HTMLDivElement>
 
-const toMinSec = (ms?: number) => {
-
-    if (!ms) {
-        return undefined
-    }
-    const min = Math.floor((ms / 1000 / 60) << 0)
-    const sec = Math.floor((ms / 1000) % 60)
-
-    return `${min}:${sec < 10 ? '0' + sec : sec}`
-}
 
 
 const TrackCard = (props: TrackCardProps) => {

@@ -1,5 +1,5 @@
 import { responseToPieApiResponse } from "@/utils/hellpers"
-import { EventBody, FindByDateParams, FindByTitleParams, FindByUuid, MusicAlbum, MusicBand, SearchResult, Track, api } from "."
+import { EventBody, FindByDateParams, FindByQuery, FindByTitleParams, FindByUuid, MusicAlbum, MusicBand, SearchResult, Track, api } from "."
 
 
 export interface PieApiResponse<T> {
@@ -12,7 +12,7 @@ export interface PieApiResponse<T> {
 
 export type SearchResponse = {
     uuid: string
-    name: string 
+    name: string
     entity_type: 'BAND' | 'ALBUM' | 'TRACK'
     bandName: string
 }
@@ -20,7 +20,14 @@ export type SearchResponseRoot = {
     tracks: SearchResponse[]
     albums: SearchResponse[]
     bands: SearchResponse[]
-} 
+}
+
+export type SnoopySearchTrack = {
+    title: string
+    lengthInMilliseconds: number
+    bandName: string
+    coverUrl: string
+}
 
 interface PieApiClient {
     findTrackByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<Track[]>>
@@ -41,6 +48,8 @@ interface PieApiClient {
     uploadMp3: (body: FormData) => Promise<any>
 
     postEvent: (body: EventBody) => Promise<PieApiResponse<void>>
+    searchSnoopy: (params: FindByQuery) => Promise<PieApiResponse<SnoopySearchTrack[]>>
+    uploadSnoopy: (params: {query: string}) => Promise<any>
 }
 
 const get = { method: 'GET', headers: { 'Content-Type': 'application/json' } }
@@ -55,8 +64,8 @@ export const pieApiClient: PieApiClient = {
         fetch(api.urlForTracksByDate(params), get)
             .then(responseToPieApiResponse),
     findTrackByAlbum: async (params) =>
-            fetch(api.urlForTracksByAlbum(params), get)
-                .then(responseToPieApiResponse),
+        fetch(api.urlForTracksByAlbum(params), get)
+            .then(responseToPieApiResponse),
     findTrackDeprecated: async (params) =>
         fetch(api.urlForTracksDeprecated(params), get)
             .then(responseToPieApiResponse),
@@ -87,4 +96,10 @@ export const pieApiClient: PieApiClient = {
     searchByTitle: async (params) =>
         fetch(api.urlForGlobalSearch(params), get)
             .then(responseToPieApiResponse),
+    searchSnoopy: async (params) =>
+        fetch(api.urlForSnoopySearch(params), get)
+            .then(responseToPieApiResponse),
+    uploadSnoopy: async (params) =>
+            fetch(api.urlForSnoopyUpload(params), get)
+                .then(responseToPieApiResponse),
 }
