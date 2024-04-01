@@ -13,7 +13,7 @@ import Search from "../icons/Search";
 const SideBar = () => {
     return (
         <div class="sm:w-[260px] flex flex-col justify-between sm:py-5 p-2 sm:p-6 sm:gap-8 sm:sidebar">
-            <div class='flex flex-row sm:flex-col'>
+            <div class='flex flex-row sm:flex-col sm:gap-5'>
                 <div class="hidden sm:flex justify-between">
                     <div class="flex flex-col">
                         <div className="text-center  text-3xl font-bold">Library</div>
@@ -26,12 +26,13 @@ const SideBar = () => {
                 </div>
 
                 <div class="sm:mx-0 mx-5 w-full sm:w-auto justify-between flex flex-row sm:flex-col gap-1 sidebar-link-panel">
-                    <Link to="/library" class='sidebar-link'>
+                    <Link to="/library/songs" class='sidebar-link' >
                         <div class="h-12 flex items-center gap-3">
-                            <Clock class="w-8 h-8" />
-                            <span class='hidden sm:inline'>Recently Added</span>
+                            <MusicNote class="w-8 h-8" />
+                            <span class='hidden sm:inline'>Songs</span>
                         </div>
                     </Link>
+
                     <Link to="/library/artists" class='sidebar-link' >
                         <div class="h-12 flex items-center gap-3">
                             <MusicMicro class="w-8 h-8" />
@@ -46,24 +47,27 @@ const SideBar = () => {
                         </div>
                     </Link>
 
-                    <Link to="/library/songs" class='sidebar-link' >
-                        <div class="h-12 flex items-center gap-3">
-                            <MusicNote class="w-8 h-8" />
-                            <span class='hidden sm:inline'>Songs</span>
-                        </div>
-                    </Link>
                     <Link to="/library/made-for-you" class='sidebar-link' >
                         <div class="h-12 flex items-center gap-3">
                             <User class="w-8 h-8" />
                             <span class='hidden sm:inline'>Made for You</span>
                         </div>
                     </Link>
+
+                    <Link to="/library/racent" class='sidebar-link'>
+                        <div class="h-12 flex items-center gap-3">
+                            <Clock class="w-8 h-8" />
+                            <span class='hidden sm:inline'>Recently Added</span>
+                        </div>
+                    </Link>
+
                     <Link to="/library/upload" class='sidebar-link'>
                         <div class="h-12 flex items-center gap-3">
                             <UploadIcon />
                             <span class='hidden sm:inline'>Upload</span>
                         </div>
                     </Link>
+
 
                     <Link to="/search" class='block sm:hidden sidebar-link'>
                         <div class="flex h-12 w-7 justify-center items-center gap-3">

@@ -59,7 +59,7 @@ export const searchScreen = createRoute({
         }, [screen.height])
 
         return (<div class='sm:w-[950px] flex flex-col mt-auto sm:m-auto gap-[50px]'>
-            <GlobalSearch class={`absolute center w-full sm:w-[1000px] ${track && !isSearchMode ? 'top-0 sm:top-[40%]' : 'sm:top-1/2 sm:-translate-y-1/2'}  ${isSearchMode ? 'sm:top-10' : 'sm:left-1/2 sm:transform sm:-translate-x-1/2'} `} value={query} setValue={onChnage} />
+            <GlobalSearch class={`absolute center w-full sm:w-[1000px] ${track && !isSearchMode ? 'top-0 sm:top-[40%]' : 'sm:top-1/2 sm:-translate-y-1/2'}  ${isSearchMode ? 'sm:top-10' : ''} sm:left-1/2 sm:transform sm:-translate-x-1/2 transition-all duration-200`} value={query} setValue={onChnage} />
 
             {isSearchMode &&
                 <div style={{ height: searchResultH }} class={`flex sm:w-[1000px] mt-[80px] sm:mt-[90px] flex-col sm:mx-auto gap-5 overflow-y-scroll`}>
@@ -96,7 +96,7 @@ export const searchScreen = createRoute({
                 </div>}
 
 
-            {track && <div class={`${!isSearchMode ? 'sm:mt-[20%]' : ''}  sm:w-full`}>
+            {track && <div class={`${!isSearchMode ? 'sm:mt-[20%]' : ''}  sm:mt-0 sm:w-full transition-all duration-200`}>
                 <BubblePlayer />
             </div>}
 
@@ -206,10 +206,16 @@ type GlobalSearchProps = {
 }
 
 const GlobalSearch = (props: GlobalSearchProps) => {
+    const ref = useRef<HTMLInputElement>(null)
+    useEffect(() => {
+        if (ref.current) {
+            ref.current.focus()
+        }
+    }, [])
     return (
         <div class={`h-[70px] flex items-center sm:rounded-[29px] bg-black bg-opacity-10 px-5 gap-5 search ${props.class} z-20`}>
             <Search class='w-6 h-6 opacity-50' />
-            <input value={props.value} onInput={(e) => props.setValue(e.currentTarget.value)} placeholder={'Search'} class='w-full text-white placeholder-white placeholder-opacity-75 text-[24px] text-opacity-75 bg-transparent !outline-none' type="text" />
+            <input ref={ref} value={props.value} onInput={(e) => props.setValue(e.currentTarget.value)} placeholder={'Search'} class='w-full text-white placeholder-white placeholder-opacity-75 text-[24px] text-opacity-75 bg-transparent !outline-none' type="text" />
         </div>
 
     )
