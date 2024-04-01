@@ -48,18 +48,24 @@ export const sharePlayerScreen = createRoute({
             <>
 
 
-                <Helmet meta={[
+                <Helmet link={[
+                    { as: "image", rel: "preload", href: api.urlForTrackCoverById({ id: track.album.uuid }) }
+                ]} meta={[
+                    { name: "title", content: `${track.title} - ${track.band.name}` },
+                    { name: "description", content: `${track.title} - ${track.band.name}` },
                     { property: "og:title", content: `${track.title} - ${track.band.name}` },
-                    { property: "og:site_name", content: `Pie Tunes` },
+                    { property: "og:site_name", content: `@pietunes` },
                     { property: "og:description", content: `${track.title} - ${track.band.name}` },
-                    { property: "og:image", content: api.urlForTrackCoverById({ id: track.album.uuid })},
+                    { property: "og:image", content: api.urlForTrackCoverById({ id: track.album.uuid }) },
+                    { property: "og:image:width", content: '400' },
+                    { property: "og:image:height", content: '400' },
                     { property: "og:url", content: `${config.host.domain}/player/${uuid}` },
                     { property: "og:type", content: 'music.song' },
-                    { property: "twitter:card", content: "summary"},
-                    { property: "twitter:site", content: "Pie Tunes"},
-                    { property: "twitter:image", content: api.urlForTrackCoverById({ id: track.album.uuid })},
-                    { property: "twitter:title", content: "Pie Tunes"},
-                    { property: "twitter:description", content: `${track.band.name} · Song${track.releaseYear ? ' · ' + track.releaseYear : '' }`},
+                    { property: "twitter:card", content: "summary" },
+                    { property: "twitter:site", content: "Pie Tunes" },
+                    { property: "twitter:image", content: api.urlForTrackCoverById({ id: track.album.uuid }) },
+                    { property: "twitter:title", content: "Pie Tunes" },
+                    { property: "twitter:description", content: `${track.band.name} · Song${track.releaseYear ? ' · ' + track.releaseYear : ''}` },
                     // { name: "type", content: "mp3" }
                 ]} title={`${track.title} - ${track.band.name}`} />
                 {isMobile ? <MobilePlayer /> : <Player />}
