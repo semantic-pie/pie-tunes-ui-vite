@@ -49,10 +49,10 @@ export const sharePlayerScreen = createRoute({
 
 
                 <Helmet meta={[
-                    { name: "title", content: `${track.title} - ${track.band.name}` },
-                    { name: "description", content: `${track.title} - ${track.band.name}` },
-                    { name: "image", content: api.urlForTrackCoverById({ id: track.album.uuid }) },
-                    { name: "url", content: `${config.host.domain}/player/${uuid}` },
+                    { property: "og:title", content: `${track.title} - ${track.band.name}` },
+                    { property: "og:description", content: `${track.title} - ${track.band.name}` },
+                    { property: "og:image", content: api.urlForTrackCoverById({ id: track.album.uuid }) },
+                    { property: "og:url", content: `${config.host.domain}/player/${uuid}` },
                     // { name: "type", content: "mp3" }
                 ]} />
                 {isMobile ? <MobilePlayer /> : <Player />}
