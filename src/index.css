@@ -19,7 +19,31 @@ html {
   /* @apply  bg-gradient-to-r from-violet-500 to-fuchsia-500 */
   /* @apply  bg-[url('/src/assets/master_cover.jpg')] */
 
+  
+
 }
+
+/* ::-webkit-scrollbar */
+::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+/* ::-webkit-scrollbar-thumb */
+::-webkit-scrollbar-thumb {
+  @apply bg-black bg-opacity-25;
+  border-radius: 0.225rem;
+}
+
+/* ::-webkit-scrollbar-thumb:hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-black bg-opacity-40
+}
+
+/* ::view-transition-old(root), ::view-transition-new(root) */
+/* ::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 100ms;
+} */
 
 .albumview-info {
   border-radius: 12px;
