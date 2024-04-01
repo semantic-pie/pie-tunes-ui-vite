@@ -60,6 +60,7 @@ export type FindByQuery = {
 export const api = {
     urlForGlobalSearch: ({ page, limit, query, userUuid }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/search', { queryParams: { page, limit, q: query, userUuid } })!,
 
+    urlForTracksByUuid: ({ uuid }: FindByUuid) => buildUrl(pieDomainHost + '/api/v1/library/tracks/', { path: uuid })!,
     urlForTracksByTitle: ({ page, limit, query, userUuid }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-title', { queryParams: { page: page, limit, q: query, userUuid } })!,
     urlForTracksByDate: ({ page, limit, order, userUuid }: FindByDateParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-date', { queryParams: { page: page, limit, order, userUuid } })!,
     urlForTracksByAlbum: (params: FindByUuid) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-album', { path: params.uuid })!,

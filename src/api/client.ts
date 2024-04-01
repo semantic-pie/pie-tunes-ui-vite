@@ -31,6 +31,7 @@ export type SnoopySearchTrack = {
 }
 
 interface PieApiClient {
+    findTrackByUuid: (params: FindByUuid) => Promise<PieApiResponse<Track>>
     findTrackByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<Track[]>>
     findTrackByDate: (params: FindByDateParams) => Promise<PieApiResponse<Track[]>>
     findTrackByAlbum: (params: FindByUuid) => Promise<PieApiResponse<Track[]>>
@@ -58,6 +59,9 @@ const get = { method: 'GET', headers: { 'Content-Type': 'application/json' } }
 const postWithBody = (body: any) => ({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
 
 export const pieApiClient: PieApiClient = {
+    findTrackByUuid: async (params) =>
+    fetch(api.urlForTracksByUuid(params), get)
+        .then(responseToPieApiResponse),
     findTrackByTitle: async (params) =>
         fetch(api.urlForTracksByTitle(params), get)
             .then(responseToPieApiResponse),

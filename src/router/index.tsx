@@ -1,7 +1,7 @@
 import SidePill from "@/components/SidePill";
 import { Outlet, createRootRoute, createRouter, useNavigate } from "@tanstack/react-router";
 import { albumViewRoute, albumsRoute, artistsRoute, libraryScreen, madeForYouRoute, songsRoute, uploadRoute } from "./library";
-import { playerScreen } from "./player";
+import { playerScreen, sharePlayerScreen } from "./player";
 import { searchScreen } from "./search";
 import { useEffect } from "preact/hooks";
 import { api } from "@/api";
@@ -42,12 +42,6 @@ export const rootRoute = createRootRoute({
     }, [albumsPages])
 
     useEffect(() => {
-      // pieApiClient.findTrackDeprecated({ page: songsPages, limit: ENTITY_PER_PAGE, query: 'iqnore' })
-      //   .then(({ data }) => {
-      //     dispatch(tracks(data))
-      //     if (songsPages === 0)
-      //       dispatch(playTrack(data[5]))
-      //   })
       pieApiClient.findTrackByDate({ page: songsPages, limit: ENTITY_PER_PAGE, userUuid})
       .then(({ data }) => {
         dispatch(tracks(data))
@@ -77,10 +71,10 @@ export const rootRoute = createRootRoute({
 
     const nav = useNavigate()
 
-    useEffect(() => {
-      nav({ from: '/', to: '/library/songs'})
-    }, [])
-    // sm:mx-[2%] sm:gap-[2%] xl:mx-[5%] xl:gap-[15%] 
+    // useEffect(() => {
+    //   nav({ from: '/', to: '/library/songs'})
+    // }, [])
+
     return (
       <div class='relative flex flex-col w-full sm:flex-row h-dvh'> 
         <SidePill />
@@ -91,6 +85,6 @@ export const rootRoute = createRootRoute({
 
 })
 
-const routeTree = rootRoute.addChildren([libraryScreen, playerScreen, searchScreen, madeForYouRoute, songsRoute, albumsRoute, artistsRoute, uploadRoute, albumViewRoute])
+const routeTree = rootRoute.addChildren([libraryScreen, playerScreen, sharePlayerScreen, searchScreen, madeForYouRoute, songsRoute, albumsRoute, artistsRoute, uploadRoute, albumViewRoute])
 
 export const router = createRouter({ routeTree })

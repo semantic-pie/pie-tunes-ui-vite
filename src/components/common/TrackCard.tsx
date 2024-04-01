@@ -1,7 +1,7 @@
 import { api } from "@/api"
 import { Track } from "@/api"
 import { playTrack, useAppDispatch, useAppSelector } from "@/redux/store"
-import { HTMLProps, useState } from "preact/compat"
+import { HTMLProps } from "preact/compat"
 import Like from "./Like"
 import { toMinSec, trancate } from "@/utils/hellpers"
 

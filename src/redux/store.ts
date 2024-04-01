@@ -62,13 +62,13 @@ export const searchAlbumsFetch = (query: string) => async (dispatch: AppDispatch
 
 
 export const fetchToLike = (track_uuid: string) => async (dispatch: AppDispatch) => {
-    pieApiClient.postEvent({type: 'LIKE_TRACK', track_uuid, user_uuid: userUuid})
-        .then(({}) =>  dispatch(like(track_uuid)))
+    pieApiClient.postEvent({ type: 'LIKE_TRACK', track_uuid, user_uuid: userUuid })
+        .then(({ }) => dispatch(like(track_uuid)))
 }
 
 export const fetchToUnlike = (track_uuid: string) => async (dispatch: AppDispatch) => {
-    pieApiClient.postEvent({type: 'REMOVE_LIKE', track_uuid, user_uuid: userUuid})
-        .then(({}) =>  dispatch(like(track_uuid)))
+    pieApiClient.postEvent({ type: 'REMOVE_LIKE', track_uuid, user_uuid: userUuid })
+        .then(({ }) => dispatch(like(track_uuid)))
 }
 
 const playerSlice = createSlice({
@@ -76,7 +76,7 @@ const playerSlice = createSlice({
     initialState,
     reducers: {
         like: (state, action: PayloadAction<string>) => {
-            state.search.songs = state.search.songs.map(s => s.uuid === action.payload ? {...s, liked: true} : s )
+            state.search.songs = state.search.songs.map(s => s.uuid === action.payload ? { ...s, liked: true } : s)
         },
         unlike: (state, action: PayloadAction<string>) => {
             // const track = state.queue.find(t => t.uuid === action.payload)
@@ -87,7 +87,11 @@ const playerSlice = createSlice({
         },
         playTrack: (state, action: PayloadAction<Track>) => {
             state.currentTrack = action.payload
-            state.numberInQueue = state.queue.findIndex((t) => t.uuid === action.payload.uuid)
+            const i = state.queue.findIndex((t) => t.uuid === action.payload.uuid)
+            if (i != -1) {
+                state.numberInQueue = i
+            }
+
         },
         addTrackToQueue: (state, action: PayloadAction<Track>) => {
             const temp = state.queue.filter(t => t.uuid !== action.payload.uuid)
