@@ -3,7 +3,7 @@ import { Track } from "@/api"
 import { playTrack, useAppDispatch, useAppSelector } from "@/redux/store"
 import { HTMLProps, useState } from "preact/compat"
 import Like from "./Like"
-import { toMinSec } from "@/utils/hellpers"
+import { toMinSec, trancate } from "@/utils/hellpers"
 
 type TrackCardProps = {
     track: Track
@@ -27,10 +27,10 @@ const TrackCard = (props: TrackCardProps) => {
                 <img onClick={() => dispatch(playTrack(track))} class="w-12 h-12 rounded-md cursor-pointer" src={api.urlForTrackCoverById({ id: track.album.uuid })} /> :
                 <div class="w-12 h-12 rounded-md bg-fuchsia-100 bg-opacity-40" />}
 
-            <div class='w-full flex justify-between items-center'>
+            <div class='w-full  flex justify-between items-center '>
                 <div onClick={() => dispatch(playTrack(track))} class='cursor-pointer' >
-                    <div class="text-start text-white text-base font-normal capitalize">{track.title}</div>
-                    <div class="text-stasrt text-white text-opacity-60 text-sm font-normal capitalize">{track.band.name}</div>
+                    <div class="text-start text-white text-base text-nowrap font-normal capitalize">{trancate(track.title, 28)}</div>
+                    <div class="text-start text-white text-opacity-60 text-sm font-normal capitalize">{trancate(track.band.name, 28)}</div>
                 </div>
 
                 <div class='flex items-center gap-3'>

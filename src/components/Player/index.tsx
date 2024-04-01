@@ -18,7 +18,7 @@ const calcPositionInPercent = (time?: number, duration?: number) => {
 const Player = () => {
     const track = useAppSelector(state => state.currentTrack)
 
-    const tracks = useAppSelector(state => state.queue)
+    const tracks = useAppSelector(state => state.library.songs)
 
     const dispatch = useAppDispatch()
 
@@ -75,8 +75,8 @@ A taste of the divine
                 {tracks.map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
                     <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: t.album.uuid })} alt="" />
                     <div class='flex flex-col'>
-                        <span class='text-white'>{t?.title.substring(0, 15)}</span>
-                        <span class='text-white opacity-45'>{t?.band.name.substring(0, 15)}</span>
+                        <span class='text-white text-nowrap'>{t?.title.substring(0, 30)}</span>
+                        <span class='text-white text-nowrap opacity-45'>{t?.band.name.substring(0, 30)}</span>
                     </div>
                 </div>))}
             </>

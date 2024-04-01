@@ -30,3 +30,5 @@ export const toMinSec = (ms?: number) => {
 
     return `${min}:${sec < 10 ? '0' + sec : sec}`
 }
+
+export const trancate = (v: string, max: number) => v.length > max ? v.substring(0, max) + '...' : v
