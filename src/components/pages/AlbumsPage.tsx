@@ -11,6 +11,8 @@ const AlbumsPage = () => {
 
   const [query, setQury] = useState<string>('')
 
+  const scrollPosition = useRef<number>(0)
+
   const changeQuery = (q: string) => {
     dispatch(searchAlbumsFetch(q))
     setQury(q)
@@ -21,10 +23,6 @@ const AlbumsPage = () => {
 
   const albums = query.length > 0 ? searched : libraryAlbums
 
-
-  console.log('albums: ', albums)
-  console.log('searched: ', searched)
-  console.log('libraryAlbums: ', libraryAlbums)
   const [isLoadNeed, setIsLoadNeed] = useState(false)
 
   const ref = useRef<HTMLDivElement>(null)
@@ -46,7 +44,9 @@ const AlbumsPage = () => {
     if (!ref.current) return
 
     const { scrollTop, scrollHeight } = ref.current
-    // play around with the trigger factor instead of fixed px
+
+    scrollPosition.current = scrollTop
+
     const trigger = 1
     if (scrollHeight - (scrollTop + window.innerHeight) < window.innerHeight * trigger) {
       setIsLoadNeed(true)
@@ -55,15 +55,15 @@ const AlbumsPage = () => {
 
   useEffect(() => {
     if (!ref.current) return
-    // const app = document.querySelector('#app')
-    // if (!app) return
 
     ref.current.addEventListener('scroll', handleScroll)
     return () => {
       if (!ref.current) return
       ref.current.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [ref.current])
+
+  ref.current?.scrollTo({ top: scrollPosition.current })
 
   return (
     <>
