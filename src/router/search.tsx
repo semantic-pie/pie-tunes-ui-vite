@@ -2,7 +2,7 @@ import { createRoute } from "@tanstack/react-router";
 import { rootRoute } from ".";
 import { search, useAppDispatch, useAppSelector } from "@/redux/store";
 import BubblePlayer from "@/components/BubblePlayer";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import Search from "@/components/icons/Search";
 import { SnoopySearchTrack, pieApiClient } from "@/api/client";
 import TrackCard from "@/components/common/TrackCard";
@@ -11,6 +11,9 @@ import ArtistCard from "@/components/common/ArtistCard";
 import { userUuid } from "@/appConfiguration";
 import { toMinSec } from "@/utils/hellpers";
 import UploadIcon from "@/components/icons/UploadIcon";
+import CheckIcon from "@/components/icons/CheckIcon";
+import CrossIcon from "@/components/icons/CrossIcon";
+import LoadingIcon from "@/components/icons/LoadingIcon";
 
 
 export const searchScreen = createRoute({
@@ -22,6 +25,8 @@ export const searchScreen = createRoute({
         const [query, setQuery] = useState<string>('')
         const [searchResultH, setSearchResultH] = useState<number>(window.innerHeight - 250)
 
+        const controller = useRef<AbortController>()
+
         // const [res, setRes] = useState<SearchResult>()
         const searchResult = useAppSelector(state => state.search)
 
@@ -29,7 +34,11 @@ export const searchScreen = createRoute({
 
         const onChnage = (query: string) => {
             setQuery(query)
-            pieApiClient.searchByTitle({ query, userUuid })
+
+            if (controller.current) controller.current.abort()
+            controller.current = new AbortController()
+
+            pieApiClient.searchByTitle({ query, userUuid, controller: controller.current })
                 .then(response => {
                     console.log('search:', response)
                     dispatch(search(response.data))
@@ -37,8 +46,6 @@ export const searchScreen = createRoute({
         }
 
         const isSearchMode = query.length > 0
-
-        console.log('test: ', track)
 
 
         useEffect(() => {
@@ -49,8 +56,6 @@ export const searchScreen = createRoute({
             } else {
                 setSearchResultH(window.innerHeight - 400)
             }
-
-
         }, [screen.height])
 
         return (<div class='sm:w-[950px] flex flex-col mt-auto sm:m-auto gap-[50px]'>
@@ -99,18 +104,33 @@ export const searchScreen = createRoute({
     }
 })
 
+type SnoopySearchTrackExtended = SnoopySearchTrack & { status?: SnoopyTrackStatus }
+
 type SnoopySearchProps = {
     query: string
 }
 
+enum SnoopyTrackStatus {
+    IN_PROCESS,
+    SUCCESSFULLY,
+    FAILED
+}
+
 const SnoopySearch = (props: SnoopySearchProps) => {
 
-    const [snoopySearchResult, setSnoopySearchResult] = useState<SnoopySearchTrack[]>()
+    const [snoopySearchResult, setSnoopySearchResult] = useState<SnoopySearchTrackExtended[]>()
 
-    const snoopySearchFetch = () => {
+    const snoopySearchFetch = () =>
         pieApiClient.searchSnoopy({ q: props.query })
             .then(data => setSnoopySearchResult(data.data))
-    }
+
+    const changeTrackStatus = (id: string) =>
+        (status: SnoopyTrackStatus) => {
+            if (snoopySearchResult) setSnoopySearchResult(prev => prev!.map(t => t.id === id ? { ...t, status } : t))
+        }
+
+
+    console.log('snoopySearchResult: ', snoopySearchResult)
 
     return (
         <>
@@ -120,22 +140,33 @@ const SnoopySearch = (props: SnoopySearchProps) => {
                     <h2 class='text-[28px] font-bold'>Tracks from other sources</h2>
 
 
-
                     <div class={`w-full h-fit flex flex-col gap-4 overflow-y-scroll`}>
-                        {snoopySearchResult.map(snoop => <SnoopyTrack snoopyTrack={snoop} />)}
+                        {snoopySearchResult.map(snoop => <SnoopyTrack snoopyTrack={snoop} changeStatus={changeTrackStatus(snoop.id)} />)}
                     </div>
 
                 </div>}
         </>
-
     )
 }
 
 type SnoopyTrackProps = {
-    snoopyTrack: SnoopySearchTrack
+    snoopyTrack: SnoopySearchTrackExtended
+    changeStatus: (status: SnoopyTrackStatus) => void
 }
 
 const SnoopyTrack = (props: SnoopyTrackProps) => {
+
+    const upload = (query: string) => {
+        if (!props.snoopyTrack.status) {
+            props.changeStatus(SnoopyTrackStatus.IN_PROCESS)
+            pieApiClient.uploadSnoopy({ query })
+                .then(response => response.meta.status === 200 ? props.changeStatus(SnoopyTrackStatus.SUCCESSFULLY) : props.changeStatus(SnoopyTrackStatus.FAILED))
+        }
+       
+    }
+
+    const status = props.snoopyTrack.status
+
     return (
         <div class={`w-full flex flex-row justify-start items-center gap-3`}>
             <img class="w-12 h-12 rounded-md cursor-pointer" src={props.snoopyTrack.coverUrl} /> :
@@ -148,8 +179,11 @@ const SnoopyTrack = (props: SnoopyTrackProps) => {
                 </div>
 
                 <div class='flex items-center gap-3'>
-                    <div onClick={() => pieApiClient.uploadSnoopy({query: `${props.snoopyTrack.bandName} ${props.snoopyTrack.title}`})} class='cursor-pointer'>
-                        <UploadIcon />
+                    <div onClick={() => upload(`${props.snoopyTrack.bandName} ${props.snoopyTrack.title}`)} class={`${props.snoopyTrack.status ? '' : 'cursor-pointer'}`}>
+                        {
+                            status != undefined ? status === SnoopyTrackStatus.IN_PROCESS ? <LoadingIcon /> : status === SnoopyTrackStatus.SUCCESSFULLY ? <CheckIcon class='w-5 h-5' /> : <CrossIcon class='w-5 h-5' /> : <UploadIcon />
+                        }
+
                     </div>
 
                     <span class='test-white text-[14px] opacity-50'>

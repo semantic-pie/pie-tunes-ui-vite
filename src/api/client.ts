@@ -23,6 +23,7 @@ export type SearchResponseRoot = {
 }
 
 export type SnoopySearchTrack = {
+    id: string
     title: string
     lengthInMilliseconds: number
     bandName: string
@@ -43,13 +44,13 @@ interface PieApiClient {
     findArtistsByDate: (params: FindByDateParams) => Promise<PieApiResponse<MusicBand[]>>
     findArtistsDeprecated: (params: FindByTitleParams) => Promise<PieApiResponse<MusicBand[]>>
 
-    searchByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<SearchResult>>
+    searchByTitle: (params: FindByTitleParams & { controller: AbortController }) => Promise<PieApiResponse<SearchResult>>
 
     uploadMp3: (body: FormData) => Promise<any>
 
     postEvent: (body: EventBody) => Promise<PieApiResponse<void>>
     searchSnoopy: (params: FindByQuery) => Promise<PieApiResponse<SnoopySearchTrack[]>>
-    uploadSnoopy: (params: {query: string}) => Promise<any>
+    uploadSnoopy: (params: { query: string }) => Promise<PieApiResponse<any>>
 }
 
 const get = { method: 'GET', headers: { 'Content-Type': 'application/json' } }
@@ -94,12 +95,12 @@ export const pieApiClient: PieApiClient = {
         fetch(api.urlForLike(), postWithBody(body))
             .then(responseToPieApiResponse),
     searchByTitle: async (params) =>
-        fetch(api.urlForGlobalSearch(params), get)
+        fetch(api.urlForGlobalSearch(params), {...get, signal: params.controller.signal})
             .then(responseToPieApiResponse),
     searchSnoopy: async (params) =>
         fetch(api.urlForSnoopySearch(params), get)
             .then(responseToPieApiResponse),
     uploadSnoopy: async (params) =>
-            fetch(api.urlForSnoopyUpload(params), get)
-                .then(responseToPieApiResponse),
+        fetch(api.urlForSnoopyUpload(params), get)
+            .then(responseToPieApiResponse),
 }
