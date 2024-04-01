@@ -54,6 +54,12 @@ export const sharePlayerScreen = createRoute({
                     { property: "og:description", content: `${track.title} - ${track.band.name}` },
                     { property: "og:image", content: api.urlForTrackCoverById({ id: track.album.uuid })},
                     { property: "og:url", content: `${config.host.domain}/player/${uuid}` },
+                    { property: "og:type", content: 'music.song' },
+                    { property: "twitter:card", content: "summary"},
+                    { property: "twitter:site", content: "Pie Tunes"},
+                    { property: "twitter:image", content: api.urlForTrackCoverById({ id: track.album.uuid })},
+                    { property: "twitter:title", content: "Pie Tunes"},
+                    { property: "twitter:description", content: `${track.band.name} · Song${track.releaseYear ? ' · ' + track.releaseYear : '' }`},
                     // { name: "type", content: "mp3" }
                 ]} title={`${track.title} - ${track.band.name}`} />
                 {isMobile ? <MobilePlayer /> : <Player />}
@@ -62,6 +68,11 @@ export const sharePlayerScreen = createRoute({
         )
     }
 })
+
+{/* <meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="Variants World">
+		<meta name="twitter:image" content={ogImage}>
+		<meta name="twitter:title" content={title}></meta> */}
 
 {/* <title>{track.title} - {track.band.name}</title>
                         <meta property="og:title" content={`${track.title} - ${track.band.name}`} />
