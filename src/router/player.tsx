@@ -50,8 +50,9 @@ export const sharePlayerScreen = createRoute({
 
                 <Helmet meta={[
                     { property: "og:title", content: `${track.title} - ${track.band.name}` },
+                    { property: "og:site_name", content: `Pie Tunes` },
                     { property: "og:description", content: `${track.title} - ${track.band.name}` },
-                    { property: "og:image", content: api.urlForTrackCoverById({ id: track.album.uuid }) },
+                    { property: "og:image", content: api.urlForTrackCoverById({ id: track.album.uuid })},
                     { property: "og:url", content: `${config.host.domain}/player/${uuid}` },
                     // { name: "type", content: "mp3" }
                 ]} title={`${track.title} - ${track.band.name}`} />
