@@ -45,8 +45,8 @@ export const rootRoute = createRootRoute({
       pieApiClient.findTrackByDate({ page: songsPages, limit: ENTITY_PER_PAGE, userUuid})
       .then(({ data }) => {
         dispatch(tracks(data))
-        if (songsPages === 0)
-          dispatch(playTrack(data[5]))
+        // if (songsPages === 0)
+        //   dispatch(playTrack(data[0])) //Vladimir: я закомитил это потому что иначе не работают /player/{uuid}
       })
     }, [songsPages])
 
