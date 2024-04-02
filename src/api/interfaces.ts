@@ -39,3 +39,8 @@ export interface SearchResult {
   bands: MusicBand[]
 }
 
+export interface Playlist {
+  uuid: string
+  name: string
+  tracks: { track: Track }[]
+}

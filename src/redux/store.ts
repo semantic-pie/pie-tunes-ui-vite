@@ -1,4 +1,4 @@
-import { MusicAlbum, MusicBand, SearchResult, Track } from "@/api"
+import { MusicAlbum, MusicBand, Playlist, SearchResult, Track } from "@/api"
 import { pieApiClient } from "@/api/client"
 import { userUuid } from "@/appConfiguration"
 import { PayloadAction, configureStore, createSlice } from "@reduxjs/toolkit"
@@ -23,6 +23,9 @@ interface PlayerSlice {
         albums: MusicAlbum[]
         searchAlbums: MusicAlbum[]
         albumsPages: number
+        playlists: {
+            madeForYou: Playlist[]
+        }
     }
 }
 
@@ -47,6 +50,9 @@ const initialState = {
         albums: [],
         searchAlbums: [],
         albumsPages: 0,
+        playlists: {
+            madeForYou: []
+        }
     }
 } as PlayerSlice
 
@@ -151,7 +157,11 @@ const playerSlice = createSlice({
                 state.queue = state.library.songs
             }
         },
-
+        playlists: (state, action: PayloadAction<Playlist[]>) => {
+            if (action.payload.length > 0) {
+                state.library.playlists.madeForYou = [...state.library.playlists.madeForYou, ...action.payload]
+            }
+        },
         prev: (state) => {
             if (state.currentTrack && state.numberInQueue != undefined) {
                 if (state.numberInQueue > 0)
@@ -169,7 +179,7 @@ const playerSlice = createSlice({
     }
 })
 
-export const { playTrack, addTrackToQueue, setQueue, albums, artists, next, prev, like, unlike, loadNextPage, loadNextPageAlbums, loadNextPageArtists, tracks, search, searchSongs, searchAlbums } = playerSlice.actions
+export const { playTrack, addTrackToQueue, setQueue, albums, playlists, artists, next, prev, like, unlike, loadNextPage, loadNextPageAlbums, loadNextPageArtists, tracks, search, searchSongs, searchAlbums } = playerSlice.actions
 
 // types configuration
 export const store = configureStore({ reducer: playerSlice.reducer })

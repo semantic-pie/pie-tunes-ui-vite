@@ -1,15 +1,14 @@
 import BubblePlayer from "@/components/BubblePlayer"
 import DevUploader from "@/components/DevUploader"
-import PlaylistCard from "@/components/common/PlaylistCard"
 import MainPage from "@/components/pages/MainPage"
-import Page from "@/components/pages/Page"
-import { createRoute } from "@tanstack/react-router"
+import { createRoute, useNavigate } from "@tanstack/react-router"
 import { rootRoute } from "."
 import { useAppSelector } from "@/redux/store"
 import AlbumPage from "@/components/pages/AlbumPage"
 import AlbumsPage from "@/components/pages/AlbumsPage"
 import TracksPage from "@/components/pages/TracksPage"
 import ArtistsPage from "@/components/pages/ArtistsPage"
+import MadeForYouPage from "@/components/pages/MadeForYouPage"
 
 
 export const libraryScreen = createRoute({
@@ -17,24 +16,33 @@ export const libraryScreen = createRoute({
   path: '/library',
   component: () => {
     const track = useAppSelector(state => state.currentTrack)
-    return (<div class=' flex flex-col sm:gap-5 sm:mx-auto sm:my-auto'>
+    const nav = useNavigate()
 
-      <MainPage />
+    nav({ from: '/library', to: '/library/songs' })
 
-      {track && <div class="w-full">
-        <BubblePlayer />
-      </div>}
+    return (
+      <div class=' flex flex-col sm:gap-5 sm:mx-auto sm:my-auto'>
+        <MainPage />
 
-    </div>)
+        {track && <div class="w-full">
+          <BubblePlayer />
+        </div>}
+
+      </div>)
   }
-
 })
 
 
 export const madeForYouRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/made-for-you',
-  component: () => <Page title="Made For You" list={[...Array(8).keys()].map(() => <PlaylistCard />)} wrap />
+  component: () => <MadeForYouPage />
+})
+
+export const madeForYouViewRoute = createRoute({
+  getParentRoute: () => madeForYouRoute,
+  path: '/$playlist',
+  component: () => <div>kek</div>
 })
 
 export const songsRoute = createRoute({

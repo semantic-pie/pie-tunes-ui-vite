@@ -1,5 +1,5 @@
 import { responseToPieApiResponse } from "@/utils/hellpers"
-import { EventBody, FindByDateParams, FindByQuery, FindByTitleParams, FindByUuid, MusicAlbum, MusicBand, SearchResult, Track, api } from "."
+import { EventBody, FindByDateParams, FindByQuery, FindByTitleParams, FindByUserUuid, FindByUuid, MusicAlbum, MusicBand, Playlist, SearchResult, Track, api } from "."
 
 
 export interface PieApiResponse<T> {
@@ -35,7 +35,10 @@ interface PieApiClient {
     findTrackByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<Track[]>>
     findTrackByDate: (params: FindByDateParams) => Promise<PieApiResponse<Track[]>>
     findTrackByAlbum: (params: FindByUuid) => Promise<PieApiResponse<Track[]>>
+    findTrackByPlaylist: (params: FindByUuid) => Promise<PieApiResponse<Track[]>>
     findTrackDeprecated: (params: FindByTitleParams) => Promise<PieApiResponse<Track[]>>
+
+    findPlaylistsByDate: (params: FindByUserUuid) => Promise<PieApiResponse<Playlist[]>>
 
     findAlbumsByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<MusicAlbum[]>>
     findAlbumsByDate: (params: FindByDateParams) => Promise<PieApiResponse<MusicAlbum[]>>
@@ -60,8 +63,8 @@ const postWithBody = (body: any) => ({ method: 'POST', headers: { 'Content-Type'
 
 export const pieApiClient: PieApiClient = {
     findTrackByUuid: async (params) =>
-    fetch(api.urlForTracksByUuid(params), get)
-        .then(responseToPieApiResponse),
+        fetch(api.urlForTracksByUuid(params), get)
+            .then(responseToPieApiResponse),
     findTrackByTitle: async (params) =>
         fetch(api.urlForTracksByTitle(params), get)
             .then(responseToPieApiResponse),
@@ -71,8 +74,14 @@ export const pieApiClient: PieApiClient = {
     findTrackByAlbum: async (params) =>
         fetch(api.urlForTracksByAlbum(params), get)
             .then(responseToPieApiResponse),
+    findTrackByPlaylist: async (params) =>
+        fetch(api.urlForTracksByPlaylist(params), get)
+            .then(responseToPieApiResponse),
     findTrackDeprecated: async (params) =>
         fetch(api.urlForTracksDeprecated(params), get)
+            .then(responseToPieApiResponse),
+    findPlaylistsByDate: async (params) =>
+        fetch(api.urlForPlaylistsByDate(params), get)
             .then(responseToPieApiResponse),
     findAlbumsByTitle: async (params) =>
         fetch(api.urlForAlbumsByTitle(params), get)
@@ -99,7 +108,7 @@ export const pieApiClient: PieApiClient = {
         fetch(api.urlForLike(), postWithBody(body))
             .then(responseToPieApiResponse),
     searchByTitle: async (params) =>
-        fetch(api.urlForGlobalSearch(params), {...get, signal: params.controller.signal})
+        fetch(api.urlForGlobalSearch(params), { ...get, signal: params.controller.signal })
             .then(responseToPieApiResponse),
     searchSnoopy: async (params) =>
         fetch(api.urlForSnoopySearch(params), get)

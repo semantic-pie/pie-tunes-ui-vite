@@ -7,6 +7,7 @@ const { host, https} = config
 const pieDomainHost = (https ? 'https' : 'http') + '://' + host.domain
 const pieStreamingHost = (https ? 'https' : 'http') + '://' + host.streaming
 const pieSnoopyHost= (https ? 'https' : 'http') + '://' + host.snoopy
+const pieRecHost= (https ? 'https' : 'http') + '://' + host.rec
 
 export type LikeTrackBody = {
     type: 'LIKE_TRACK',
@@ -43,6 +44,10 @@ export type FindByUuid = {
     uuid: string
 }
 
+export type FindByUserUuid = {
+    userUuid: string
+}
+
 export type FindByQuery = {
     q: string
 }
@@ -64,6 +69,7 @@ export const api = {
     urlForTracksByTitle: ({ page, limit, query, userUuid }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-title', { queryParams: { page: page, limit, q: query, userUuid } })!,
     urlForTracksByDate: ({ page, limit, order, userUuid }: FindByDateParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-date', { queryParams: { page: page, limit, order, userUuid } })!,
     urlForTracksByAlbum: (params: FindByUuid) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-album', { path: params.uuid })!,
+    urlForTracksByPlaylist: (params: FindByUuid) => buildUrl(pieRecHost + '/api/v1/playlists/', { path: params.uuid })!,
 
     urlForArtistsByTitle: ({ page, limit, query, userUuid }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/artists/find-by-title', { queryParams: { page: page, limit, q: query, userUuid } })!,
     urlForArtistsByDate: ({ page, limit, order, userUuid }: FindByDateParams) => buildUrl(pieDomainHost + '/api/v1/library/artists/find-by-date', { queryParams: { page: page, limit, order, userUuid } })!,
@@ -71,6 +77,8 @@ export const api = {
     urlForAlbumsByTitle: ({ page, limit, query, userUuid }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/albums/find-by-title', { queryParams: { page: page, limit, q: query, userUuid } })!,
     urlForAlbumsByDate: ({ page, limit, order, userUuid }: FindByDateParams) => buildUrl(pieDomainHost + '/api/v1/library/albums/find-by-date', { queryParams: { page: page, limit, order, userUuid } })!,
 
+
+    urlForPlaylistsByDate: (params: FindByUserUuid) => buildUrl(pieRecHost + '/api/v1/playlists/random/find-by-date', { queryParams: params})!,
 
     urlForTrackStreamById: ({ id }: FindById) => buildUrl(pieStreamingHost + '/api/play', { path: id + '.mp3' })!,
     urlForTrackCoverById: ({ id }: FindById) => buildUrl(pieStreamingHost + '/api/tracks/covers', { path: id })!,

@@ -71,6 +71,7 @@ const TracksPage = (props: TracksPageProps) => {
       <SearchBar query={query} setQuery={changeQuery} />
       <div ref={ref} class={`flex flex-col max-h-[100%] flex-1  gap-4 overflow-y-scroll`}>
         {tracks.map((track) => <TrackCard track={track} />)}
+        {tracks.length === 0 && <span class='m-auto opacity-50'>You haven't added anything yet</span>}
       </div>
     </>
   )

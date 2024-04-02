@@ -1,4 +1,4 @@
-import { createRoute, useLoaderData, useNavigate } from "@tanstack/react-router";
+import { createRoute, useNavigate } from "@tanstack/react-router";
 import { rootRoute } from ".";
 import Player from "@/components/Player";
 import MobilePlayer from "@/components/MobilePlayer";
