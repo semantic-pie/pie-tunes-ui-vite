@@ -3,16 +3,13 @@ import { useEffect, useRef } from "preact/hooks"
 
 export const useIsLoadNeedScroll = (callback: () => void) => {
     const isLoadNeed = useSignal(false)
-    // const scrollPosition = useSignal(0)
-    const scrollPosition = useRef(0)
     const containerWithScrollRef = useRef<HTMLDivElement>(null)
 
     const handleScroll = () => {
-        console.log('scrool handle')
         if (containerWithScrollRef.current) {
             const { scrollTop, scrollHeight } = containerWithScrollRef.current
 
-            scrollPosition.current = scrollTop
+            sessionStorage.setItem('scrollPosition', scrollTop + '')
             const trigger = 1 // play around with the trigger factor instead of fixed px
             if (scrollHeight - (scrollTop + window.innerHeight) < window.innerHeight * trigger) {
                 isLoadNeed.value = true
@@ -21,8 +18,6 @@ export const useIsLoadNeedScroll = (callback: () => void) => {
     }
 
     useEffect(() => {
-        console.log('scrool change')
-        
         if (isLoadNeed.value) {
             callback()
             setTimeout(() => {
@@ -32,7 +27,6 @@ export const useIsLoadNeedScroll = (callback: () => void) => {
     }, [isLoadNeed.value])
 
     useEffect(() => {
-        console.log('scrool init')
         if (!containerWithScrollRef.current) return
 
         containerWithScrollRef.current.addEventListener('scroll', handleScroll)
@@ -43,8 +37,10 @@ export const useIsLoadNeedScroll = (callback: () => void) => {
         }
     }, [])
 
+
+    const sp = sessionStorage.getItem("scrollPosition")
     return {
         containerWithScrollRef,
-        scrollPosition: scrollPosition.current
+        scrollPosition: sp ? parseInt(sp) : 0
     }
 }

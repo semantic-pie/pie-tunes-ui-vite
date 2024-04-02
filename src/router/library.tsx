@@ -55,13 +55,13 @@ export const songsRoute = createRoute({
 
 export const albumsRoute = createRoute({
   getParentRoute: () => libraryScreen,
-  path: '/albums/',
+  path: '/albums',
   component: () => <AlbumsPage />
 })
 
 export const albumViewRoute = createRoute({
-  getParentRoute: () => albumsRoute,
-  path: '/$albumId',
+  getParentRoute: () => libraryScreen,
+  path: '/albums/$albumId',
   component: () => <AlbumPage />
 })
 

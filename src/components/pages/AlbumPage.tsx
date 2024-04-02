@@ -7,9 +7,6 @@ import TrackCard from "../common/TrackCard"
 import { useEffect, useState } from "preact/hooks"
 import { pieApiClient } from "@/api/client"
 
-type AlbumPageProps = {
-    // uuid: string
-}
 
 const AlbumPage = () => {
     const { albumId } = albumViewRoute.useParams()
@@ -22,8 +19,8 @@ const AlbumPage = () => {
     }, [])
     const album = useAppSelector(state => state.library.albums.find(a => a.uuid === albumId))
 
-    const twoRows = album?.name.length > 20 ? true : false
-
+    let twoRows = false
+    if (album) twoRows = album.name.length > 20 ? true : false
 
     return (
         <>
@@ -49,7 +46,6 @@ const AlbumPage = () => {
 
                         </div>
                     </div>
-
 
                     <div class="sm:p-5 flex flex-col sm:overflow-y-scroll">
                         {albumTracks.map((track, i) => <TrackCard class={`p-2.5 ${i !== 0 ? 'border-t-[0.75px] border-white border-opacity-50' : ''} `} track={track} />)}
