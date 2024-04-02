@@ -1,8 +1,8 @@
-import { createRoute } from "@tanstack/react-router";
+import { createRoute, useLoaderData, useNavigate } from "@tanstack/react-router";
 import { rootRoute } from ".";
 import Player from "@/components/Player";
 import MobilePlayer from "@/components/MobilePlayer";
-import { playTrack, useAppDispatch } from "@/redux/store";
+import { playTrack, useAppDispatch, useAppSelector } from "@/redux/store";
 import { useEffect } from "preact/hooks";
 import { pieApiClient } from "@/api/client";
 import { Helmet } from '@notwoods/preact-helmet'
@@ -13,10 +13,13 @@ export const playerScreen = createRoute({
     getParentRoute: () => rootRoute,
     path: '/player',
     component: () => {
-        const isMobile = window.innerWidth < 640
+        // const isMobile = window.innerWidth < 640
+        const currentTrack = useAppSelector(state => state.currentTrack)
 
-        if (isMobile) return <MobilePlayer />
-        else return <Player />
+        const nav = useNavigate()
+
+        if (currentTrack)
+            nav({ from: '/player', to: '/player/' + currentTrack.uuid })
     }
 })
 
@@ -26,29 +29,28 @@ export const sharePlayerScreen = createRoute({
     loader: ({ params }) => pieApiClient.findTrackByUuid({ uuid: params.uuid }).then(res => res.data),
     component: () => {
         const track = sharePlayerScreen.useLoaderData()
+        const currentTrack = useAppSelector(state => state.currentTrack)
 
         const isMobile = window.innerWidth < 640
         const dispatch = useAppDispatch()
-        // const track = useAppSelector(state => state.library.songs)[0]
         const { uuid } = sharePlayerScreen.useParams()
 
-        // const [track, setTrack] = useState<Track>()
+        useEffect(() => {
+            if (!currentTrack)
+                dispatch(playTrack(track))
+        }, [])
+
+        const nav = useNavigate()
 
         useEffect(() => {
-            // pieApiClient.findTrackByUuid({ uuid })
-            //     .then(data => {
-            //         dispatch(playTrack(data.data))
-            //         setTrack(data.data)
-            //     })
-            dispatch(playTrack(track))
-
-        }, [])
+            if (currentTrack)
+                nav({ from: '/player', to: '/player/' + currentTrack.uuid })
+        }, [currentTrack])
 
         return (
             <>
-
-
                 <Helmet link={[
+                    { rel: "image_src", href: api.urlForTrackCoverById({ id: track.album.uuid }) },
                     { as: "image", rel: "preload", href: api.urlForTrackCoverById({ id: track.album.uuid }) }
                 ]} meta={[
                     { name: "title", content: `${track.title} - ${track.band.name}` },

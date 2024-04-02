@@ -1,12 +1,12 @@
 import { playTrack, useAppDispatch, useAppSelector } from "@/redux/store"
-import { api } from "@/api"
+import { Track, api } from "@/api"
 import ProgresBar from "../common/ProgressBar"
 import { useAudioTime } from "../BubblePlayer/hooks.ts/useAudioTime"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
 import ThreeDots from "../icons/ThreeDots"
 import TracksSwitchingControls from "../BubblePlayer/TracksSwitchingControls"
 import ValumeControls from "../BubblePlayer/ValumeControls"
-import { useState } from "preact/hooks"
+import { useEffect, useState } from "preact/hooks"
 import Like from "../common/Like"
 
 const calcPositionInPercent = (time?: number, duration?: number) => {
@@ -20,12 +20,11 @@ const Player = () => {
 
     const tracks = useAppSelector(state => state.library.songs)
 
-    const dispatch = useAppDispatch()
-
     const time = useAudioTime()
     const { duration, seek } = useGlobalAudioPlayer()
     const position = calcPositionInPercent(time, duration);
 
+    const info = `Sleep Token are a British rock band from London, formed in 2016. The group are an anonymous, masked collective led by a frontman using the moniker Vessel. They have been categorised under many different genres, including alternative metal, post-rock/metal, progressive metal and indie rock/pop. After self-releasing their debut extended play (EP) One in 2016, the band signed with Basick Records and issued a follow-up, Two, the next year. The group later signed with Spinefarm Records and released their debut full-length album Sundowning in 2019, which was followed in 2021 by This Place Will Become Your Tomb. A third album, Take Me Back to Eden, was released in May 2023.`
     const lyrics = `
 I've got a river running right into you
 I've got a blood trail, red in the blue
@@ -67,36 +66,9 @@ You've got my body, flesh and bone
 The sky above, the Earth below
 Nothing to say and nowhere to go
 A taste of the divine
-    `.split('\n\n')
+`
 
-    const pages: PlayerInfoPage[] = [
-        {
-            label: 'Up Next', content: <>
-                {tracks.map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
-                    <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: t.album.uuid })} alt="" />
-                    <div class='flex flex-col'>
-                        <span class='text-white text-nowrap'>{t?.title.substring(0, 30)}</span>
-                        <span class='text-white text-nowrap opacity-45'>{t?.band.name.substring(0, 30)}</span>
-                    </div>
-                </div>))}
-            </>
-        },
-        {
-            label: 'Lyrics', content: <>
-                <div class='flex flex-col gap-5 text-gray-300 px-5'>
-                    {lyrics.map(l => <p>{l}</p>)}
-                </div>
-            </>
-
-        },
-        {
-            label: 'Info', content: <>
-                <p class='opacity-70'>
-                    Sleep Token are a British rock band from London, formed in 2016. The group are an anonymous, masked collective led by a frontman using the moniker Vessel. They have been categorised under many different genres, including alternative metal, post-rock/metal, progressive metal and indie rock/pop. After self-releasing their debut extended play (EP) One in 2016, the band signed with Basick Records and issued a follow-up, Two, the next year. The group later signed with Spinefarm Records and released their debut full-length album Sundowning in 2019, which was followed in 2021 by This Place Will Become Your Tomb. A third album, Take Me Back to Eden, was released in May 2023.
-                </p>
-            </>
-        },
-    ]
+console.log('render')
 
     return (
         <div class='flex flex-col m-auto w-[900px] justify-between playerview rounded-[45px] bg-white bg-opacity-15 z-10 overflow-y-scroll'>
@@ -125,7 +97,8 @@ A taste of the divine
                             </div>
                         </div>
                     </div>
-                    <PlayerInfoContainer pages={pages} />
+                    <PlayerInfoContainer queue={tracks} lyrics={lyrics} info={info} />
+
                 </div>
             }
             <div class='flex flex-col w-full h-[130px] playerview-buttom bg-black bg-opacity-10 backdrop-blur-[60px] rounded-t-0 rounded-b-[45px] pt-[30px] px-5 sm:px-[55px] gap-[14px]'>
@@ -149,21 +122,51 @@ type PlayerInfoPage = {
 }
 
 type PlayerInfoContainerProps = {
-    pages: PlayerInfoPage[]
+    // pages: PlayerInfoPage[]
+    queue: Track[]
+    lyrics: string
+    info: string
 }
 
 const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
-    const [current, setCurrent] = useState(props.pages[0] ?? undefined)
+    const [current, setCurrent] = useState('Up Next')
+    const dispatch = useAppDispatch()
 
     return (
         <div class={`sm:w-[370px] h-[450px] flex flex-col justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px] mt-2 sm:mt-0 mb-[138px] sm:mb-0`}>
             <div class='flex justify-between'>
-                {props.pages.map(p => (<button onClick={() => setCurrent(p)} class={`w-[5.6rem] h-[1.8rem] rounded-lg text-white text-opacity-50 bg-black bg-opacity-15 border-opacity-50 ${p.label === current.label ? 'border-white border-[1px] text-opacity-100' : ''}`}>{p.label}</button>))}
+                {['Up Next', 'Lyrics', 'Info'].map(p => (<button onClick={() => setCurrent(p)} class={`w-[5.6rem] h-[1.8rem] rounded-lg text-white text-opacity-50 bg-black bg-opacity-15 border-opacity-50 ${p === current ? 'border-white border-[1px] text-opacity-100' : ''}`}>{p}</button>))}
             </div>
 
             <div class='flex flex-col overflow-y-scroll gap-3' >
-                {current.content}
+                {
+                    current === 'Up Next' && <>
+                        {props.queue.map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
+                            <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: t.album.uuid })} alt="" />
+                            <div class='flex flex-col'>
+                                <span class='text-white text-nowrap'>{t?.title.substring(0, 30)}</span>
+                                <span class='text-white text-nowrap opacity-45'>{t?.band.name.substring(0, 30)}</span>
+                            </div>
+                        </div>))}
+                    </>
+                }
+                {
+                    current === 'Lyrics' && <>
+                        <div class='flex flex-col gap-5 text-gray-300 px-5'>
+                            {props.lyrics.split('\n\n').map(l => <p>{l}</p>)}
+                        </div>
+                    </>
+
+                }
+                {
+                    current === 'Info' && <>
+                        <p class='opacity-70'>
+                            {props.info}
+                        </p>
+                    </>
+                }
             </div>
+
         </div>
     )
 }
