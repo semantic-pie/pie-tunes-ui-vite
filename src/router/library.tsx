@@ -23,7 +23,7 @@ export const libraryScreen = createRoute({
       <div class='h-dvh sm:h-auto flex flex-col sm:gap-5 sm:mx-auto sm:my-auto'>
         <MainPage />
 
-        {track && <div class="w-full">
+        {track && <div class="w-full mt-auto">
           <BubblePlayer />
         </div>}
 
