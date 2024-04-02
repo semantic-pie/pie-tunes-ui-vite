@@ -48,6 +48,8 @@ export const searchScreen = createRoute({
         const isSearchMode = query.length > 0
 
 
+
+
         useEffect(() => {
             const isMobile = window.innerWidth < 640
 

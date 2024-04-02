@@ -16,12 +16,9 @@ export const libraryScreen = createRoute({
   path: '/library',
   component: () => {
     const track = useAppSelector(state => state.currentTrack)
-    const nav = useNavigate()
-
-    nav({ from: '/library', to: '/library/songs' })
 
     return (
-      <div class=' flex flex-col sm:gap-5 sm:mx-auto sm:my-auto'>
+      <div class='h-dvh sm:h-auto flex flex-col sm:gap-5 sm:mx-auto sm:my-auto'>
         <MainPage />
 
         {track && <div class="w-full">
