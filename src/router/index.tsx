@@ -10,7 +10,8 @@ import { ENTITY_PER_PAGE, albums, artists, playTrack, tracks, useAppDispatch, us
 import { pieApiClient } from "@/api/client";
 import { blureBackgroundHook } from "@/utils/blureBackgroundHook";
 import { useNavigatorMediaSessionHook } from "@/utils/useNavigatorMediaSessionHook";
-import { userUuid } from "@/appConfiguration";
+import { config, userUuid } from "@/appConfiguration";
+import { Helmet } from '@notwoods/preact-helmet'
 
 export const rootRoute = createRootRoute({
   component: () => {
@@ -77,6 +78,24 @@ export const rootRoute = createRootRoute({
 
     return (
       <div class='relative flex flex-col w-full sm:flex-row h-dvh'> 
+       <Helmet meta={[
+                    { name: "title", content: `Pie Tunes` },
+                    { name: "description", content: `Awesome music service` },
+                    { property: "og:title", content: `Pie Tunes` },
+                    { property: "og:site_name", content: `@pietunes` },
+                    { property: "og:description", content: `Awesome music service` },
+                    // { property: "og:image", content: api.urlForTrackCoverById({ id: track.album.uuid }) },
+                    // { property: "og:image:width", content: '400' },
+                    // { property: "og:image:height", content: '400' },
+                    { property: "og:url", content: `${config.host.domain}` },
+                    // { property: "og:type", content: 'music.song' },
+                    { property: "twitter:card", content: "summary" },
+                    { property: "twitter:site", content: "Pie Tunes" },
+                    // { property: "twitter:image", content: api.urlForTrackCoverById({ id: track.album.uuid }) },
+                    { property: "twitter:title", content: "Pie Tunes" },
+                    { property: "twitter:description", content: `Awesome music service` },
+                    // { name: "type", content: "mp3" }
+                ]} title={`Pie Tunes`} />
         <SidePill />
         <Outlet />
       </div>
