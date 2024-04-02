@@ -9,6 +9,8 @@ import AlbumsPage from "@/components/pages/AlbumsPage"
 import TracksPage from "@/components/pages/TracksPage"
 import ArtistsPage from "@/components/pages/ArtistsPage"
 import MadeForYouPage from "@/components/pages/MadeForYouPage"
+import PlaylistPage from "@/components/pages/PlaylistPage"
+import { pieApiClient } from "@/api/client"
 
 
 export const libraryScreen = createRoute({
@@ -37,9 +39,10 @@ export const madeForYouRoute = createRoute({
 })
 
 export const madeForYouViewRoute = createRoute({
-  getParentRoute: () => madeForYouRoute,
-  path: '/$playlist',
-  component: () => <div>kek</div>
+  getParentRoute: () => libraryScreen,
+  path: '/made-for-you/$playlistId',
+  loader: ({ params }) => pieApiClient.findTrackByPlaylist({ uuid: params.playlistId }).then(response => response.data),
+  component: () => <PlaylistPage />
 })
 
 export const songsRoute = createRoute({

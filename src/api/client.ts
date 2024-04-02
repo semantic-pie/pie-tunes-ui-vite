@@ -35,7 +35,7 @@ interface PieApiClient {
     findTrackByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<Track[]>>
     findTrackByDate: (params: FindByDateParams) => Promise<PieApiResponse<Track[]>>
     findTrackByAlbum: (params: FindByUuid) => Promise<PieApiResponse<Track[]>>
-    findTrackByPlaylist: (params: FindByUuid) => Promise<PieApiResponse<Track[]>>
+    findTrackByPlaylist: (params: FindByUuid) => Promise<PieApiResponse<Playlist>>
     findTrackDeprecated: (params: FindByTitleParams) => Promise<PieApiResponse<Track[]>>
 
     findPlaylistsByDate: (params: FindByUserUuid) => Promise<PieApiResponse<Playlist[]>>
