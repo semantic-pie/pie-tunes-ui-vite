@@ -1,54 +1,22 @@
 import { loadNextPageArtists, useAppDispatch, useAppSelector } from "@/redux/store";
 import SearchBar from "../common/SearchBar";
 import SortByIcon from "../icons/SortByIcon";
-import { useEffect, useRef, useState } from "preact/hooks";
 import ArtistCard from "../common/ArtistCard";
+import { useIsLoadNeedScroll } from "@/utils/useIsLoadNeedWithScroll";
+import { useSearchQuery } from "@/utils/useSearchQuery";
 
 const ArtistsPage = () => {
-  const [query, setQury] = useState<string>('')
-
-  const artists = useAppSelector(state => query.length > 0 ? state.library.artists.filter(a => a.name.includes(query)) : state.library.artists)
-
-  const [isLoadNeed, setIsLoadNeed] = useState(false)
-
-  const ref = useRef<HTMLDivElement>(null)
-
   const dispatch = useAppDispatch()
 
+  const { changeSearchQuery, searchQuery } = useSearchQuery((query) => {
+    console.log('search artists: ', query)
+  })
 
-  useEffect(() => {
-    if (isLoadNeed) {
-      dispatch(loadNextPageArtists())
-      setTimeout(() => {
-        setIsLoadNeed(false)
-      }, 200)
+  const artists = useAppSelector(state => searchQuery.length > 0 ? state.library.artists.filter(a => a.name.includes(searchQuery)) : state.library.artists)
 
-    }
-  }, [isLoadNeed])
-
-
-  const handleScroll = () => {
-    if (!ref.current) return
-
-    const { scrollTop, scrollHeight } = ref.current
-    // play around with the trigger factor instead of fixed px
-    const trigger = 1
-    if (scrollHeight - (scrollTop + window.innerHeight) < window.innerHeight * trigger) {
-      setIsLoadNeed(true)
-    }
-  }
-
-  useEffect(() => {
-    if (!ref.current) return
-    // const app = document.querySelector('#app')
-    // if (!app) return
-
-    ref.current.addEventListener('scroll', handleScroll)
-    return () => {
-      if (!ref.current) return
-      ref.current.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+  const { containerWithScrollRef } = useIsLoadNeedScroll(() => {
+    dispatch(loadNextPageArtists())
+  })
 
   return (
     <>
@@ -56,8 +24,8 @@ const ArtistsPage = () => {
         <div className="text-start text-white text-3xl font-bold">Artists</div>
         <SortByIcon />
       </div>
-      <SearchBar query={query} setQuery={setQury} />
-      <div ref={ref} class="flex max-h-[100%] flex-col sm:flex-row sm:flex-wrap gap-x-3 gap-y-3 overflow-y-scroll">
+      <SearchBar query={searchQuery} setQuery={changeSearchQuery} />
+      <div ref={containerWithScrollRef} class="flex max-h-[100%] flex-col sm:flex-row sm:flex-wrap gap-x-3 gap-y-3 overflow-y-scroll">
         {artists.map((a) => <ArtistCard band={a} />)}
       </div>
     </>
