@@ -29,9 +29,9 @@ const AlbumPage = () => {
                     <div class='p-1 sm:p-5 gap-5 flex flex-col sm:flex-row justify-between'>
                         <img class='w-full sm:w-[200px] sm:h-[200px] rounded-md' src={api.urlForTrackCoverById({ id: albumId })} alt="" />
                         <div class='flex flex-col w-full  justify-between'>
-                            <h3 class="text-[18px]">Album</h3>
+                            <h3 class="hidden sm:block text-[18px]">Album</h3>
                             <div class={`flex flex-col p-2.5 albumview-info justify-between h-fit gap-4 leading-tight`}>
-                                <h2 class={`${twoRows ? 'text-[16px] sm:text-[28px]' : 'text-[24px] sm:text-[42px]'}`}>{album.name}</h2>
+                                <h2 class={`${twoRows ? 'text-[20px] sm:text-[28px]' : 'text-[24px] sm:text-[42px]'}`}>{album.name}</h2>
                                 <div class='flex justify-between'>
                                     <div class='flex items-center gap-2.5'>
                                         <img class='w-10 h-10 rounded-md' src={api.urlForTrackCoverById({ id: albumId })} alt="" />

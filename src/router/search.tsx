@@ -20,10 +20,9 @@ export const searchScreen = createRoute({
     getParentRoute: () => rootRoute,
     path: '/search',
     component: () => {
-
         const track = useAppSelector(state => state.currentTrack)
         const [query, setQuery] = useState<string>('')
-        const [searchResultH, setSearchResultH] = useState<number>(window.innerHeight - 250)
+
 
         const controller = useRef<AbortController>()
 
@@ -45,26 +44,28 @@ export const searchScreen = createRoute({
                 })
         }
 
+        const [containerHeight, setContainerHeight] = useState<{ height: number }>()
+
         const isSearchMode = query.length > 0
-
-
-
 
         useEffect(() => {
             const isMobile = window.innerWidth < 640
 
             if (isMobile) {
-                setSearchResultH(window.innerHeight - 250)
+                setContainerHeight({ height: window.innerHeight - 90 })
             } else {
-                setSearchResultH(window.innerHeight - 400)
+                setContainerHeight({ height: window.innerHeight - 400 })
             }
         }, [screen.height])
 
-        return (<div class='sm:w-[950px] flex flex-col mt-auto sm:m-auto gap-[50px]'>
-            <GlobalSearch class={`absolute center w-full sm:w-[1000px] ${track && !isSearchMode ? 'top-0 sm:top-[40%]' : 'sm:top-1/2 sm:-translate-y-1/2'}  ${isSearchMode ? 'sm:top-10' : ''} sm:left-1/2 sm:transform sm:-translate-x-1/2 transition-all duration-200`} value={query} setValue={onChnage} />
+
+
+
+        return (<div class='h-dvh sm:w-[950px] flex flex-col sm:mx-auto gap-[50px]'>
+            <GlobalSearch class={`absolute !center w-full sm:w-[1000px] ${track && !isSearchMode ? 'top-0 sm:top-[40%]' : 'sm:top-1/2 sm:-translate-y-1/2'}  ${isSearchMode ? 'sm:top-10' : ''} sm:transform transition-all duration-200`} value={query} setValue={onChnage} />
 
             {isSearchMode &&
-                <div style={{ height: searchResultH }} class={`flex sm:w-[1000px] mt-[80px] sm:mt-[90px] flex-col sm:mx-auto gap-5 overflow-y-scroll`}>
+                <div style={containerHeight} class={`flex sm:w-[1000px] mt-[80px] sm:mt-[90px] flex-col sm:mx-auto gap-5 overflow-y-scroll`}>
                     {searchResult.songs.length > 0 &&
                         <div class='w-full flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 gap-5 py-4 backdrop-blur-[60px]'>
                             <h2 class='text-[28px] font-bold'>Tracks</h2>
@@ -98,7 +99,7 @@ export const searchScreen = createRoute({
                 </div>}
 
 
-            {track && <div class={`${!isSearchMode ? 'sm:mt-[20%]' : ''}  sm:mt-0 sm:w-full transition-all duration-200`}>
+            {track && <div class={`${!isSearchMode ? 'sm:mt-[60%]' : ''}  mt-auto sm:mt-0 sm:w-full transition-all duration-200`}>
                 <BubblePlayer />
             </div>}
 
@@ -164,7 +165,7 @@ const SnoopyTrack = (props: SnoopyTrackProps) => {
             pieApiClient.uploadSnoopy({ query })
                 .then(response => response.meta.status === 200 ? props.changeStatus(SnoopyTrackStatus.SUCCESSFULLY) : props.changeStatus(SnoopyTrackStatus.FAILED))
         }
-       
+
     }
 
     const status = props.snoopyTrack.status
