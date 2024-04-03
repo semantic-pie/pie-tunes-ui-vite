@@ -79,8 +79,8 @@ export const searchScreen = createRoute({
 
                     {searchResult.albums.length > 0 &&
                         <div class='w-full sm:w-fit mx-auto flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 py-2 backdrop-blur-[60px]'>
-                            <h2 class='w-fit text-[28px] font-bold'>Albums</h2>
-                            <div class={`w-fit flex flex-col sm:flex-row  sm:h-72 gap-3 overflow-x-scroll `}>
+                            <h2 class='text-[28px] font-bold'>Albums</h2>
+                            <div class={`flex flex-col sm:grid sm:grid-cols-4 gap-3 overflow-x-scroll `}>
                                 {searchResult.albums.map((a) => <AlbumCard album={a} />)}
                             </div>
                         </div>
@@ -88,8 +88,8 @@ export const searchScreen = createRoute({
 
                     {searchResult.bands.length > 0 &&
                         <div class='w-full sm:w-fit mx-auto flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 py-2 backdrop-blur-[60px]'>
-                            <h2 class='w-fit text-[28px] font-bold'>Artits</h2>
-                            <div class={`w-fit flex flex-col sm:flex-row  sm:h-72 gap-3 overflow-x-scroll `}>
+                            <h2 class='text-[28px] font-bold'>Artits</h2>
+                            <div class={`flex flex-col sm:grid sm:grid-cols-4 gap-3 overflow-x-scroll `}>
                                 {searchResult.bands.map((b) => <ArtistCard band={b} />)}
                             </div>
                         </div>
