@@ -14,7 +14,7 @@ const MadeForYouPage = () => {
         <div className="text-start text-white text-3xl font-bold">Made For You</div>
         <SortByIcon />
       </div>
-      <div class="flex max-h-[100%] flex-col sm:grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-3 overflow-y-scroll">
+      <div class="flex max-h-[100%] flex-col sm:grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 pr-[8px] mr-[-14px] gap-x-3 gap-y-3 overflow-y-scroll">
         {madeForYou.map((playlist) => <PlaylistCard onClick={() => nav({ to: '/library/made-for-you/' + playlist.uuid })} playlist={playlist} />)}
       </div>
     </>

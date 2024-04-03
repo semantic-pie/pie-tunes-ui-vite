@@ -29,7 +29,7 @@ const TracksPage = () => {
         <SortByIcon />
       </div>
       <SearchBar query={searchQuery} setQuery={changeSearchQuery} />
-      <div ref={containerWithScrollRef} class={`flex flex-col max-h-[100%] flex-1  gap-4 overflow-y-scroll`}>
+      <div ref={containerWithScrollRef} class={`flex flex-col max-h-[100%] pr-[8px] mr-[-14px] flex-1 gap-4 overflow-y-scroll`}>
         {tracks.map((track) => <TrackCard track={track} />)}
         {tracks.length === 0 && searchQuery.length === 0 && <span class='m-auto opacity-70'>You haven't added anything yet</span>}
         {tracks.length === 0 && searchQuery.length !== 0 && <span class='m-auto opacity-70'>Nothing found :(</span>}

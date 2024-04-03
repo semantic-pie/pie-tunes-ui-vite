@@ -33,7 +33,7 @@ const AlbumsPage = () => {
         <SortByIcon />
       </div>
       <SearchBar query={searchQuery} setQuery={changeSearchQuery} />
-      <div ref={containerWithScrollRef} class="flex max-h-[100%] flex-col sm:grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-3 overflow-y-scroll">
+      <div ref={containerWithScrollRef} class="flex max-h-[100%] flex-col sm:grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 pr-[8px] mr-[-14px] gap-x-3 gap-y-3 overflow-y-scroll">
         {albums.map((album) => <AlbumCard album={album} />)}
       </div>
     </>

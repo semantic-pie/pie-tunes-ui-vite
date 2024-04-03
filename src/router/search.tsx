@@ -14,6 +14,8 @@ import UploadIcon from "@/components/icons/UploadIcon";
 import CheckIcon from "@/components/icons/CheckIcon";
 import CrossIcon from "@/components/icons/CrossIcon";
 import LoadingIcon from "@/components/icons/LoadingIcon";
+import { useSignal } from "@preact/signals";
+import { useSearchQuery } from "@/utils/useSearchQuery";
 
 
 export const searchScreen = createRoute({
@@ -21,7 +23,20 @@ export const searchScreen = createRoute({
     path: '/search',
     component: () => {
         const track = useAppSelector(state => state.currentTrack)
-        const [query, setQuery] = useState<string>('')
+
+
+        const { searchQuery, changeSearchQuery } = useSearchQuery((query) => {
+            if (controller.current) controller.current.abort()
+            controller.current = new AbortController()
+
+            pieApiClient.searchByTitle({ query, userUuid, controller: controller.current })
+                .then(response => {
+                    console.log('search:', response)
+                    dispatch(search(response.data))
+                })
+        })
+
+        // const [query, setQuery] = useState<string>('')
 
 
         const controller = useRef<AbortController>()
@@ -31,41 +46,20 @@ export const searchScreen = createRoute({
 
         const dispatch = useAppDispatch()
 
-        const onChnage = (query: string) => {
-            setQuery(query)
+        const containerHeight = useSignal<{ height: number }>(window.innerWidth < 640 ? { height: window.innerHeight - 90 } : { height: window.innerHeight - 400 })
 
-            if (controller.current) controller.current.abort()
-            controller.current = new AbortController()
-
-            pieApiClient.searchByTitle({ query, userUuid, controller: controller.current })
-                .then(response => {
-                    console.log('search:', response)
-                    dispatch(search(response.data))
-                })
-        }
-
-        const [containerHeight, setContainerHeight] = useState<{ height: number }>()
-
-        const isSearchMode = query.length > 0
+        const isSearchMode = searchQuery.length > 0
 
         useEffect(() => {
-            const isMobile = window.innerWidth < 640
-
-            if (isMobile) {
-                setContainerHeight({ height: window.innerHeight - 90 })
-            } else {
-                setContainerHeight({ height: window.innerHeight - 400 })
-            }
+            containerHeight.value = window.innerWidth < 640 ? { height: window.innerHeight - 90 } : { height: window.innerHeight - 400 }
         }, [screen.height])
 
 
-
-
         return (<div class='h-dvh sm:w-[950px] flex flex-col sm:mx-auto gap-[50px]'>
-            <GlobalSearch class={`absolute !center w-full sm:w-[1000px] ${track && !isSearchMode ? 'top-0 sm:top-[40%]' : 'sm:top-1/2 sm:-translate-y-1/2'}  ${isSearchMode ? 'sm:top-10' : ''} sm:transform transition-all duration-200`} value={query} setValue={onChnage} />
+            <GlobalSearch class={`absolute !center w-full sm:w-[1000px] ${track && !isSearchMode ? 'top-0 sm:top-[40%]' : 'sm:top-1/2 sm:-translate-y-1/2'}  ${isSearchMode ? 'sm:top-10' : ''} sm:transform transition-all duration-200`} value={searchQuery} setValue={changeSearchQuery} />
 
             {isSearchMode &&
-                <div style={containerHeight} class={`flex sm:w-[1000px] mt-[80px] sm:mt-[90px] flex-col sm:mx-auto gap-5 overflow-y-scroll`}>
+                <div style={containerHeight.value} class={`flex sm:w-[1000px] mt-[80px] sm:mt-[90px] flex-col sm:mx-auto gap-5 overflow-y-scroll`}>
                     {searchResult.songs.length > 0 &&
                         <div class='w-full flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 gap-5 py-4 backdrop-blur-[60px]'>
                             <h2 class='text-[28px] font-bold'>Tracks</h2>
@@ -95,7 +89,7 @@ export const searchScreen = createRoute({
                             </div>
                         </div>
                     }
-                    {isSearchMode && query.length > 4 && <SnoopySearch query={query} />}
+                    {isSearchMode && searchQuery.length > 4 && <SnoopySearch query={searchQuery} />}
                 </div>}
 
 
@@ -216,7 +210,7 @@ const GlobalSearch = (props: GlobalSearchProps) => {
         }
     }, [])
     return (
-        <div class={`h-[70px] flex items-center sm:rounded-[29px] bg-black bg-opacity-10 px-5 gap-5 search ${props.class} z-20`}>
+        <div class={`h-[70px] flex items-center rounded-[29px] bg-black bg-opacity-10 px-5 gap-5 search ${props.class} z-20`}>
             <Search class='w-6 h-6 opacity-50' />
             <input ref={ref} value={props.value} onInput={(e) => props.setValue(e.currentTarget.value)} placeholder={'Search'} class='w-full text-white placeholder-white placeholder-opacity-75 text-[24px] text-opacity-75 bg-transparent !outline-none' type="text" />
         </div>

@@ -33,7 +33,7 @@ const TrackCard = (props: TrackCardProps) => {
                     <div class="text-start text-white text-opacity-60 text-sm font-normal capitalize">{track.band ? trancate(track.band.name, 28) : 'Band Name'}</div>
                 </div>
 
-                <div class='flex items-center gap-3'>
+                <div class='flex items-center gap-3 pr-2'>
                     {props.addButton && !track.liked && !liked && <Like entity={track} />}
 
                     <span class='test-white text-[14px] opacity-50'>
