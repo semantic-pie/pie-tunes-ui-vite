@@ -3,7 +3,7 @@ import { madeForYouViewRoute } from "@/router/library";
 import TrackCard from "../common/TrackCard";
 import ThreeDots from "../icons/ThreeDots";
 import Like from "../common/Like";
-import { Playlist } from "@/api";
+import { Playlist, api } from "@/api";
 
 const calcGenres = (playlist: Playlist) => {
   const map = new Map()
@@ -26,7 +26,7 @@ const PlaylistPage = () => {
     <>
       <div class={`flex flex-col gap-5 overflow-y-scroll sm:overflow-hidden`}>
         <div class='p-1 sm:p-5 gap-5 flex flex-col sm:flex-row justify-between'>
-          <img class='w-full sm:w-[200px] sm:h-[200px] rounded-md' src={'/src/assets/dailymixpic.jpeg'} alt="" />
+          <img class='w-full sm:w-[200px] sm:h-[200px] rounded-md' src={api.urlForTrackCoverById({ id: 'dailyplaylist.jpeg' })} alt="" />
           <div class='flex flex-col w-full  justify-between'>
             <h3 class="hidden sm:block text-[18px]">Playlist</h3>
             <div class={`flex flex-col p-2.5 albumview-info justify-between h-fit gap-4 leading-tight`}>
