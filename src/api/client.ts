@@ -48,7 +48,7 @@ interface PieApiClient {
     findArtistsByDate: (params: FindByDateParams) => Promise<PieApiResponse<MusicBand[]>>
     findArtistsDeprecated: (params: FindByTitleParams) => Promise<PieApiResponse<MusicBand[]>>
 
-    searchByTitle: (params: FindByTitleParams & { controller: AbortController }) => Promise<PieApiResponse<SearchResult>>
+    searchByTitle: (params: FindByTitleParams & { controller?: AbortController }) => Promise<PieApiResponse<SearchResult>>
 
     uploadMp3: (body: FormData) => Promise<any>
 
@@ -108,7 +108,7 @@ export const pieApiClient: PieApiClient = {
         fetch(api.urlForLike(), postWithBody(body))
             .then(responseToPieApiResponse),
     searchByTitle: async (params) =>
-        fetch(api.urlForGlobalSearch(params), { ...get, signal: params.controller.signal })
+        fetch(api.urlForGlobalSearch(params), { ...get, signal: params.controller?.signal })
             .then(responseToPieApiResponse),
     searchSnoopy: async (params) =>
         fetch(api.urlForSnoopySearch(params), get)

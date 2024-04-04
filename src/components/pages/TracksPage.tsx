@@ -5,7 +5,6 @@ import TrackCard from "../common/TrackCard";
 import { useIsLoadNeedScroll } from "@/utils/useIsLoadNeedWithScroll";
 import { useSearchQuery } from "@/utils/useSearchQuery";
 
-
 const TracksPage = () => {
   const { changeSearchQuery, searchQuery } = useSearchQuery((query) => {
     dispatch(searchTracksFetch(query))
@@ -21,7 +20,6 @@ const TracksPage = () => {
   const { containerWithScrollRef } = useIsLoadNeedScroll(() => {
     dispatch(loadNextPage())
   })
-
   return (
     <>
       <div class="justify-between items-start inline-flex">

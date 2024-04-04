@@ -56,6 +56,14 @@ const initialState = {
     }
 } as PlayerSlice
 
+export const globalSearch = (query: string, controller?: AbortController) => async (dispatch: AppDispatch) => {
+    pieApiClient.searchByTitle({ query, userUuid, controller })
+    .then(response => {
+        console.log('search:', response)
+        dispatch(search(response.data))
+    })
+}
+
 export const searchTracksFetch = (query: string) => async (dispatch: AppDispatch) => {
     pieApiClient.findTrackByTitle({ page: 0, limit: 10, query, userUuid })
         .then(({ data }) => dispatch(searchSongs(data)))
@@ -120,6 +128,9 @@ const playerSlice = createSlice({
         loadNextPageAlbums: (state) => {
             state.library.albumsPages++
         },
+        searchAddSnoopyTrack: (state, action: PayloadAction<Track>) => {
+            state.search.songs = [...state.search.songs, action.payload]
+        },
         searchSongs: (state, action: PayloadAction<Track[]>) => {
             if (action.payload.length > 0) {
                 state.library.searchSongs = action.payload
@@ -179,7 +190,7 @@ const playerSlice = createSlice({
     }
 })
 
-export const { playTrack, addTrackToQueue, setQueue, albums, playlists, artists, next, prev, like, unlike, loadNextPage, loadNextPageAlbums, loadNextPageArtists, tracks, search, searchSongs, searchAlbums } = playerSlice.actions
+export const { playTrack, addTrackToQueue, setQueue, albums, playlists, artists, next, prev, like, unlike, loadNextPage, loadNextPageAlbums, loadNextPageArtists, searchAddSnoopyTrack, tracks, search, searchSongs, searchAlbums } = playerSlice.actions
 
 // types configuration
 export const store = configureStore({ reducer: playerSlice.reducer })

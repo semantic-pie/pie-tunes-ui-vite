@@ -1,6 +1,6 @@
 import { createRoute } from "@tanstack/react-router";
 import { rootRoute } from ".";
-import { search, useAppDispatch, useAppSelector } from "@/redux/store";
+import { globalSearch, search, searchAddSnoopyTrack, useAppDispatch, useAppSelector } from "@/redux/store";
 import BubblePlayer from "@/components/BubblePlayer";
 import { useEffect, useRef, useState } from "preact/hooks";
 import Search from "@/components/icons/Search";
@@ -29,11 +29,7 @@ export const searchScreen = createRoute({
             if (controller.current) controller.current.abort()
             controller.current = new AbortController()
 
-            pieApiClient.searchByTitle({ query, userUuid, controller: controller.current })
-                .then(response => {
-                    console.log('search:', response)
-                    dispatch(search(response.data))
-                })
+            dispatch(globalSearch(query, controller.current))
         })
 
         // const [query, setQuery] = useState<string>('')
@@ -152,12 +148,23 @@ type SnoopyTrackProps = {
 }
 
 const SnoopyTrack = (props: SnoopyTrackProps) => {
-
+    const dispatch = useAppDispatch()
     const upload = (query: string) => {
         if (!props.snoopyTrack.status) {
             props.changeStatus(SnoopyTrackStatus.IN_PROCESS)
             pieApiClient.uploadSnoopy({ query })
-                .then(response => response.meta.status === 200 ? props.changeStatus(SnoopyTrackStatus.SUCCESSFULLY) : props.changeStatus(SnoopyTrackStatus.FAILED))
+                .then(response => {
+                    if (response.meta.status === 200)
+                        props.changeStatus(SnoopyTrackStatus.SUCCESSFULLY)
+                    else props.changeStatus(SnoopyTrackStatus.FAILED)
+
+                    console.log(response)
+                    return response.data
+                })
+
+                .then(data => data.uploadedTrack.uuid)
+                .then(addedTrackUuid => pieApiClient.findTrackByUuid({ uuid: addedTrackUuid }))
+                .then(response => dispatch(searchAddSnoopyTrack(response.data)))
         }
 
     }
