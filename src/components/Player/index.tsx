@@ -138,7 +138,7 @@ const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
                 {['Up Next', 'Lyrics', 'Info'].map(p => (<button onClick={() => setCurrent(p)} class={`w-[5.6rem] h-[1.8rem] rounded-lg text-white text-opacity-50 bg-black bg-opacity-15 border-opacity-50 ${p === current ? 'border-white border-[1px] text-opacity-100' : ''}`}>{p}</button>))}
             </div>
 
-            <div class='flex flex-col overflow-y-scroll gap-3' >
+            <div class='flex flex-col overflow-y-scroll pr-[3px] mr-[-5px] gap-3' >
                 {
                     current === 'Up Next' && <>
                         {props.queue.map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
