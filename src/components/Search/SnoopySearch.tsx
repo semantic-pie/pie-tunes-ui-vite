@@ -21,7 +21,7 @@ enum SnoopyTrackStatus {
 
 const SnoopySearch = (props: SnoopySearchProps) => {
     const snoopySearchResult = useSignal<SnoopySearchTrackExtended[] | undefined>(undefined)
-    const setSearchResult = (tracks: SnoopySearchTrack[]) => snoopySearchResult.value = tracks
+    const setSearchResult = (tracks: SnoopySearchTrack[]) => {snoopySearchResult.value = tracks}
 
     const snoopySearchFetch = () =>
         pieApiClient.searchSnoopy({ q: props.query })

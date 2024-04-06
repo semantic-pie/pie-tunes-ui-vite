@@ -28,7 +28,7 @@ const SearchPage = () => {
         dispatch(globalSearch(query, controller.current))
     })
 
-    
+
 
     const isSearchMode = searchQuery.length > 0
 
@@ -36,11 +36,11 @@ const SearchPage = () => {
         containerHeight.value = window.innerWidth < 640 ? { height: window.innerHeight - 90 } : { height: window.innerHeight - 400 }
     }, [screen.height])
 
-    return (<div class='h-dvh sm:w-[950px] flex flex-col sm:mx-auto gap-[50px]'>
-        <GlobalSearchInput class={`absolute !center w-full sm:w-[1000px] ${track && !isSearchMode ? 'top-0 sm:top-[40%]' : 'sm:top-1/2 sm:-translate-y-1/2'}  ${isSearchMode ? 'sm:top-10' : ''} sm:transform transition-all duration-200`} value={searchQuery} setValue={changeSearchQuery} />
+    return (<div class={`h-dvh sm:w-[1000px] flex flex-col sm:mx-auto ${isSearchMode ? 'gap-2 sm:gap-4' : 'sm:mt-[20%] gap-16'}`}>
+        <GlobalSearchInput class={`center w-full sm:w-[1000px] sm:transform transition-all duration-200`} value={searchQuery} setValue={changeSearchQuery} />
 
         {isSearchMode &&
-            <div style={containerHeight.value} class={`flex sm:w-[1000px] mt-[80px] sm:mt-[90px] flex-col sm:mx-auto gap-5 overflow-y-scroll`}>
+            <div class={`flex sm:w-[1000px] flex-col sm:mx-auto gap-5 overflow-x-hidden overflow-y-scroll rounded-[29px]`}>
                 {searchResult.songs.length > 0 &&
                     <div class='w-full flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 gap-5 py-4 backdrop-blur-[60px]'>
                         <h2 class='text-[28px] font-bold'>Tracks</h2>
@@ -53,28 +53,29 @@ const SearchPage = () => {
 
                 }
 
-                {searchResult.albums.length > 0 &&
-                    <div class='w-full sm:w-fit mx-auto flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 py-2 backdrop-blur-[60px]'>
-                        <h2 class='text-[28px] font-bold'>Albums</h2>
-                        <div class={`flex flex-col sm:grid sm:grid-cols-4 gap-3 overflow-x-scroll `}>
-                            {searchResult.albums.map((a) => <AlbumCard album={a} />)}
+                    {searchResult.albums.length > 0 &&
+                        <div class='w-full sm:w-fit mx-auto flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 py-2 backdrop-blur-[60px]'>
+                            <h2 class='text-[28px] font-bold'>Albums</h2>
+                            <div class={`flex flex-col sm:grid sm:grid-cols-4 gap-3 overflow-x-scroll `}>
+                                {searchResult.albums.map((a) => <AlbumCard album={a} />)}
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
 
-                {searchResult.bands.length > 0 &&
-                    <div class='w-full sm:w-fit mx-auto flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 py-2 backdrop-blur-[60px]'>
-                        <h2 class='text-[28px] font-bold'>Artits</h2>
-                        <div class={`flex flex-col sm:grid sm:grid-cols-4 gap-3 overflow-x-scroll `}>
-                            {searchResult.bands.map((b) => <ArtistCard band={b} />)}
+                    {searchResult.bands.length > 0 &&
+                        <div class='w-full sm:w-fit mx-auto flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 py-2 backdrop-blur-[60px]'>
+                            <h2 class='text-[28px] font-bold'>Artits</h2>
+                            <div class={`flex flex-col sm:grid sm:grid-cols-4 gap-3 overflow-x-scroll `}>
+                                {searchResult.bands.map((b) => <ArtistCard band={b} />)}
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
+
                 {isSearchMode && searchQuery.length > 4 && <SnoopySearch query={searchQuery} />}
             </div>}
 
 
-        {track && <div class={`${!isSearchMode ? 'sm:mt-[60%]' : ''}  mt-auto sm:mt-0 sm:w-full transition-all duration-200`}>
+        {track && <div class={`mt-auto sm:mt-0 sm:w-full transition-all duration-200`}>
             <BubblePlayer />
         </div>}
 
