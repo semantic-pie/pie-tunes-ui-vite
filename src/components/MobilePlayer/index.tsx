@@ -40,8 +40,8 @@ const MobilePlayer = () => {
             label: 'Up Next', content: <>
                 {tracks.map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
                     <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: t.album.uuid })} alt="" />
-                    <div class='flex flex-col '>
-                        <span class='text-white text-nowrap'>{trancate(t.title, 32)}</span>
+                    <div class='flex flex-col truncate'>
+                        <span class='text-white text-nowrap '>{trancate(t.title, 32)}</span>
                         <span class='text-white text-nowrap opacity-45'>{trancate(t.band.name, 32)}</span>
                     </div>
                 </div>))}
@@ -81,8 +81,8 @@ const MobilePlayer = () => {
             <div class={`flex ${currentMiniPage.value ? 'flex-row' : 'flex-col'}  justify-between gap-2 `}>
                 <img ref={imgRef} class={`rounded-xl h-full w-full ${currentMiniPage.value ? '!w-20 !h-20' : ''} transition-all duration-400`} src={api.urlForTrackCoverById({ id: track.album.uuid })} alt="" />
 
-                <div class='w-full flex justify-between pb-[5px] px-3 py-1 bg-black bg-opacity-15 rounded-xl'>
-                    <div className="flex flex-col justify-center items-start gap-1">
+                <div class='w-full flex justify-between pb-[5px] px-3 py-1 bg-black bg-opacity-15 rounded-xl truncate'>
+                    <div className="flex flex-col justify-center items-start gap-1 truncate">
                         <div className="text-center text-white text-[24px] font-semibold text-opacity-80 font-['Helvetica Neue'] text-nowrap track-title">{track.title.length > 25 ? track.title.substring(0, 25) + '...' : track.title}</div>
                         <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{track.band.name.length > 25 ? track.band.name.substring(0, 25) + '...' : track.band.name}</div>
                     </div>
@@ -94,13 +94,13 @@ const MobilePlayer = () => {
                 </div>
             </div>
 
-            <div class={`flex flex-col mt-auto justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px] `}>
-                <div style={{ height: currentMiniPage.value ? window.innerHeight - 300 : 0 }} class={`flex flex-col overflow-y-scroll gap-3 transition-all duration-200 ease-in`} >
+            <div class={`flex flex-col mt-auto justify-start ${currentMiniPage.value ? 'gap-[10px]' : ''} rounded-lg bg-black bg-opacity-15 p-[10px] `}>
+                <div style={{ height: currentMiniPage.value ? window.innerHeight - 300 : 0 }} class={`flex flex-col overflow-y-scroll pr-[3px] mr-[-5px] gap-3 transition-all duration-200 ease-in`} >
                     {currentMiniPage.value?.content}
                 </div>
 
                 <div class='flex justify-between'>
-                    {pages.map(p => (<button onClick={() => toggleCurrent(p)} class={`w-[5.6rem] h-[1.8rem] rounded-lg text-white text-opacity-50 bg-black bg-opacity-15 border-opacity-50 ${p.label === currentMiniPage.value?.label ? 'border-white border-[1px] text-opacity-100' : ''}`}>{p.label}</button>))}
+                    {pages.map(p => (<button onClick={() => toggleCurrent(p)} class={`w-[5.6rem] h-[1.8rem] rounded-lg text-white text-opacity-50 bg-black bg-opacity-15 border-opacity-50 ${p.label === currentMiniPage.value?.label ? 'border-white border-[1px] bg-opacity-20 text-opacity-80' : ''}`}>{p.label}</button>))}
                 </div>
             </div>
 
