@@ -22,15 +22,15 @@ const calcPositionInPercent = (time?: number, duration?: number) => {
 
 const BubbleTrackInfo = (props: BubbleTrackInfoProps) => {
     const track = props.track
-    const dispatch = useAppDispatch()
+    // const dispatch = useAppDispatch()
 
     const time = useAudioTime()
     const { duration, seek } = useGlobalAudioPlayer()
     const position = calcPositionInPercent(time, duration);
 
-    useEffect(() => {
-        if (position >= 99.5) dispatch(next())
-    }, [time])
+    // useEffect(() => {
+    //     if (position >= 99.5) 
+    // }, [time])
 
     const trackFormSearch = useAppSelector(state => state.search.songs.find(t => t.uuid === track.uuid))
 

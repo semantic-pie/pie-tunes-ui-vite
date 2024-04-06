@@ -6,7 +6,7 @@ import { searchScreen } from "./search";
 import { useEffect } from "preact/hooks";
 import { api } from "@/api";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
-import { ENTITY_PER_PAGE, albums, artists, playlists, tracks, useAppDispatch, useAppSelector } from "@/redux/store";
+import { ENTITY_PER_PAGE, albums, artists, next, playTrack, playlists, tracks, useAppDispatch, useAppSelector } from "@/redux/store";
 import { pieApiClient } from "@/api/client";
 import { blureBackgroundHook } from "@/utils/blureBackgroundHook";
 import { useNavigatorMediaSessionHook } from "@/utils/useNavigatorMediaSessionHook";
@@ -18,7 +18,7 @@ export const rootRoute = createRootRoute({
     blureBackgroundHook()
     useNavigatorMediaSessionHook()
 
-    const { load } = useGlobalAudioPlayer()
+    const { load, } = useGlobalAudioPlayer()
 
     const dispatch = useAppDispatch()
 
@@ -63,7 +63,8 @@ export const rootRoute = createRootRoute({
         load(api.urlForTrackStreamById({ id: currentTrack.uuid }), {
           html5: true,
           format: 'mp3',
-          autoplay: true
+          autoplay: true,
+          onend: () => { dispatch(next()) }
         })
         if ('mediaSession' in navigator) {
           navigator.mediaSession.metadata = new MediaMetadata({
