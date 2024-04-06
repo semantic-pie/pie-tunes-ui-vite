@@ -5,9 +5,11 @@ import { useAudioTime } from "../BubblePlayer/hooks.ts/useAudioTime"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
 import ThreeDots from "../icons/ThreeDots"
 import TracksSwitchingControls from "../BubblePlayer/TracksSwitchingControls"
-import { useState } from "preact/hooks"
+import { useEffect, useRef, useState } from "preact/hooks"
 import Like from "../common/Like"
 import { trancate } from "@/utils/hellpers"
+import { useNavigate } from "@tanstack/react-router"
+import { useSwipeHook } from "@/utils/useSwipeHook"
 
 const calcPositionInPercent = (time?: number, duration?: number) => {
     if (time && duration) return (time / duration) * 100
@@ -113,10 +115,15 @@ A taste of the divine
         else setCurrent(v)
     }
 
+    const imgRef = useRef<HTMLImageElement>(null)
+    const nav = useNavigate({ from: '/player' })
+
+    useSwipeHook(() => nav({ to: '/library/songs' }), 'swiped-down', imgRef)
+
     return (
         <div class='w-full h-dvh flex flex-col justify-start p-2 gap-2 z-10'>
-            <div class={`flex ${current ? 'flex-row' : 'flex-col'}  justify-between gap-2`}>
-                <img class={`rounded-xl ${current ? 'w-20 h-20' : ''}`} src={api.urlForTrackCoverById({ id: track.album.uuid })} alt="" />
+            <div class={`flex ${current ? 'flex-row' : 'flex-col'}  justify-between gap-2 `}>
+                <img ref={imgRef} class={`rounded-xl h-full w-full ${current ? '!w-20 !h-20' : ''} transition-all duration-400`} src={api.urlForTrackCoverById({ id: track.album.uuid })} alt="" />
 
                 <div class='w-full flex justify-between pb-[5px] px-3 py-1 bg-black bg-opacity-15 rounded-xl'>
                     <div className="flex flex-col justify-center items-start gap-1">
@@ -131,17 +138,17 @@ A taste of the divine
                 </div>
             </div>
 
-            <div class={`flex flex-col justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px] `}>
-                {current && <div style={{ height: window.innerHeight - 300 }} class='flex flex-col overflow-y-scroll gap-3' >
-                    {current.content}
-                </div>}
+            <div class={`flex flex-col mt-auto justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px] `}>
+                <div style={{ height: current ? window.innerHeight - 300 : 0 }} class={`flex flex-col overflow-y-scroll gap-3 transition-all duration-200 ease-in`} >
+                    {current?.content}
+                </div>
 
                 <div class='flex justify-between'>
                     {pages.map(p => (<button onClick={() => toggleCurrent(p)} class={`w-[5.6rem] h-[1.8rem] rounded-lg text-white text-opacity-50 bg-black bg-opacity-15 border-opacity-50 ${p.label === current?.label ? 'border-white border-[1px] text-opacity-100' : ''}`}>{p.label}</button>))}
                 </div>
             </div>
 
-            <div class='flex flex-col w-full flex-grow bg-black bg-opacity-10 backdrop-blur-[60px] rounded-xl sm:rounded-t-0 sm:rounded-b-[45px] pt-[30px] px-5 gap-5'>
+            <div class='flex flex-col max-h-full w-full flex-grow bg-black bg-opacity-10 backdrop-blur-[60px] rounded-xl pt-[30px] px-5 gap-5 transition-all duration-200 ease-out'>
                 <ProgresBar classes="w-full rounded-full" classesInner="rounded-full" value={position} setValue={seek} relativeValue={duration} polzunok />
                 <TracksSwitchingControls class='w-[300px] mx-auto' />
             </div>

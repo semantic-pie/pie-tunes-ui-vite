@@ -4,8 +4,7 @@ import { Track } from "@/api"
 import { useAudioTime } from "./hooks.ts/useAudioTime"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
 import ProgresBar from "../common/ProgressBar"
-import { useEffect } from "preact/hooks"
-import { next, useAppDispatch, useAppSelector } from "@/redux/store"
+import {useAppSelector } from "@/redux/store"
 import Like from "../common/Like"
 import { Link } from "@tanstack/react-router"
 
@@ -22,16 +21,10 @@ const calcPositionInPercent = (time?: number, duration?: number) => {
 
 const BubbleTrackInfo = (props: BubbleTrackInfoProps) => {
     const track = props.track
-    // const dispatch = useAppDispatch()
 
     const time = useAudioTime()
     const { duration, seek } = useGlobalAudioPlayer()
     const position = calcPositionInPercent(time, duration);
-
-    // useEffect(() => {
-    //     if (position >= 99.5) 
-    // }, [time])
-
     const trackFormSearch = useAppSelector(state => state.search.songs.find(t => t.uuid === track.uuid))
 
     const liked = trackFormSearch ? trackFormSearch.liked === true ? true : false : false
