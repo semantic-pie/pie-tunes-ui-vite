@@ -24,7 +24,7 @@ const Player = () => {
     } = useAppSelector(state => state)
 
     return (
-        <div class='flex flex-col m-auto w-[900px] justify-between playerview rounded-[45px] bg-white bg-opacity-15 z-10 overflow-y-scroll'>
+        <div class='flex flex-col m-auto w-[900px] justify-between playerview rounded-[45px] bg-white bg-opacity-15 z-10'>
             {track &&
                 <div class='w-full flex flex-row justify-between p-12'>
                     <div class='w-[330px] h-[450px] flex flex-col justify-between gap-2'>
@@ -50,7 +50,7 @@ const Player = () => {
                             </div>
                         </div>
                     </div>
-                    <PlayerInfoContainer queue={tracks} lyrics={lyrics} info={info} />
+                    <PlayerInfoContainer queue={tracks} lyrics={lyrics} info={JSON.stringify(track, null, 4)} />
 
                 </div>
             }
