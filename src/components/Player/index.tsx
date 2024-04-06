@@ -32,7 +32,7 @@ const Player = () => {
 
                         <div className={`h-[74px] justify-center bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
                             <div class='w-full flex justify-between pb-[5px] px-3'>
-                                <div className="flex justify-start items-center gap-3.5">
+                                <div className="flex justify-start items-center gap-3.5 truncate">
 
                                     <div className="flex-col justify-center items-start gap-1 inline-flex">
                                         <div className="text-center text-white text-lg font-normal font-['Helvetica Neue'] text-nowrap track-title">{track.title.length > 18 ? track.title.substring(0, 18) + '...' : track.title}</div>

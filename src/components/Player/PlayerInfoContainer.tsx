@@ -30,7 +30,7 @@ const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
                     currentMiniPage.value === 'Up Next' && <>
                         {props.queue.map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
                             <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: t.album.uuid })} alt="" />
-                            <div class='flex flex-col'>
+                            <div class='flex flex-col truncate'>
                                 <span class='text-white text-nowrap'>{t?.title.substring(0, 30)}</span>
                                 <span class='text-white text-nowrap opacity-45'>{t?.band.name.substring(0, 30)}</span>
                             </div>
