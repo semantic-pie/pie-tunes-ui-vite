@@ -1,14 +1,16 @@
-import { useEffect, useRef, useState } from "preact/hooks"
+import { useSignal } from "@preact/signals"
+import { useEffect, useRef } from "preact/hooks"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
 
 export const useAudioTime = () => {
     const frameRef = useRef<number>()
-    const [pos, setPos] = useState(0)
+    const position = useSignal(0)
+
     const { getPosition } = useGlobalAudioPlayer()
     
     useEffect(() => {
         const animate = () => {
-            setPos(getPosition())
+            position.value = getPosition()
             frameRef.current = requestAnimationFrame(animate)
         }
 
@@ -21,5 +23,5 @@ export const useAudioTime = () => {
         }
     }, [getPosition])
     
-    return pos;
+    return position.value;
 }

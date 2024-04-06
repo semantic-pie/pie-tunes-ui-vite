@@ -39,12 +39,8 @@ const TrackCard = (props: TrackCardProps) => {
                     <span class='test-white text-[14px] opacity-50'>
                         {toMinSec(track.lengthInMilliseconds)}
                     </span>
-
                 </div>
-
             </div>
-
-
         </div>
     )
 }

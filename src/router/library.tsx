@@ -1,7 +1,7 @@
 import BubblePlayer from "@/components/BubblePlayer"
 import DevUploader from "@/components/DevUploader"
 import MainPage from "@/components/pages/MainPage"
-import { createRoute, useNavigate } from "@tanstack/react-router"
+import { createRoute } from "@tanstack/react-router"
 import { rootRoute } from "."
 import { useAppSelector } from "@/redux/store"
 import AlbumPage from "@/components/pages/AlbumPage"
@@ -62,6 +62,7 @@ export const albumsRoute = createRoute({
 export const albumViewRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/albums/$albumId',
+  loader: ({params }) => pieApiClient.findTrackByAlbum({ uuid: params.albumId }).then(data => data.data),
   component: () => <AlbumPage />
 })
 

@@ -6,7 +6,7 @@ import { searchScreen } from "./search";
 import { useEffect } from "preact/hooks";
 import { api } from "@/api";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
-import { ENTITY_PER_PAGE, albums, artists, next, playTrack, playlists, tracks, useAppDispatch, useAppSelector } from "@/redux/store";
+import { ENTITY_PER_PAGE, albums, artists, next, playlists, tracks, useAppDispatch, useAppSelector } from "@/redux/store";
 import { pieApiClient } from "@/api/client";
 import { blureBackgroundHook } from "@/utils/blureBackgroundHook";
 import { useNavigatorMediaSessionHook } from "@/utils/useNavigatorMediaSessionHook";
@@ -15,18 +15,21 @@ import { Helmet } from '@notwoods/preact-helmet'
 
 export const rootRoute = createRootRoute({
   component: () => {
+    const dispatch = useAppDispatch()
+
     blureBackgroundHook()
     useNavigatorMediaSessionHook()
 
-    const { load, } = useGlobalAudioPlayer()
+    const { load } = useGlobalAudioPlayer()
 
-    const dispatch = useAppDispatch()
-
-    const songsPages = useAppSelector(state => state.library.songsPages)
-    const artistsPages = useAppSelector(state => state.library.artistsPages)
-    const albumsPages = useAppSelector(state => state.library.albumsPages)
-
-    const currentTrack = useAppSelector(state => state.currentTrack)
+    const {
+      currentTrack,
+      library: {
+        songsPages,
+        artistsPages,
+        albumsPages
+      }
+    } = useAppSelector(state => state)
 
     useEffect(() => {
       pieApiClient.findPlaylistsByDate({ userUuid })
@@ -53,8 +56,6 @@ export const rootRoute = createRootRoute({
       pieApiClient.findTrackByDate({ page: songsPages, limit: ENTITY_PER_PAGE, userUuid })
         .then(({ data }) => {
           dispatch(tracks(data))
-          // if (songsPages === 0)
-          //   dispatch(playTrack(data[0])) //Vladimir: я закомитил это потому что иначе не работают /player/{uuid}
         })
     }, [songsPages])
 
@@ -78,12 +79,6 @@ export const rootRoute = createRootRoute({
       }
     }, [currentTrack])
 
-    // const nav = useNavigate()
-
-    // useEffect(() => {
-    //   nav({ from: '/', to: '/library/songs'})
-    // }, [])
-
     return (
       <div class='relative flex flex-col w-full sm:flex-row h-dvh'>
         <Helmet meta={[
@@ -92,24 +87,17 @@ export const rootRoute = createRootRoute({
           { property: "og:title", content: `Pie Tunes` },
           { property: "og:site_name", content: `@pietunes` },
           { property: "og:description", content: `Awesome music service` },
-          // { property: "og:image", content: api.urlForTrackCoverById({ id: track.album.uuid }) },
-          // { property: "og:image:width", content: '400' },
-          // { property: "og:image:height", content: '400' },
           { property: "og:url", content: `${config.host.domain}` },
-          // { property: "og:type", content: 'music.song' },
           { property: "twitter:card", content: "summary" },
           { property: "twitter:site", content: "Pie Tunes" },
-          // { property: "twitter:image", content: api.urlForTrackCoverById({ id: track.album.uuid }) },
           { property: "twitter:title", content: "Pie Tunes" },
           { property: "twitter:description", content: `Awesome music service` },
-          // { name: "type", content: "mp3" }
         ]} title={`Pie Tunes`} />
         <SidePill />
         <Outlet />
       </div>
     )
   }
-
 })
 
 const routeTree = rootRoute.addChildren([libraryScreen, playerScreen, sharePlayerScreen, searchScreen, madeForYouRoute, madeForYouViewRoute, songsRoute, albumsRoute, artistsRoute, uploadRoute, albumViewRoute])

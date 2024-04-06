@@ -4,7 +4,7 @@ import { Track } from "@/api"
 import { useAudioTime } from "./hooks.ts/useAudioTime"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
 import ProgresBar from "../common/ProgressBar"
-import {useAppSelector } from "@/redux/store"
+import { useAppSelector } from "@/redux/store"
 import Like from "../common/Like"
 import { Link } from "@tanstack/react-router"
 
@@ -22,13 +22,8 @@ const calcPositionInPercent = (time?: number, duration?: number) => {
 const BubbleTrackInfo = (props: BubbleTrackInfoProps) => {
     const track = props.track
 
-    const time = useAudioTime()
-    const { duration, seek } = useGlobalAudioPlayer()
-    const position = calcPositionInPercent(time, duration);
     const trackFormSearch = useAppSelector(state => state.search.songs.find(t => t.uuid === track.uuid))
-
     const liked = trackFormSearch ? trackFormSearch.liked === true ? true : false : false
-
 
     return (
         <div className={`${props.class}  h-[74px] pt-2 bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
@@ -53,9 +48,18 @@ const BubbleTrackInfo = (props: BubbleTrackInfoProps) => {
 
                 </div>
             </div>
-            <ProgresBar classes="w-full" value={position} setValue={seek} relativeValue={duration} />
+            <ProgresBarWrapper />
         </div>
     )
+}
+
+const ProgresBarWrapper = () => {
+    const time = useAudioTime()
+    const { duration, seek } = useGlobalAudioPlayer()
+    const position = calcPositionInPercent(time, duration);
+    return (<>
+        <ProgresBar classes="w-full" value={position} setValue={seek} relativeValue={duration} />
+    </>)
 }
 
 export default BubbleTrackInfo

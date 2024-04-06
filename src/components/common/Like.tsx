@@ -7,7 +7,6 @@ type LikeProps = {
 
 const Like = (props: LikeProps) => {
     const dispatch = useAppDispatch()
-    // const track = useAppSelector(state => state.queue.find(t => t.uuid === props.entity.uuid))
 
     return (
         <LikeIcon class={`fill-white w-7 h-7 cursor-pointer`} onClick={() => {

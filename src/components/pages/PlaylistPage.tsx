@@ -19,7 +19,6 @@ const calcGenres = (playlist: Playlist) => {
 }
 
 const PlaylistPage = () => {
-
   const playlist = madeForYouViewRoute.useLoaderData()
 
   return (

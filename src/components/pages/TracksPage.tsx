@@ -10,9 +10,7 @@ const TracksPage = () => {
     dispatch(searchTracksFetch(query))
   })
 
-  const songs = useAppSelector(state => state.library.songs)
-  const searched = useAppSelector(state => state.library.searchSongs)
-
+  const {songs, searchSongs: searched} = useAppSelector(state => state.library)
   const tracks = searchQuery.length > 0 ? searched : songs
 
   const dispatch = useAppDispatch()
@@ -20,6 +18,7 @@ const TracksPage = () => {
   const { containerWithScrollRef } = useIsLoadNeedScroll(() => {
     dispatch(loadNextPage())
   })
+
   return (
     <>
       <div class="justify-between items-start inline-flex">

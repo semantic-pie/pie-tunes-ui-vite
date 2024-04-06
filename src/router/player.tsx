@@ -28,13 +28,14 @@ export const sharePlayerScreen = createRoute({
     path: '/player/$uuid',
     loader: ({ params }) => pieApiClient.findTrackByUuid({ uuid: params.uuid }).then(res => res.data),
     component: () => {
-        const track = sharePlayerScreen.useLoaderData()
-        const currentTrack = useAppSelector(state => state.currentTrack)
-
-        const isMobile = window.innerWidth < 640
         const dispatch = useAppDispatch()
-        const { uuid } = sharePlayerScreen.useParams()
 
+        const { uuid } = sharePlayerScreen.useParams()
+        const track = sharePlayerScreen.useLoaderData()
+
+        const currentTrack = useAppSelector(state => state.currentTrack)
+        const isMobile = window.innerWidth < 640
+        
         useEffect(() => {
             if (!currentTrack)
                 dispatch(playTrack(track))
@@ -44,7 +45,7 @@ export const sharePlayerScreen = createRoute({
 
         useEffect(() => {
             if (currentTrack)
-                nav({ from: '/player', to: '/player/' + currentTrack.uuid })
+                nav({ to: '/player/' + currentTrack.uuid })
         }, [currentTrack])
 
         return (

@@ -5,7 +5,6 @@ import { useEffect } from "preact/hooks"
 export const blureBackgroundHook = () => {
     const track = useAppSelector(state => state.currentTrack)
 
- 
     useEffect(() => {
         if (track) {
             // const html = document.getElementsByTagName('html')[0]

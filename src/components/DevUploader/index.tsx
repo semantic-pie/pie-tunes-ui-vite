@@ -1,19 +1,18 @@
 import { pieApiClient } from "@/api/client";
-import { useRef, useState } from "preact/hooks";
+import { useSignal } from "@preact/signals";
+import { useRef } from "preact/hooks";
 
 const DevUploader = () => {
-  const [filesCount, setFilesCount] = useState<number>(0)
-  const [uploadedFilesCount, setUploadedFilesCount] = useState<number>(0)
-  const [uploadedFilesStatus, setUploadedFilesStatus] = useState<number[]>([])
-
-  const [result, setResult] = useState<string>()
+  const filesCount = useSignal<number>(0)
+  const uploadedFilesCount = useSignal<number>(0)
+  const uploadedFilesStatus = useSignal<number[]>([])
 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
 
   async function uploadFile() {
     // setResult(undefined)
-    setUploadedFilesCount(0)
+    uploadedFilesCount.value = 0
 
     if (fileInputRef.current && fileInputRef.current.files) {
       const selectedFiles = fileInputRef.current.files;
@@ -23,18 +22,12 @@ const DevUploader = () => {
         formData.append("file", element);
 
         await pieApiClient.uploadMp3(formData).then(({ meta }) => {
-          setUploadedFilesCount(prev => prev + 1)
-          setUploadedFilesStatus(prev => [...prev, meta.status])
+          uploadedFilesCount.value++
+          uploadedFilesStatus.value = [...uploadedFilesStatus.value, meta.status]
           // setResult(`${uploadedFilesCount}/${filesCount} files uploaded`)
         })
 
       }
-
-      console.log('Uploading result: ')
-      console.log('filesCount: ', filesCount)
-      console.log('uploadedFilesCount: ', uploadedFilesCount)
-      console.log('uploadedFilesStatus: ', uploadedFilesStatus)
-      console.log('result: ', result)
     }
   }
 
@@ -42,9 +35,9 @@ const DevUploader = () => {
     if (e.currentTarget && e.currentTarget.files && e.currentTarget.files.length) {
       console.log('kek: ', e.currentTarget.files.length)
 
-      setFilesCount(e.currentTarget.files.length)
-      setUploadedFilesCount(0)
-      setUploadedFilesStatus([])
+      filesCount.value = e.currentTarget.files.length
+      uploadedFilesCount.value = 0
+      uploadedFilesStatus.value = []
     }
   }
 
@@ -56,11 +49,7 @@ const DevUploader = () => {
     }
   }
 
-  console.log('filesCount: ', filesCount)
-  console.log('uploadedFilesCount: ', uploadedFilesCount)
-  console.log('uploadedFilesStatus: ', uploadedFilesStatus)
-
-  const last = filesCount - uploadedFilesCount
+  const last = filesCount.value - uploadedFilesCount.value
 
   return (
     <div class='w-full overflow-y-scroll'>
@@ -72,8 +61,8 @@ const DevUploader = () => {
         </div>
 
         <div class='mx-5 flex flex-wrap gap-1'>
-          {filesCount > 0 && [...Array(filesCount).keys()].map((ignore, i, arr) => {
-            const status = uploadedFilesStatus[i]
+          {filesCount.value > 0 && [...Array(filesCount).keys()].map((ignore, i, arr) => {
+            const status = uploadedFilesStatus.value[i]
             return (
               <div data-tooltip={status >= 400 ? getFileName(i) : undefined}
                 data-tooltip-position="bottom" class={`w-10 h-10 flex justify-center items-center text-center bg-opacity-80 ${arr.length - i <= last ? 'bg-slate-300' : status > 400 ? 'bg-red-300' : 'bg-green-300'}`}>{status >= 400 ? status : ''}</div>

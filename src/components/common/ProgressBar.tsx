@@ -1,4 +1,5 @@
-import { useRef, useState } from "preact/hooks"
+import { useSignal } from "@preact/signals"
+import { useRef } from "preact/hooks"
 
 type ProgresBarProps = {
     classes?: string
@@ -12,7 +13,7 @@ type ProgresBarProps = {
 const ProgresBar = ({ value, setValue, relativeValue, classes, classesInner, polzunok }: ProgresBarProps) => {
     const container = useRef<HTMLDivElement>(null)
 
-    const [pressed, setPressed] = useState(false)
+    const isPressed = useSignal(false)
 
     const calculateAndSetProgres = (clientX: number) => {
         if (container.current) {
@@ -23,22 +24,30 @@ const ProgresBar = ({ value, setValue, relativeValue, classes, classesInner, pol
     }
 
     const onTouch = (e: TouchEvent) => {
+        e.preventDefault()
+        e.stopPropagation()
         calculateAndSetProgres(e.targetTouches[0].clientX)
     }
 
     const onMouse = (e: MouseEvent) => {
+        e.preventDefault()
+        e.stopPropagation()
         calculateAndSetProgres(e.clientX)
     }
 
 
     const onTouchMove = (e: TouchEvent) => {
-        if (pressed) {
+        e.preventDefault()
+        e.stopPropagation()
+        if (isPressed.value) {
             calculateAndSetProgres(e.targetTouches[0].clientX)
         }
     }
 
     const onMouseMove = (e: MouseEvent) => {
-        if (pressed) {
+        e.preventDefault()
+        e.stopPropagation()
+        if (isPressed.value) {
             calculateAndSetProgres(e.clientX)
         }
     }
@@ -47,14 +56,14 @@ const ProgresBar = ({ value, setValue, relativeValue, classes, classesInner, pol
         <div ref={container}
             class={` ${classes} h-[4px] cursor-pointer bg-black bg-opacity-20 flex justify-start group`}
             onClick={onMouse}
-            onTouchStart={(e) => { setPressed(true), onTouch(e) }}
-            onTouchEnd={() => setPressed(false)}
-            onTouchCancel={() => setPressed(false)}
+            onTouchStart={(e) => {e.preventDefault(), e.stopPropagation(), isPressed.value = true, onTouch(e) }}
+            onTouchEnd={() => isPressed.value = false}
+            onTouchCancel={() => isPressed.value = false}
             onTouchMove={onTouchMove}
-            onMouseDown={() => setPressed(true)}
-            onMouseUp={() => setPressed(false)}
+            onMouseDown={() => isPressed.value = true}
+            onMouseUp={() => isPressed.value = false}
             onMouseMove={onMouseMove}
-            onMouseLeave={() => setPressed(false)}
+            onMouseLeave={() => isPressed.value = false}
         >
             <div style={{ width: value + '%' }} class={`${classesInner} bg-white bg-opacity-60 ${polzunok ? '' : 'group-hover:bg-opacity-80'} cursor-pointer`}>
 
