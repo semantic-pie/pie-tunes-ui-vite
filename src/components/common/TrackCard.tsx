@@ -27,7 +27,7 @@ const TrackCard = (props: TrackCardProps) => {
                 <img onClick={() => dispatch(playTrack(track))} class="w-12 h-12 rounded-md cursor-pointer" src={api.urlForTrackCoverById({ id: track.album.uuid })} /> :
                 <div class="w-12 h-12 rounded-md bg-fuchsia-100 bg-opacity-40" />}
 
-            <div class='w-full  flex justify-between items-center '>
+            <div class='w-full  flex justify-between items-center truncate'>
                 <div onClick={() => dispatch(playTrack(track))} class='cursor-pointer' >
                     <div class="text-start text-white text-base text-nowrap font-normal capitalize">{trancate(track.title, 28)}</div>
                     <div class="text-start text-white text-opacity-60 text-sm font-normal capitalize">{track.band ? trancate(track.band.name, 28) : 'Band Name'}</div>
