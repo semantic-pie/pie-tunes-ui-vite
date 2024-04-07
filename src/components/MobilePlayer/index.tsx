@@ -56,11 +56,10 @@ const MobilePlayer = () => {
 
         },
         {
-            label: 'Info', content: <>
-                <p class='opacity-70'>
-                    Sleep Token are a British rock band from London, formed in 2016. The group are an anonymous, masked collective led by a frontman using the moniker Vessel. They have been categorised under many different genres, including alternative metal, post-rock/metal, progressive metal and indie rock/pop. After self-releasing their debut extended play (EP) One in 2016, the band signed with Basick Records and issued a follow-up, Two, the next year. The group later signed with Spinefarm Records and released their debut full-length album Sundowning in 2019, which was followed in 2021 by This Place Will Become Your Tomb. A third album, Take Me Back to Eden, was released in May 2023.
-                </p>
-            </>
+            label: 'Info', content:
+                <pre class='h-full opacity-70 text-[12px] font-mono overflow-scroll'>
+                    {JSON.stringify(track, null, 4)}
+                </pre>
         },
     ]
 
