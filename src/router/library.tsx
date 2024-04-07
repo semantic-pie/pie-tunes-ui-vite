@@ -72,6 +72,12 @@ export const artistsRoute = createRoute({
   component: () => <ArtistsPage />
 })
 
+export const racentsRoute = createRoute({
+  getParentRoute: () => libraryScreen,
+  path: '/racent',
+  component: () => <div></div>
+})
+
 export const uploadRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/upload',

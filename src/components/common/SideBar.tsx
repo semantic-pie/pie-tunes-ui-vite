@@ -6,13 +6,68 @@ import Playlists from "@/components/icons/Playlists";
 import Plus from "@/components/icons/Plus";
 import ThreeDots from "@/components/icons/ThreeDots";
 import User from "@/components/icons/User";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import UploadIcon from "../icons/UploadIcon";
 import Search from "../icons/Search";
+import { useSignal } from "@preact/signals";
+import { useRef } from "preact/hooks";
+import { useSwipeHook } from "@/utils/useSwipeHook";
+
+const pages: { route: string }[] = [
+    { route: '/library/songs' },
+    { route: '/library/artists' },
+    { route: '/library/albums' },
+    { route: '/library/made-for-you' },
+    { route: '/library/racent' },
+    { route: '/library/upload' },
+    { route: '/library/upload' }
+]
 
 const SideBar = () => {
+    const ref = useRef(null)
+    const router = useRouterState();
+    const nav = useNavigate()
+
+    const currentPage = useSignal<string>(router.location.pathname)
+
+    const swipeLeft = () => {
+        console.log('swipe left')
+        const currentPageIndex = pages.findIndex(p => p.route === currentPage.value)
+        const nextPageIndex = currentPageIndex + 1
+
+        console.log('currentPageIndex: ', currentPageIndex)
+        console.log('nextPageIndex: ', nextPageIndex)
+
+        if (currentPageIndex != -1 && nextPageIndex < pages.length) {
+            console.log('ok left')
+            const next = pages[nextPageIndex].route
+            currentPage.value = next
+            nav({ to: next })
+        }
+    }
+
+    const swipeRight = () => {
+        console.log('swipe right')
+        const currentPageIndex = pages.findIndex(p => p.route === currentPage.value)
+        const prevPageIndex = currentPageIndex - 1
+
+        console.log('currentPageIndex: ', currentPageIndex)
+        console.log('prevPageIndex: ', prevPageIndex)
+
+        if (currentPageIndex != -1 && prevPageIndex != -1) {
+            console.log('ok right')
+            const prev = pages[prevPageIndex].route
+            currentPage.value = prev
+            nav({ to: prev })
+        }
+    }
+
+    useSwipeHook(swipeLeft, 'swiped-left', ref)
+    useSwipeHook(swipeRight, 'swiped-right', ref)
+
+    console.log(currentPage.value)
     return (
-        <div class="sm:w-[260px] flex flex-col justify-between sm:py-5 p-2 sm:p-6 sm:gap-8 sm:sidebar">
+        <div ref={ref} class="sm:w-[260px] flex flex-col justify-between sm:py-5 p-2 sm:p-6 sm:gap-8 sm:sidebar">
             <div class='flex flex-row sm:flex-col sm:gap-5'>
                 <div class="hidden sm:flex justify-between">
                     <div class="flex flex-col">

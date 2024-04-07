@@ -1,6 +1,6 @@
 import SidePill from "@/components/SidePill";
 import { Outlet, createRootRoute, createRouter } from "@tanstack/react-router";
-import { albumViewRoute, albumsRoute, artistsRoute, libraryScreen, madeForYouRoute, madeForYouViewRoute, songsRoute, uploadRoute } from "./library";
+import { albumViewRoute, albumsRoute, artistsRoute, libraryScreen, madeForYouRoute, madeForYouViewRoute, racentsRoute, songsRoute, uploadRoute } from "./library";
 import { playerScreen, sharePlayerScreen } from "./player";
 import { searchScreen } from "./search";
 import { useEffect } from "preact/hooks";
@@ -100,6 +100,6 @@ export const rootRoute = createRootRoute({
   }
 })
 
-const routeTree = rootRoute.addChildren([libraryScreen, playerScreen, sharePlayerScreen, searchScreen, madeForYouRoute, madeForYouViewRoute, songsRoute, albumsRoute, artistsRoute, uploadRoute, albumViewRoute])
+const routeTree = rootRoute.addChildren([libraryScreen, playerScreen, sharePlayerScreen, searchScreen, madeForYouRoute, madeForYouViewRoute, songsRoute, albumsRoute, artistsRoute, uploadRoute, albumViewRoute, racentsRoute])
 
 export const router = createRouter({ routeTree })
