@@ -22,5 +22,12 @@ export default defineConfig({
       "@components": path.resolve(__dirname, "./src/components"),
     },
   },
-  plugins: [preact(), TanStackRouterVite(),  VitePWA()],
+  plugins: [preact(), TanStackRouterVite(), VitePWA({
+    manifest: {
+      name: 'Pie Tunes',
+      short_name: 'Pie Tunes',
+      start_url: '/library/songs',
+      lang: 'en'
+    }
+  })],
 });
