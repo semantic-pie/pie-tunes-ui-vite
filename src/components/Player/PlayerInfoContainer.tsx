@@ -47,7 +47,7 @@ const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
                 }
                 {
                     currentMiniPage.value === 'Info' && <>
-                        <pre class='opacity-70 text-[12px] font-mono overflow-y-scroll overflow-x-hidden'>
+                        <pre class='opacity-70 text-[12px] font-mono overflow-scroll'>
                             {props.info}
                         </pre>
                     </>

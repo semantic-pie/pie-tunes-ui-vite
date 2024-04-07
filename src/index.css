@@ -12,6 +12,7 @@ body {
 
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -21,6 +22,10 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-black bg-opacity-40
+}
+
+::-webkit-scrollbar-corner {
+  @apply bg-transparent
 }
 
 /* ::view-transition-old(root), ::view-transition-new(root) */
@@ -125,7 +130,7 @@ body {
 }
 
 
-@-webkit-keyframes movingtitle {
+/* @-webkit-keyframes movingtitle {
   from {
     margin-left: 0px;
   }
@@ -143,4 +148,4 @@ body {
   to {
     margin-left: 100%;
   }
-}
+} */
