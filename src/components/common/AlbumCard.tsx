@@ -1,11 +1,10 @@
 import { MusicAlbum, api } from "@/api"
 import { trancate } from "@/utils/hellpers"
 import { useNavigate } from "@tanstack/react-router"
-import { HTMLProps } from "preact/compat"
 
 type AlbumCardProps = {
     album: MusicAlbum
-} & HTMLProps<HTMLDivElement>
+}
 
 const AlbumCard = (props: AlbumCardProps) => {
     const nav = useNavigate({ from: '/library/albums' })

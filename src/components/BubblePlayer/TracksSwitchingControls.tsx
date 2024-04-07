@@ -3,13 +3,11 @@ import Forward from "@/components/icons/PlayerIcons/Forward";
 import Pause from "@/components/icons/PlayerIcons/Pause";
 import Play from "@/components/icons/PlayerIcons/Play";
 import { next, prev, useAppDispatch } from "@/redux/store";
-import { HTMLProps } from "preact/compat";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
 
 
-const TracksSwitchingControls = (props: HTMLProps<HTMLDivElement>) => {
+const TracksSwitchingControls = (props: { class?: string }) => {
     const { playing, togglePlayPause } = useGlobalAudioPlayer()
-
     const dispatch = useAppDispatch()
 
     return (
