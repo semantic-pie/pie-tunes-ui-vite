@@ -4,6 +4,7 @@
 
 html {
   @apply bg-slate-800 text-white font-['Helvetica']
+overscroll-behavior: none;
 }
 
 ::-webkit-scrollbar {
