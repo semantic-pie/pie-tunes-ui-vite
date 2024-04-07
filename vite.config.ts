@@ -23,6 +23,7 @@ export default defineConfig({
     },
   },
   plugins: [preact(), TanStackRouterVite(), VitePWA({
+    registerType: 'autoUpdate',
     manifest: {
       name: 'Pie Tunes',
       short_name: 'Pie Tunes',
