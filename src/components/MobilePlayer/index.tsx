@@ -79,7 +79,7 @@ const MobilePlayer = () => {
     return (
         <div class='w-full h-dvh flex flex-col justify-start p-2 gap-2 z-10'>
             <div class={`flex ${currentMiniPage.value ? 'flex-row' : 'flex-col'}  justify-between gap-2 `}>
-                <img ref={imgRef} class={`rounded-xl h-full w-full ${currentMiniPage.value ? '!w-20 !h-20' : ''} transition-all duration-400`} src={api.urlForTrackCoverById({ id: track.album.uuid })} alt="" />
+                <img ref={imgRef} class={`rounded-xl max-[380px]:self-center max-[380px]:h-56 max-[380px]:w-56 h-full w-full ${currentMiniPage.value ? '!w-20 !h-20' : ''} transition-all duration-400`} src={api.urlForTrackCoverById({ id: track.album.uuid })} alt="" />
 
                 <div class='w-full flex justify-between pb-[5px] px-3 py-1 bg-black bg-opacity-15 rounded-xl truncate'>
                     <div className="flex flex-col justify-center items-start gap-1 truncate">
