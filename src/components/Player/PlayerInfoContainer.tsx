@@ -1,5 +1,6 @@
 import { Track, api } from "@/api"
-import { playTrack, useAppDispatch } from "@/redux/store"
+import { playTrack } from "@/redux/slices/playerSlice"
+import { useAppDispatch } from "@/redux/store"
 import { useSignal } from "@preact/signals"
 
 type PlayerInfoContainerProps = {
@@ -28,11 +29,11 @@ const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
             <div class='flex flex-col overflow-y-scroll pr-[3px] mr-[-5px] gap-3' >
                 {
                     currentMiniPage.value === 'Up Next' && <>
-                        {props.queue.map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
-                            <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: t.album.uuid })} alt="" />
+                        {props.queue.map(track => (<div onClick={() => dispatch(playTrack({ track }))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
+                            <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: track.album.uuid })} alt="" />
                             <div class='flex flex-col truncate'>
-                                <span class='text-white text-nowrap'>{t?.title.substring(0, 30)}</span>
-                                <span class='text-white text-nowrap opacity-45'>{t?.band.name.substring(0, 30)}</span>
+                                <span class='text-white text-nowrap'>{track?.title.substring(0, 30)}</span>
+                                <span class='text-white text-nowrap opacity-45'>{track?.band.name.substring(0, 30)}</span>
                             </div>
                         </div>))}
                     </>

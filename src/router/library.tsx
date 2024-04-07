@@ -17,7 +17,7 @@ export const libraryScreen = createRoute({
   getParentRoute: () => rootRoute,
   path: '/library',
   component: () => {
-    const track = useAppSelector(state => state.currentTrack)
+    const track = useAppSelector(state => state.player.queue.currentTrack)
 
     return (
       <div class='h-dvh sm:h-auto flex flex-col sm:gap-5 sm:mx-auto sm:my-auto'>

@@ -10,7 +10,7 @@ const AlbumPage = () => {
     const { albumId } = albumViewRoute.useParams()
     const albumTracks = albumViewRoute.useLoaderData()
 
-    const album = useAppSelector(state => state.library.albums.find(a => a.uuid === albumId) ?? { name: '' })
+    const album = useAppSelector(state => state.library.albums.all.find(a => a.uuid === albumId) ?? { name: '' })
 
     let twoRows = false
     if (album) twoRows = album.name.length > 20 ? true : false

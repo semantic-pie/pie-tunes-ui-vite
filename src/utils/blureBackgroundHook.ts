@@ -3,7 +3,7 @@ import { useAppSelector } from "@/redux/store"
 import { useEffect } from "preact/hooks"
 
 export const blureBackgroundHook = () => {
-    const track = useAppSelector(state => state.currentTrack)
+    const track = useAppSelector(state => state.player.queue.currentTrack)
 
     useEffect(() => {
         if (track) {

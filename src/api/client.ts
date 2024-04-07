@@ -30,6 +30,14 @@ export type SnoopySearchTrack = {
     coverUrl: string
 }
 
+export type SnoopySearchTrackExtended = SnoopySearchTrack & { status?: SnoopyTrackStatus }
+
+export enum SnoopyTrackStatus {
+    IN_PROCESS,
+    SUCCESSFULLY,
+    FAILED
+}
+
 interface PieApiClient {
     findTrackByUuid: (params: FindByUuid) => Promise<PieApiResponse<Track>>
     findTrackByTitle: (params: FindByTitleParams) => Promise<PieApiResponse<Track[]>>
@@ -54,7 +62,7 @@ interface PieApiClient {
 
     postEvent: (body: EventBody) => Promise<PieApiResponse<void>>
     searchSnoopy: (params: FindByQuery) => Promise<PieApiResponse<SnoopySearchTrack[]>>
-    uploadSnoopy: (params: { query: string }) => Promise<PieApiResponse<any>>
+    uploadSnoopy: (params: { query: string }) => Promise<PieApiResponse<{ uploadedTrack: { uuid: string } }>>
 }
 
 const get = { method: 'GET', headers: { 'Content-Type': 'application/json' } }

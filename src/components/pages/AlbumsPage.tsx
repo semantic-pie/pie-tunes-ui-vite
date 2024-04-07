@@ -1,10 +1,11 @@
-import { loadNextPageAlbums, useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import SearchBar from "../common/SearchBar";
 import SortByIcon from "../icons/SortByIcon";
 import AlbumCard from "../common/AlbumCard";
 import { useIsLoadNeedScroll } from "@/utils/useIsLoadNeedWithScroll";
 import { useSearchQuery } from "@/utils/useSearchQuery";
 import { useEffect } from "preact/hooks";
+import { fetchNextAlbumsPage } from "@/redux/slices/dataSlice";
 
 const AlbumsPage = () => {
   const { changeSearchQuery, searchQuery } = useSearchQuery((query) => {
@@ -12,14 +13,14 @@ const AlbumsPage = () => {
     // dispatch(searchAlbumsFetch(query))
   })
 
-  const libraryAlbums = useAppSelector(state => state.library.albums)
+  const libraryAlbums = useAppSelector(state => state.library.albums.all)
   // const searched = useAppSelector(state => state.library.searchAlbums)
   const albums = libraryAlbums
 
   const dispatch = useAppDispatch()
 
   const { containerWithScrollRef, scrollPosition } = useIsLoadNeedScroll(() => {
-    dispatch(loadNextPageAlbums())
+    dispatch(fetchNextAlbumsPage())
   })
 
   useEffect(() => {

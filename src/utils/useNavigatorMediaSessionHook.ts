@@ -1,4 +1,5 @@
-import { next, prev, useAppDispatch } from "@/redux/store";
+import { playNextQueueTrack, playPrevQueueTrack } from "@/redux/slices/playerSlice";
+import { useAppDispatch } from "@/redux/store";
 import { useEffect } from "preact/hooks";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
 
@@ -10,8 +11,8 @@ export const useNavigatorMediaSessionHook = () => {
     const actionHandlers: [MediaSessionAction, MediaSessionActionHandler][] = [
         ['play', play],
         ['pause', pause],
-        ['previoustrack', () => dispatch(prev())],
-        ['nexttrack', () => dispatch(next())],
+        ['previoustrack', () => dispatch(playPrevQueueTrack())],
+        ['nexttrack', () => dispatch(playNextQueueTrack())],
         ['stop', pause],
         ['seekto', (details) => details.seekTime ? seek(details.seekTime) : undefined]
     ];

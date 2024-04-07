@@ -1,4 +1,4 @@
-import { playTrack, useAppDispatch, useAppSelector } from "@/redux/store"
+import { useAppDispatch, useAppSelector } from "@/redux/store"
 import { api } from "@/api"
 import ProgresBar from "../common/ProgressBar"
 import { useAudioTime } from "../BubblePlayer/hooks.ts/useAudioTime"
@@ -11,6 +11,7 @@ import { trancate } from "@/utils/hellpers"
 import { useNavigate } from "@tanstack/react-router"
 import { useSwipeHook } from "@/utils/useSwipeHook"
 import { useSignal } from "@preact/signals"
+import { playTrack } from "@/redux/slices/playerSlice"
 
 const calcPositionInPercent = (time?: number, duration?: number) => {
     if (time && duration) return (time / duration) * 100
@@ -23,11 +24,11 @@ type PlayerInfoPage = {
 }
 
 const MobilePlayer = () => {
-    const track = useAppSelector(state => state.currentTrack)
+    const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
 
-    if (!track) return <div>No Track</div>
+    if (!currentTrack) return <div>No Track</div>
 
-    const tracks = useAppSelector(state => state.queue)
+    const tracks = useAppSelector(state => state.player.queue.tracks)
 
     const dispatch = useAppDispatch()
 
@@ -38,11 +39,11 @@ const MobilePlayer = () => {
     const pages: PlayerInfoPage[] = [
         {
             label: 'Up Next', content: <>
-                {tracks.map(t => (<div onClick={() => dispatch(playTrack(t))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
-                    <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: t.album.uuid })} alt="" />
+                {tracks.map(track => (<div onClick={() => dispatch(playTrack({ track }))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
+                    <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: track.album.uuid })} alt="" />
                     <div class='flex flex-col truncate'>
-                        <span class='text-white text-nowrap '>{trancate(t.title, 32)}</span>
-                        <span class='text-white text-nowrap opacity-45'>{trancate(t.band.name, 32)}</span>
+                        <span class='text-white text-nowrap '>{trancate(track.title, 32)}</span>
+                        <span class='text-white text-nowrap opacity-45'>{trancate(track.band.name, 32)}</span>
                     </div>
                 </div>))}
             </>
@@ -58,7 +59,7 @@ const MobilePlayer = () => {
         {
             label: 'Info', content:
                 <pre class='h-full opacity-70 text-[12px] font-mono overflow-scroll'>
-                    {JSON.stringify(track, null, 4)}
+                    {JSON.stringify(currentTrack, null, 4)}
                 </pre>
         },
     ]
@@ -78,17 +79,17 @@ const MobilePlayer = () => {
     return (
         <div class='w-full h-dvh flex flex-col justify-start p-2 gap-2 z-10'>
             <div class={`flex ${currentMiniPage.value ? 'flex-row' : 'flex-col'}  justify-between gap-2 `}>
-                <img ref={imgRef} class={`rounded-xl max-[380px]:self-center max-[380px]:h-56 max-[380px]:w-56 h-full w-full ${currentMiniPage.value ? '!w-20 !h-20' : ''} transition-all duration-400`} src={api.urlForTrackCoverById({ id: track.album.uuid })} alt="" />
+                <img ref={imgRef} class={`rounded-xl max-[380px]:self-center max-[380px]:h-56 max-[380px]:w-56 h-full w-full ${currentMiniPage.value ? '!w-20 !h-20' : ''} transition-all duration-400`} src={api.urlForTrackCoverById({ id: currentTrack.album.uuid })} alt="" />
 
                 <div class='w-full flex justify-between pb-[5px] px-3 py-1 bg-black bg-opacity-15 rounded-xl truncate'>
                     <div className="flex flex-col justify-center items-start gap-1 truncate">
-                        <div className="text-center text-white text-[24px] font-semibold text-opacity-80 font-['Helvetica Neue'] text-nowrap track-title">{track.title.length > 25 ? track.title.substring(0, 25) + '...' : track.title}</div>
-                        <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{track.band.name.length > 25 ? track.band.name.substring(0, 25) + '...' : track.band.name}</div>
+                        <div className="text-center text-white text-[24px] font-semibold text-opacity-80 font-['Helvetica Neue'] text-nowrap track-title">{currentTrack.title.length > 25 ? currentTrack.title.substring(0, 25) + '...' : currentTrack.title}</div>
+                        <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{currentTrack.band.name.length > 25 ? currentTrack.band.name.substring(0, 25) + '...' : currentTrack.band.name}</div>
                     </div>
 
                     <div class="flex flex-row gap-5 items-center justify-center">
                         <ThreeDots class="w-4 h-4" />
-                        <Like entity={track} />
+                        <Like entity={currentTrack} />
                     </div>
                 </div>
             </div>

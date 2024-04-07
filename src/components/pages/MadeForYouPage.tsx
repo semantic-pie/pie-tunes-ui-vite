@@ -4,7 +4,7 @@ import PlaylistCard from "../common/PlaylistCard";
 import { useNavigate } from "@tanstack/react-router";
 
 const MadeForYouPage = () => {
-  const madeForYou = useAppSelector(state => state.library.playlists.madeForYou)
+  const madeForYou = useAppSelector(state => state.library.playlist.madeForYou.all)
 
   const nav = useNavigate({ from: '/library/made-for-you' })
 

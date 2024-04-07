@@ -1,9 +1,10 @@
-import { loadNextPageArtists, useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import SearchBar from "../common/SearchBar";
 import SortByIcon from "../icons/SortByIcon";
 import ArtistCard from "../common/ArtistCard";
 import { useIsLoadNeedScroll } from "@/utils/useIsLoadNeedWithScroll";
 import { useSearchQuery } from "@/utils/useSearchQuery";
+import { fetchNextBandsPage } from "@/redux/slices/dataSlice";
 
 const ArtistsPage = () => {
   const dispatch = useAppDispatch()
@@ -12,10 +13,10 @@ const ArtistsPage = () => {
     console.log('search artists: ', query)
   })
 
-  const artists = useAppSelector(state => searchQuery.length > 0 ? state.library.artists.filter(a => a.name.includes(searchQuery)) : state.library.artists)
+  const artists = useAppSelector(state => searchQuery.length > 0 ? state.library.bands.all.filter(a => a.name.includes(searchQuery)) : state.library.bands.all)
 
   const { containerWithScrollRef } = useIsLoadNeedScroll(() => {
-    dispatch(loadNextPageArtists())
+    dispatch(fetchNextBandsPage())
   })
 
   return (

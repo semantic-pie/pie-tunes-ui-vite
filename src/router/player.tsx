@@ -2,19 +2,20 @@ import { createRoute, useNavigate } from "@tanstack/react-router";
 import { rootRoute } from ".";
 import Player from "@/components/Player";
 import MobilePlayer from "@/components/MobilePlayer";
-import { playTrack, useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useEffect } from "preact/hooks";
 import { pieApiClient } from "@/api/client";
 import { Helmet } from '@notwoods/preact-helmet'
 import { api } from "@/api";
 import { config } from "@/appConfiguration";
+import { playTrack } from "@/redux/slices/playerSlice";
 
 export const playerScreen = createRoute({
     getParentRoute: () => rootRoute,
     path: '/player',
     component: () => {
         // const isMobile = window.innerWidth < 640
-        const currentTrack = useAppSelector(state => state.currentTrack)
+        const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
 
         const nav = useNavigate()
 
@@ -33,12 +34,12 @@ export const sharePlayerScreen = createRoute({
         const { uuid } = sharePlayerScreen.useParams()
         const track = sharePlayerScreen.useLoaderData()
 
-        const currentTrack = useAppSelector(state => state.currentTrack)
+        const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
         const isMobile = window.innerWidth < 640
-        
+
         useEffect(() => {
             if (!currentTrack)
-                dispatch(playTrack(track))
+                dispatch(playTrack({ track }))
         }, [])
 
         const nav = useNavigate()

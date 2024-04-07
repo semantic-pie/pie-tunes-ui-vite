@@ -22,7 +22,7 @@ const calcPositionInPercent = (time?: number, duration?: number) => {
 const BubbleTrackInfo = (props: BubbleTrackInfoProps) => {
     const track = props.track
 
-    const trackFormSearch = useAppSelector(state => state.search.songs.find(t => t.uuid === track.uuid))
+    const trackFormSearch = useAppSelector(state => state.search.result.songs.find(t => t.uuid === track.uuid))
     const liked = trackFormSearch ? trackFormSearch.liked === true ? true : false : false
 
     return (

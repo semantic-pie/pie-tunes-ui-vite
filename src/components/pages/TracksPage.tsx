@@ -1,22 +1,23 @@
-import { loadNextPage, searchTracksFetch, useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import SearchBar from "../common/SearchBar";
 import SortByIcon from "../icons/SortByIcon";
 import TrackCard from "../common/TrackCard";
 import { useIsLoadNeedScroll } from "@/utils/useIsLoadNeedWithScroll";
 import { useSearchQuery } from "@/utils/useSearchQuery";
+import { fetchForTrackSearchByTitle, fetchNextSongsPage } from "@/redux/slices/dataSlice";
 
 const TracksPage = () => {
   const { changeSearchQuery, searchQuery } = useSearchQuery((query) => {
-    dispatch(searchTracksFetch(query))
+    dispatch(fetchForTrackSearchByTitle({ query }))
   })
 
-  const { songs, searchSongs: searched } = useAppSelector(state => state.library)
-  const tracks = searchQuery.length > 0 ? searched : songs
+  const { songs: { all, searched } } = useAppSelector(state => state.library)
+  const tracks = searchQuery.length > 0 ? searched : all
 
   const dispatch = useAppDispatch()
 
   const { containerWithScrollRef } = useIsLoadNeedScroll(() => {
-    dispatch(loadNextPage())
+    dispatch(fetchNextSongsPage())
   })
 
   return (

@@ -6,12 +6,13 @@ import { searchScreen } from "./search";
 import { useEffect } from "preact/hooks";
 import { api } from "@/api";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
-import { ENTITY_PER_PAGE, albums, artists, next, playlists, tracks, useAppDispatch, useAppSelector } from "@/redux/store";
-import { pieApiClient } from "@/api/client";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { blureBackgroundHook } from "@/utils/blureBackgroundHook";
 import { useNavigatorMediaSessionHook } from "@/utils/useNavigatorMediaSessionHook";
-import { config, userUuid } from "@/appConfiguration";
+import { config } from "@/appConfiguration";
 import { Helmet } from '@notwoods/preact-helmet'
+import { fetchNextAlbumsPage, fetchNextBandsPage, fetchNextSongsPage, fetchPlaylists } from "@/redux/slices/dataSlice";
+import { playNextQueueTrack } from "@/redux/slices/playerSlice";
 
 export const rootRoute = createRootRoute({
   component: () => {
@@ -20,44 +21,15 @@ export const rootRoute = createRootRoute({
     blureBackgroundHook()
     useNavigatorMediaSessionHook()
 
-    const { load } = useGlobalAudioPlayer()
-
-    const {
-      currentTrack,
-      library: {
-        songsPages,
-        artistsPages,
-        albumsPages
-      }
-    } = useAppSelector(state => state)
-
     useEffect(() => {
-      pieApiClient.findPlaylistsByDate({ userUuid })
-        .then(({ data }) => {
-          dispatch(playlists(data))
-        })
+      dispatch(fetchPlaylists())
+      dispatch(fetchNextAlbumsPage())
+      dispatch(fetchNextSongsPage())
+      dispatch(fetchNextBandsPage())
     }, [])
 
-    useEffect(() => {
-      pieApiClient.findArtistsDeprecated({ page: artistsPages * ENTITY_PER_PAGE, limit: ENTITY_PER_PAGE, query: 'iqnore' })
-        .then(({ data }) => {
-          dispatch(artists(data))
-        })
-    }, [artistsPages])
-
-    useEffect(() => {
-      pieApiClient.findAlbumsDeprecated({ page: albumsPages * ENTITY_PER_PAGE, limit: ENTITY_PER_PAGE, query: 'iqnore' })
-        .then(({ data }) => {
-          dispatch(albums(data))
-        })
-    }, [albumsPages])
-
-    useEffect(() => {
-      pieApiClient.findTrackByDate({ page: songsPages, limit: ENTITY_PER_PAGE, userUuid })
-        .then(({ data }) => {
-          dispatch(tracks(data))
-        })
-    }, [songsPages])
+    const { load } = useGlobalAudioPlayer()
+    const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
 
     useEffect(() => {
       if (currentTrack) {
@@ -65,7 +37,7 @@ export const rootRoute = createRootRoute({
           html5: true,
           format: 'mp3',
           autoplay: true,
-          onend: () => { dispatch(next()) }
+          onend: () => { dispatch(playNextQueueTrack()) }
         })
         if ('mediaSession' in navigator) {
           navigator.mediaSession.metadata = new MediaMetadata({

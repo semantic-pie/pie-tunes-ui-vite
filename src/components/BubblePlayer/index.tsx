@@ -9,7 +9,7 @@ import { useSwipeHook } from "@/utils/useSwipeHook";
 
 
 const BubblePlayer = () => {
-    const currentTrack = useAppSelector(state => state.currentTrack);
+    const currentTrack = useAppSelector(state => state.player.queue.currentTrack);
 
     const nav = useNavigate()
     const ref = useRef<HTMLDivElement>(null)
