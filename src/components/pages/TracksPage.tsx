@@ -10,7 +10,7 @@ const TracksPage = () => {
     dispatch(searchTracksFetch(query))
   })
 
-  const {songs, searchSongs: searched} = useAppSelector(state => state.library)
+  const { songs, searchSongs: searched } = useAppSelector(state => state.library)
   const tracks = searchQuery.length > 0 ? searched : songs
 
   const dispatch = useAppDispatch()
@@ -26,11 +26,14 @@ const TracksPage = () => {
         <SortByIcon />
       </div>
       <SearchBar query={searchQuery} setQuery={changeSearchQuery} />
-      <div ref={containerWithScrollRef} class={`flex flex-col max-h-[100%] pr-[8px] mr-[-14px] flex-1 gap-4 overflow-y-scroll`}>
-        {tracks.map((track) => <TrackCard track={track} />)}
-        {tracks.length === 0 && searchQuery.length === 0 && <span class='m-auto opacity-70'>You haven't added anything yet</span>}
-        {tracks.length === 0 && searchQuery.length !== 0 && <span class='m-auto opacity-70'>Nothing found :(</span>}
+      <div class='relative flex h-full'>
+        <div ref={containerWithScrollRef} class={`absolute top-0 left-0 right-0 flex flex-col h-full pr-[8px] mr-[-14px] flex-1 gap-4 overflow-y-scroll`}>
+          {tracks.map((track) => <TrackCard track={track} />)}
+          {tracks.length === 0 && searchQuery.length === 0 && <span class='m-auto opacity-70'>You haven't added anything yet</span>}
+          {tracks.length === 0 && searchQuery.length !== 0 && <span class='m-auto opacity-70'>Nothing found :(</span>}
+        </div>
       </div>
+
     </>
   )
 }
