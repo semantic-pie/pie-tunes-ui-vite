@@ -15,7 +15,7 @@ const MadeForYouPage = () => {
         <SortByIcon />
       </div>
       <div class='relative flex h-full'>
-        <div class="absolute top-0 bottom-0 flex flex-col sm:grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 pr-[8px] mr-[-14px] gap-x-3 gap-y-3 overflow-y-scroll">
+        <div class="absolute top-0 flex flex-col sm:grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 pr-[8px] mr-[-14px] gap-x-3 gap-y-3 overflow-y-scroll">
           {madeForYou.map((playlist) => <PlaylistCard onClick={() => nav({ to: '/library/made-for-you/' + playlist.uuid })} playlist={playlist} />)}
         </div>
       </div>
