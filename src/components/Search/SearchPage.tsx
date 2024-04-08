@@ -33,13 +33,13 @@ const SearchPage = () => {
         containerHeight.value = window.innerWidth < 640 ? { height: window.innerHeight - 90 } : { height: window.innerHeight - 400 }
     }, [screen.height])
 
-    return (<div class={`h-dvh sm:w-[1000px] flex flex-col sm:mx-auto ${isSearchMode ? 'gap-2 sm:gap-4' : 'sm:mt-[20%] gap-16'}`}>
-        <GlobalSearchInput class={`center w-full sm:w-[1000px] sm:transform transition-all duration-200`} value={searchQuery} setValue={changeSearchQuery} />
+    return (<div class={`h-dvh sm:w-full flex flex-col sm:mx-auto  ${isSearchMode ? 'p-3 gap-2 sm:gap-4' : 'sm:mt-[20%] gap-16'} transition-all duration-200`}>
+        <GlobalSearchInput class={`center mx-auto w-full sm:w-[1000px] sm:transform transition-all duration-200`} value={searchQuery} setValue={changeSearchQuery} />
 
         {isSearchMode &&
-            <div class={`flex sm:w-[1000px] flex-col sm:mx-auto gap-5 overflow-x-hidden overflow-y-scroll rounded-[29px]`}>
+            <div class={`flex sm:w-full flex-col sm:mx-auto gap-5 overflow-x-hidden  overflow-y-scroll rounded-[29px]`}>
                 {songs.length > 0 &&
-                    <div class='w-full flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 gap-5 py-4 backdrop-blur-[60px]'>
+                    <div class='w-[1000px] mx-auto flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 gap-5 py-4 backdrop-blur-[60px]'>
                         <h2 class='text-[28px] font-bold'>Tracks</h2>
                         <div>
                             <div class={`w-full ${songs.length > 4 ? 'h-[250px]' : 'h-fit'}  flex flex-col gap-4 overflow-y-scroll`}>
@@ -51,7 +51,7 @@ const SearchPage = () => {
                 }
 
                 {albums.length > 0 &&
-                    <div class='w-full sm:w-fit mx-auto flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 py-2 backdrop-blur-[60px]'>
+                    <div class='mx-auto sm:w-[1000px] flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 py-2 backdrop-blur-[60px]'>
                         <h2 class='text-[28px] font-bold'>Albums</h2>
                         <div class={`flex flex-col sm:grid sm:grid-cols-4 gap-3 overflow-x-scroll `}>
                             {albums.map((a) => <AlbumCard album={a} />)}
@@ -60,7 +60,7 @@ const SearchPage = () => {
                 }
 
                 {bands.length > 0 &&
-                    <div class='w-full sm:w-fit mx-auto flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 py-2 backdrop-blur-[60px]'>
+                    <div class='mx-auto sm:w-[1000px] flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 py-2 backdrop-blur-[60px]'>
                         <h2 class='text-[28px] font-bold'>Artits</h2>
                         <div class={`flex flex-col sm:grid sm:grid-cols-4 gap-3 overflow-x-scroll `}>
                             {bands.map((b) => <ArtistCard band={b} />)}
@@ -72,7 +72,7 @@ const SearchPage = () => {
             </div>}
 
 
-        {currentTrack && <div class={`mt-auto sm:mt-0 sm:w-full transition-all duration-200`}>
+        {currentTrack && <div class={`mt-auto ${isSearchMode ? '!mt-auto' : ''} sm:mt-0 sm:w-full transition-all duration-300`}>
             <BubblePlayer />
         </div>}
 
