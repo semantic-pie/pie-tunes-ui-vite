@@ -1,7 +1,6 @@
-import { Track, api } from "@/api"
-import { playTrack } from "@/redux/slices/playerSlice"
-import { useAppDispatch } from "@/redux/store"
+import { Track } from "@/api"
 import { useSignal } from "@preact/signals"
+import TrackCard from "../common/TrackCard"
 
 type PlayerInfoContainerProps = {
     queue: Track[]
@@ -16,8 +15,6 @@ const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
     const currentMiniPage = useSignal<MiniPageName>('Up Next')
     const changeMiniPage = (page: MiniPageName) => currentMiniPage.value = page
 
-    const dispatch = useAppDispatch()
-
     return (
         <div class={`sm:w-[370px] h-[450px] flex flex-col justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px] mt-2 sm:mt-0 mb-[138px] sm:mb-0`}>
             <div class='flex justify-between'>
@@ -29,18 +26,12 @@ const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
             <div class='flex flex-col overflow-y-scroll pr-[3px] mr-[-5px] gap-3' >
                 {
                     currentMiniPage.value === 'Up Next' && <>
-                        {props.queue.map(track => (<div onClick={() => dispatch(playTrack({ track }))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
-                            <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: track.album.uuid })} alt="" />
-                            <div class='flex flex-col truncate'>
-                                <span class='text-white text-nowrap'>{track?.title.substring(0, 30)}</span>
-                                <span class='text-white text-nowrap opacity-45'>{track?.band.name.substring(0, 30)}</span>
-                            </div>
-                        </div>))}
+                         {props.queue.map(track => <TrackCard track={track}/>)}
                     </>
                 }
                 {
                     currentMiniPage.value === 'Lyrics' && <>
-                        <div class='flex flex-col gap-5 text-gray-300 px-5'>
+                        <div class='opacity-70 flex flex-col gap-5 px-5'>
                             {props.lyrics.split('\n\n').map(l => <p>{l}</p>)}
                         </div>
                     </>

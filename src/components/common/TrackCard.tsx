@@ -24,22 +24,24 @@ const TrackCard = (props: TrackCardProps) => {
     const liked = trackFromState ? trackFromState.liked === true ? true : false : false
 
     const queue = useAppSelector(state => state.library.songs.all)
+    const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
+
 
     const onClick = () => dispatch(playTrack({ track, continuePlaybackWithTracks: queue }))
 
     return (
-        <div class={`w-full flex flex-row justify-start items-center gap-3  ${props.class}`}>
+        <div class={`w-full flex flex-row justify-start items-center gap-3 p-1 rounded-md ${props.class} ${currentTrack?.uuid === track.uuid ? 'border-white border-[0.4px] border-opacity-20 !bg-white !bg-opacity-15' : ''}`}>
             {track.album ?
                 <img onClick={onClick} class="w-12 h-12 rounded-md cursor-pointer" src={api.urlForTrackCoverById({ id: track.album.uuid })} /> :
                 <div class="w-12 h-12 rounded-md bg-fuchsia-100 bg-opacity-40" />}
 
-            <div class='w-full  flex justify-between items-center truncate'>
-                <div onClick={onClick} class='cursor-pointer' >
-                    <div class="text-start text-white text-base text-nowrap font-normal capitalize">{trancate(track.title, 28)}</div>
-                    <div class="text-start text-white text-opacity-60 text-sm font-normal capitalize">{track.band ? trancate(track.band.name, 28) : 'Band Name'}</div>
+            <div class='w-full flex items-center justify-between overflow-hidden'>
+                <div onClick={onClick} class='w-4/5 flex flex-col cursor-pointer truncate' >
+                    <div class="text-start text-white text-base font-normal capitalize truncate">{track.title}</div>
+                    <div class="text-start text-white text-opacity-60 text-sm font-normal capitalize truncate">{track.band ? track.band.name : 'Band Name'}</div>
                 </div>
 
-                <div class='flex items-center gap-3 pr-2'>
+                <div class='flext max-w-20 w-14 flex justify-end gap-3 pr-2'>
                     {props.addButton && !track.liked && !liked && <Like entity={track} />}
 
                     <span class='test-white text-[14px] opacity-50'>

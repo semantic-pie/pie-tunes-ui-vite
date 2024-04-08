@@ -28,15 +28,19 @@ const BubbleTrackInfo = (props: BubbleTrackInfoProps) => {
     return (
         <div className={`${props.class}  h-[74px] pt-2 bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
             <div class='w-full flex justify-between pb-[5px] px-1.5'>
-                <Link to={'/player'}>
-                    <div className="justify-start items-center gap-3.5 flex">
+
+                <Link to={'/player'} class='w-2/3 sm:w-3/5 '>
+                    <div className="justify-start items-center gap-3.5 flex ">
+
                         <img className="w-14 h-14 rounded-lg" src={api.urlForTrackCoverById({ id: track.album.uuid })} />
-                        <div className="flex-col justify-center items-start gap-1 inline-flex">
-                            <div className="text-center text-white text-lg font-normal font-['Helvetica Neue'] text-nowrap track-title">{track.title.length > 18 ? track.title.substring(0, 18) + '...' : track.title}</div>
-                            <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{track.band.name}</div>
+                        <div className="w-full flex-col justify-center items-start gap-1 inline-flex  ">
+                            <div className="w-full text-left text-white text-lg font-normal font-['Helvetica Neue'] track-title truncate">{track.title}</div>
+                            <div className="w-full text-left text-white text-opacity-40 text-base font-normal font-['Helvetica Neue'] truncate">{track.band.name}</div>
                         </div>
+
                     </div>
                 </Link>
+
                 <div class="flex flex-row gap-5 items-center justify-center">
                     <div class="w-4 h-4">
                         <ThreeDots class="w-4 h-4" />
