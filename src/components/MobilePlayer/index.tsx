@@ -89,7 +89,7 @@ const MobilePlayer = () => {
 
                     <div class="flex flex-row gap-5 items-center justify-center">
                         <ThreeDots class="w-4 h-4" />
-                        <Like entity={currentTrack} />
+                        <Like track={currentTrack} />
                     </div>
                 </div>
             </div>

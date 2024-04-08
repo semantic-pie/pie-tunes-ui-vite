@@ -10,9 +10,7 @@ export const config = {
 }
 
 export const CONSTANTS = {
-    ENTITY_PER_PAGE: 15
+    ENTITY_PER_PAGE: 20
 }
-
-export const userUuid = '7ea506b5-0cf4-4f7a-8781-42bf2e5fd591'
 
 console.log("API:\n", config)

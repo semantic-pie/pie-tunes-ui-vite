@@ -40,7 +40,7 @@ const Player = () => {
                                         <ThreeDots class="w-4 h-4" />
                                     </div>
                                     <div>
-                                        <Like entity={currentTrack} />
+                                        <Like track={currentTrack} />
                                     </div>
                                 </div>
                             </div>

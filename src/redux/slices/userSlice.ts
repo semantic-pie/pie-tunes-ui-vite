@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { pieApiClient } from "@/api/client"
-import { RootState } from "../store"
+import { AppDispatch, RootState } from "../store"
+import { MusicAlbum, MusicBand, Track } from "@/api"
 
 interface UserSlice {
     userUuid: string
@@ -10,19 +11,19 @@ const initialState: UserSlice = {
     userUuid: '7ea506b5-0cf4-4f7a-8781-42bf2e5fd591'
 }
 
-type FetchLikeProps = { trackUuid: string }
+export type FetchLikeProps = { track?: Track, album?: MusicAlbum, band?: MusicBand }
 
-export const fetchForLike = createAsyncThunk<{ trackUuid: string }, FetchLikeProps, { state: RootState }>(
+export const fetchForLike = createAsyncThunk<FetchLikeProps, FetchLikeProps, { state: RootState, dispatch: AppDispatch }>(
     'user/fetchForLike',
-    async ({ trackUuid }, { getState }) => {
-        return pieApiClient.postEvent({ type: 'LIKE_TRACK', user_uuid: getState().user.userUuid, track_uuid: trackUuid }).then(() => ({ trackUuid }))
+    async (props, { getState }) => {
+        return pieApiClient.postEvent({ type: 'LIKE_TRACK', user_uuid: getState().user.userUuid, track_uuid: props.track?.uuid! }).then(() => props)
     }
 )
 
-export const fetchForUnlike = createAsyncThunk<{ trackUuid: string }, FetchLikeProps, { state: RootState }>(
+export const fetchForUnlike = createAsyncThunk<FetchLikeProps, FetchLikeProps, { state: RootState }>(
     'user/fetchForUnlike',
-    async ({ trackUuid }, { getState }) => {
-        return pieApiClient.postEvent({ type: 'REMOVE_LIKE', user_uuid: getState().user.userUuid, track_uuid: trackUuid }).then(() => ({ trackUuid }))
+    async (props, { getState }) => {
+        return pieApiClient.postEvent({ type: 'REMOVE_LIKE', user_uuid: getState().user.userUuid, track_uuid: props.track?.uuid! }).then(() => props)
     }
 )
 

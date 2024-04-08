@@ -68,6 +68,9 @@ export const searchSlice = createSlice({
     name: 'search',
     initialState,
     reducers: {
+        clearSnoopySearch: (state) => {
+            state.snoopy.result = []
+        },
         setSnoopyTrackStatus: (state, action: PayloadAction<{ id: string, status: SnoopyTrackStatus }>) => {
             state.snoopy.result = state.snoopy.result.map(track => track.id === action.payload.id ? { ...track, status: action.payload.status } : track)
         },
@@ -87,12 +90,23 @@ export const searchSlice = createSlice({
             state.snoopy.result = action.payload.data
         })
         builder.addCase(fetchForLike.fulfilled, (state, action) => {
-            state.result.songs = state.result.songs.map(song => song.uuid === action.payload.trackUuid ? { ...song, liked: true } : song)
+            const track = action.payload.track
+            const album = action.payload.album
+            const band = action.payload.band
+            if (track) {
+                state.result.songs = state.result.songs.map(song => song.uuid === track.uuid ? { ...song, liked: true } : song)
+            }
         })
         builder.addCase(fetchForUnlike.fulfilled, (state, action) => {
-            state.result.songs = state.result.songs.map(song => song.uuid === action.payload.trackUuid ? { ...song, liked: false } : song)
+            const track = action.payload.track
+            const album = action.payload.album
+            const band = action.payload.band
+            if (track) {
+                state.result.songs = state.result.songs.map(song => song.uuid === track.uuid ? { ...song, liked: false } : song)
+            }
+            
         })
     },
 })
 
-export const { setSnoopyTrackStatus, addTrackToSearchResult } = searchSlice.actions
+export const { setSnoopyTrackStatus, addTrackToSearchResult, clearSnoopySearch } = searchSlice.actions

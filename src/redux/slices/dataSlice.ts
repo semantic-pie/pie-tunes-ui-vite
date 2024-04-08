@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { PieApiResponse, pieApiClient } from "@/api/client"
 import { RootState } from "../store"
 import { CONSTANTS } from "@/appConfiguration"
+import { fetchForLike } from "./userSlice"
 
 interface DataSlice {
     songs: {
@@ -62,7 +63,7 @@ export const fetchNextSongsPage = createAsyncThunk<PieApiResponse<Track[]>, void
     'data/fetchNextSongsPage',
     async (_args, { getState }) => {
         const state = getState()
-        return pieApiClient.findTrackByDate({ page: state.library.songs.page, limit, userUuid: getState().user.userUuid })
+        return pieApiClient.findTrackByDate({ page: state.library.songs.page, limit, userUuid: getState().user.userUuid, order: "asc" })
     }
 )
 
@@ -97,6 +98,14 @@ export const dataSlice = createSlice({
     name: 'data',
     initialState,
     reducers: {
+        // addEntity: (state, action: PayloadAction<FetchLikeProps>) => {
+        //     const track = action.payload.track
+        //     const album = action.payload.album
+        //     const band = action.payload.band
+        //     if (track) {
+        //         state.songs.all = [track, ...state.songs.all]
+        //     }
+        // }
     },
     extraReducers(builder) {
         builder.addCase(fetchNextSongsPage.fulfilled, (state, action) => {
@@ -114,5 +123,13 @@ export const dataSlice = createSlice({
         builder.addCase(fetchPlaylists.fulfilled, (state, action) => {
             state.playlist.madeForYou.all = [...state.playlist.madeForYou.all, ...action.payload.data]
         })
-    },
+        builder.addCase(fetchForLike.fulfilled, (state, action) => {
+            const track = action.payload.track
+            const album = action.payload.album
+            const band = action.payload.band
+            if (track) {
+                state.songs.all = [track, ...state.songs.all]
+            }
+        })
+    }
 })

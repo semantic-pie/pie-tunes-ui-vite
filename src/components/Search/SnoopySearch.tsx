@@ -5,7 +5,8 @@ import LoadingIcon from "../icons/LoadingIcon"
 import CheckIcon from "../icons/CheckIcon"
 import CrossIcon from "../icons/CrossIcon"
 import UploadIcon from "../icons/UploadIcon"
-import { fetchForSnoopyDownload, fetchForSnoopySearch } from "@/redux/slices/searchSlice"
+import { clearSnoopySearch, fetchForSnoopyDownload, fetchForSnoopySearch } from "@/redux/slices/searchSlice"
+import { useEffect } from "preact/hooks"
 
 
 
@@ -17,18 +18,22 @@ const SnoopySearch = (props: SnoopySearchProps) => {
     const dispatch = useAppDispatch()
     const { result } = useAppSelector(state => state.search.snoopy)
 
+    // if (props.query && result.length > 0) dispatch(clearSnoopySearch())
+
+    useEffect(() => {
+        dispatch(clearSnoopySearch()) 
+    }, [props.query])
+
     return (
         <>
             {!(result.length > 0) ?
-                <button onClick={() => dispatch(fetchForSnoopySearch({ query: props.query }))} class='mx-auto w-fit text-[20px] px-5 py-2 bg-black bg-opacity-15 hover:bg-opacity-20 backdrop-blur-[60px] rounded-[20px]'>Search in other music services</button>
-                : <div class='w-full flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 gap-5 py-4 backdrop-blur-[60px]'>
+                <button onClick={() => dispatch(fetchForSnoopySearch({ query: props.query }))} class='sm:w-[400px] mx-auto w-fit text-[20px] px-5 py-2 bg-black bg-opacity-15 hover:bg-opacity-20 backdrop-blur-[60px] rounded-[20px]'>Search in other music services</button>
+                : <div class='w-full sm:w-[1000px] mx-auto flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 gap-5 py-4 backdrop-blur-[60px]'>
                     <h2 class='text-[28px] font-bold'>Tracks from other sources</h2>
 
-
-                    <div class={`w-full h-fit flex flex-col gap-4 overflow-y-scroll`}>
+                    <div class={` h-fit flex flex-col gap-4 overflow-y-scroll`}>
                         {result.map(snoop => <SnoopyTrack snoopyTrack={snoop} />)}
                     </div>
-
                 </div>}
         </>
     )
@@ -46,8 +51,9 @@ const SnoopyTrack = (props: SnoopyTrackProps) => {
     const query = `${props.snoopyTrack.bandName} ${props.snoopyTrack.title}`
     const id = props.snoopyTrack.id
 
+    
     return (
-        <div class={`w-full flex flex-row justify-start items-center gap-3`}>
+        <div class={`flex flex-row justify-start items-center gap-3`}>
             <img class="w-12 h-12 rounded-md cursor-pointer" src={props.snoopyTrack.coverUrl} /> :
 
 

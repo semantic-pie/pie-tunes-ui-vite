@@ -47,7 +47,7 @@ const BubbleTrackInfo = (props: BubbleTrackInfoProps) => {
                     </div>
 
                     {trackFormSearch && !liked && <div>
-                        <Like entity={track} />
+                        <Like track={track} />
                     </div>}
 
                 </div>

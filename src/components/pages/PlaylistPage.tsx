@@ -34,7 +34,7 @@ const PlaylistPage = () => {
                 {calcGenres(playlist)}
                 <div class='flex justify-between items-center w-[80px] mx-5'>
                   <ThreeDots class={'w-[27px] h-[27px]'} />
-                  <Like entity={{ liked: false, uuid: '' }} />
+                  <Like />
                 </div>
               </div>
             </div>
@@ -45,7 +45,7 @@ const PlaylistPage = () => {
           {calcGenres(playlist)}
           <div class='flex justify-between items-center w-[80px]'>
             <ThreeDots class={'w-[27px] h-[27px]'} />
-            <Like entity={{ liked: false, uuid: '' }} />
+            <Like />
           </div>
         </div>
 

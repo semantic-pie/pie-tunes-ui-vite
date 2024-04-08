@@ -41,8 +41,8 @@ const TrackCard = (props: TrackCardProps) => {
                     <div class="text-start text-white text-opacity-60 text-sm font-normal capitalize truncate">{track.band ? track.band.name : 'Band Name'}</div>
                 </div>
 
-                <div class={`flext ${props.addButton ? 'min-w-32' : 'max-w-20'} items-center w-14 flex justify-end gap-3 pr-2`}>
-                    {props.addButton && !track.liked && !liked && <Like entity={track} />}
+                <div class={`flext ${props.addButton ? 'min-w-20' : 'max-w-10'} items-center w-14 flex justify-between gap-3 pr-2`}>
+                    {props.addButton && !track.liked && !liked && <Like track={track} />}
 
                     <span class='test-white text-[14px] opacity-50'>
                         {toMinSec(track.lengthInMilliseconds)}
