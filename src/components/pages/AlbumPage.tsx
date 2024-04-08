@@ -50,7 +50,7 @@ const AlbumPage = () => {
 
             <div class='relative flex h-full w-full'>
                 <div class="absolute p-2 sm:p-5 w-full top-0 left-0 right-0 flex flex-col sm:overflow-y-scroll">
-                    {albumTracks.map((track, i) => <TrackCard class={`p-2.5 ${i !== 0 ? 'border-t-[0.75px] border-white border-opacity-50' : ''} `} track={track} />)}
+                    {albumTracks.map((track, i) => <TrackCard class={`p-2.5`} track={track} />)}
                 </div>
             </div>
         </div>

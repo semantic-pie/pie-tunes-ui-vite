@@ -52,7 +52,7 @@ const PlaylistPage = () => {
 
         <div class='relative flex h-full '>
           <div class="absolute p-2 sm:p-5 top-0 bottom-0 left-0 right-0 h-full flex flex-col sm:overflow-y-scroll">
-            {playlist.tracks.map((wrapper, i) => <TrackCard class={`p-2.5 ${i !== 0 ? 'border-t-[0.75px]  border-white border-opacity-50' : ''} `} track={wrapper.track} />)}
+            {playlist.tracks.map((wrapper, i) => <TrackCard class={`p-2.5  `} track={wrapper.track} />)}
           </div>
         </div>
       </div>
