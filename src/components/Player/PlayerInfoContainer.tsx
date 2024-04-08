@@ -12,7 +12,7 @@ type MiniPageName = 'Up Next' | 'Lyrics' | 'Info'
 
 
 const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
-    const currentMiniPage = useSignal<MiniPageName>('Up Next')
+    const currentMiniPage = useSignal<MiniPageName>(props.queue.length > 0 ? 'Up Next' : 'Info')
     const changeMiniPage = (page: MiniPageName) => currentMiniPage.value = page
 
     return (
