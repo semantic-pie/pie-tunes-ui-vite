@@ -1,8 +1,9 @@
 import { Track } from "@/api"
+import { TrackCardWrapper } from "@/components/TrackCardComponent/TrackCardWrapper"
 import { useSignal } from "@preact/signals"
-import { TrackCardWrapper } from "../TrackCardComponent/TrackCardWrapper"
 
 type PlayerInfoContainerProps = {
+    currentTrack: Track
     queue: Track[]
     lyrics: string
     info: string
@@ -26,7 +27,7 @@ const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
             <div class='flex flex-col overflow-y-scroll pr-[3px] mr-[-5px] gap-3' >
                 {
                     currentMiniPage.value === 'Up Next' && <>
-                         {props.queue.map(track => <TrackCardWrapper track={track} contextQueue={props.queue}/>)}
+                        {props.queue.map(track => <TrackCardWrapper track={track} contextQueue={props.queue} selected={props.currentTrack.uuid === track.uuid} />)}
                     </>
                 }
                 {

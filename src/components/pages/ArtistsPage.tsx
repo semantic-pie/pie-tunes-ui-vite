@@ -1,10 +1,11 @@
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import SearchBar from "../common/SearchBar";
 import SortByIcon from "../icons/SortByIcon";
-import ArtistCard from "../common/ArtistCard";
 import { useIsLoadNeedScroll } from "@/utils/useIsLoadNeedWithScroll";
 import { useSearchQuery } from "@/utils/useSearchQuery";
 import { fetchNextBandsPage } from "@/redux/slices/dataSlice";
+import { ScrollAndLoadList } from "../ScrollAndLoadListComponent/ScrollAndLoadList";
+import { ArtistCardWrapper } from "../ArtistCardComponent/ArtistCardWrapper";
 
 const ArtistsPage = () => {
   const dispatch = useAppDispatch()
@@ -26,11 +27,14 @@ const ArtistsPage = () => {
         <SortByIcon />
       </div>
       <SearchBar query={searchQuery} setQuery={changeSearchQuery} />
-      <div class='relative flex h-full w-full'>
+      {/* <div class='relative flex h-full w-full'>
         <div ref={containerWithScrollRef} class="absolute top-0 bottom-0 left-0 right-0 flex max-h-[100%] flex-col sm:grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 pr-[8px] mr-[-14px] gap-x-3 gap-y-3 overflow-y-scroll">
           {artists.map((a) => <ArtistCard band={a} />)}
         </div>
-      </div>
+      </div> */}
+      <ScrollAndLoadList onLoadNeed={() => dispatch(fetchNextBandsPage())} gridLayout  >
+        {artists.map(artist => <ArtistCardWrapper artist={artist} />)}
+      </ScrollAndLoadList>
     </>
   )
 }

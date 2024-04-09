@@ -1,10 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/redux/store"
 import { api } from "@/api"
-import ProgresBar from "../common/ProgressBar"
-import { useAudioTime } from "../BubblePlayer/hooks.ts/useAudioTime"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
 import ThreeDots from "../icons/ThreeDots"
-import TracksSwitchingControls from "../BubblePlayer/TracksSwitchingControls"
 import { useRef } from "preact/hooks"
 import Like from "../common/Like"
 import { trancate } from "@/utils/hellpers"
@@ -12,6 +9,9 @@ import { useNavigate } from "@tanstack/react-router"
 import { useSwipeHook } from "@/utils/useSwipeHook"
 import { useSignal } from "@preact/signals"
 import { playTrack } from "@/redux/slices/playerSlice"
+import { TrackTimeProgresBar } from "../common/TrackTimeProgresBar"
+import { TracksSwitchingControls } from "../BubblePlayerComponent/BubblePlayer/TracksSwitchingControls"
+import { fetchForLike } from "@/redux/slices/userSlice"
 
 const calcPositionInPercent = (time?: number, duration?: number) => {
     if (time && duration) return (time / duration) * 100
@@ -32,18 +32,18 @@ const MobilePlayer = () => {
 
     const dispatch = useAppDispatch()
 
-    const time = useAudioTime()
-    const { duration, seek } = useGlobalAudioPlayer()
-    const position = calcPositionInPercent(time, duration);
+    // const time = useAudioTime()
+    // const { duration, seek } = useGlobalAudioPlayer()
+    // const position = calcPositionInPercent(time, duration);
 
     const pages: PlayerInfoPage[] = [
         {
             label: 'Up Next', content: <>
                 {tracks.map(track => (<div onClick={() => dispatch(playTrack({ track }))} class='p-[7px] flex gap-3 rounded-lg bg-black bg-opacity-15 cursor-pointer'>
-                    <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: track.album.uuid })} alt="" />
+                    <img class='rounded-md w-[54px] h-[54px]' src={api.urlForTrackCoverById({ id: track.musicAlbum.uuid })} alt="" />
                     <div class='flex flex-col truncate'>
                         <span class='text-white text-nowrap '>{trancate(track.title, 32)}</span>
-                        <span class='text-white text-nowrap opacity-45'>{trancate(track.band.name, 32)}</span>
+                        <span class='text-white text-nowrap opacity-45'>{trancate(track.musicBand.name, 32)}</span>
                     </div>
                 </div>))}
             </>
@@ -76,20 +76,22 @@ const MobilePlayer = () => {
 
     useSwipeHook(() => nav({ to: '/library/songs' }), 'swiped-down', imgRef)
 
+    const { playing, } = useGlobalAudioPlayer()
+
     return (
         <div class='w-full h-dvh flex flex-col justify-start p-2 gap-2 z-10'>
             <div class={`flex ${currentMiniPage.value ? 'flex-row' : 'flex-col'}  justify-between gap-2 `}>
-                <img ref={imgRef} class={`rounded-xl max-[380px]:self-center max-[380px]:h-56 max-[380px]:w-56 h-full w-full ${currentMiniPage.value ? '!w-20 !h-20' : ''} transition-all duration-400`} src={api.urlForTrackCoverById({ id: currentTrack.album.uuid })} alt="" />
+                <img ref={imgRef} class={`rounded-xl max-[380px]:self-center max-[380px]:h-56 max-[380px]:w-56 h-full w-full ${currentMiniPage.value ? '!w-20 !h-20' : ''} transition-all duration-400`} src={api.urlForTrackCoverById({ id: currentTrack.musicAlbum.uuid })} alt="" />
 
                 <div class='w-full flex justify-between pb-[5px] px-3 py-1 bg-black bg-opacity-15 rounded-xl truncate'>
                     <div className="flex flex-col justify-center items-start gap-1 truncate">
                         <div className="text-center text-white text-[24px] font-semibold text-opacity-80 font-['Helvetica Neue'] text-nowrap track-title">{currentTrack.title.length > 25 ? currentTrack.title.substring(0, 25) + '...' : currentTrack.title}</div>
-                        <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{currentTrack.band.name.length > 25 ? currentTrack.band.name.substring(0, 25) + '...' : currentTrack.band.name}</div>
+                        <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{currentTrack.musicBand.name.length > 25 ? currentTrack.musicBand.name.substring(0, 25) + '...' : currentTrack.musicBand.name}</div>
                     </div>
 
                     <div class="flex flex-row gap-5 items-center justify-center">
                         <ThreeDots class="w-4 h-4" />
-                        <Like track={currentTrack} />
+                        <Like onLikeClick={() => dispatch(fetchForLike({ track: currentTrack }))} />
                     </div>
                 </div>
             </div>
@@ -105,8 +107,9 @@ const MobilePlayer = () => {
             </div>
 
             <div class='flex flex-col max-h-full w-full flex-grow bg-black bg-opacity-10 backdrop-blur-[60px] rounded-xl pt-[30px] px-5 gap-5 transition-all duration-200 ease-out'>
-                <ProgresBar classes="w-full rounded-full" classesInner="rounded-full" value={position} setValue={seek} relativeValue={duration} polzunok />
-                <TracksSwitchingControls class='w-[300px] mx-auto' />
+                {/* <ProgresBar classes="w-full rounded-full" classesInner="rounded-full" value={position} setValue={seek} relativeValue={duration} polzunok /> */}
+                <TrackTimeProgresBar />
+                <TracksSwitchingControls isPlaying={playing} onPlayNextClick={() => { }} onPlayPrevClick={() => { }} togglePlayPause={() => { }} classes='w-[300px] mx-auto' />
             </div>
         </div>
     )

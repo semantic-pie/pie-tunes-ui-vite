@@ -1,23 +1,13 @@
-import { useAppDispatch } from "@/redux/store"
 import LikeIcon from "../icons/LikeIcon"
-import { fetchForLike } from "@/redux/slices/userSlice"
-import { MusicAlbum, MusicBand, Track } from "@/api"
+import { FunctionalComponent } from "preact"
 
-type LikeProps = {
-    // entity: { uuid: string, liked: boolean }
-    track?: Track
-    album?: MusicAlbum
-    band?: MusicBand 
+export type LikeProps = {
+    onLikeClick: () => void
 }
 
-const Like = (props: LikeProps) => {
-    const dispatch = useAppDispatch()
-
+const Like: FunctionalComponent<LikeProps> = ({ onLikeClick }) => {
     return (
-        <LikeIcon class={`fill-white w-7 h-7 cursor-pointer`} onClick={() => {
-            dispatch(fetchForLike({ ...props }))
-        }
-        } />
+        <LikeIcon class={`fill-white text-white w-7 h-7 cursor-pointer`} onClick={onLikeClick} />
     )
 }
 

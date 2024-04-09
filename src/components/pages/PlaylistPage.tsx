@@ -1,9 +1,12 @@
 
 import { madeForYouViewRoute } from "@/router/library";
-import TrackCard from "../common/TrackCard";
 import ThreeDots from "../icons/ThreeDots";
 import Like from "../common/Like";
 import { Playlist, api } from "@/api";
+import { ScrollAndLoadList } from "../ScrollAndLoadListComponent/ScrollAndLoadList";
+import { TrackCardWrapper } from "../TrackCardComponent/TrackCardWrapper";
+import { useAppDispatch } from "@/redux/store";
+import { fetchForLike } from "@/redux/slices/userSlice";
 
 const calcGenres = (playlist: Playlist) => {
   const map = new Map()
@@ -20,6 +23,7 @@ const calcGenres = (playlist: Playlist) => {
 
 const PlaylistPage = () => {
   const playlist = madeForYouViewRoute.useLoaderData()
+  const dispatch = useAppDispatch()
 
   return (
     <>
@@ -34,7 +38,7 @@ const PlaylistPage = () => {
                 {calcGenres(playlist)}
                 <div class='flex justify-between items-center w-[80px] mx-5'>
                   <ThreeDots class={'w-[27px] h-[27px]'} />
-                  <Like />
+                  <Like onLikeClick={() => dispatch(fetchForLike({  }))} />
                 </div>
               </div>
             </div>
@@ -45,16 +49,14 @@ const PlaylistPage = () => {
           {calcGenres(playlist)}
           <div class='flex justify-between items-center w-[80px]'>
             <ThreeDots class={'w-[27px] h-[27px]'} />
-            <Like />
+            <Like onLikeClick={() => dispatch(fetchForLike({  }))} />
           </div>
         </div>
 
 
-        <div class='relative flex h-full '>
-          <div class="absolute p-2 sm:p-5 top-0 bottom-0 left-0 right-0 h-full flex flex-col sm:overflow-y-scroll">
-            {playlist.tracks.map((wrapper, i) => <TrackCard class={`p-2.5  `} track={wrapper.track} />)}
-          </div>
-        </div>
+        <ScrollAndLoadList>
+          {playlist.tracks.map((wrapper, i) => <TrackCardWrapper track={wrapper.track} contextQueue={playlist.tracks.map(t => t.track)} />)}
+        </ScrollAndLoadList>
       </div>
     </>
   )

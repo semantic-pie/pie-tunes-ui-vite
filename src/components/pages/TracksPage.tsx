@@ -1,10 +1,10 @@
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import SearchBar from "../common/SearchBar";
 import SortByIcon from "../icons/SortByIcon";
-import TrackCard from "../common/TrackCard";
-import { useIsLoadNeedScroll } from "@/utils/useIsLoadNeedWithScroll";
 import { useSearchQuery } from "@/utils/useSearchQuery";
 import { fetchForTrackSearchByTitle, fetchNextSongsPage } from "@/redux/slices/dataSlice";
+import { TrackCardWrapper } from "../TrackCardComponent/TrackCardWrapper";
+import { ScrollAndLoadList } from "../ScrollAndLoadListComponent/ScrollAndLoadList";
 
 const TracksPage = () => {
   const { changeSearchQuery, searchQuery } = useSearchQuery((query) => {
@@ -13,12 +13,9 @@ const TracksPage = () => {
 
   const { songs: { all, searched } } = useAppSelector(state => state.library)
   const tracks = searchQuery.length > 0 ? searched : all
+  const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
 
   const dispatch = useAppDispatch()
-
-  const { containerWithScrollRef } = useIsLoadNeedScroll(() => {
-    dispatch(fetchNextSongsPage())
-  })
 
   return (
     <>
@@ -27,14 +24,9 @@ const TracksPage = () => {
         <SortByIcon />
       </div>
       <SearchBar query={searchQuery} setQuery={changeSearchQuery} />
-      <div class='relative flex h-full'>
-        <div ref={containerWithScrollRef} class={`absolute top-0 left-0 right-0 flex flex-col h-full pr-[8px] mr-[-14px] flex-1 gap-4 overflow-y-scroll`}>
-          {tracks.map((track) => <TrackCard track={track} />)}
-          {tracks.length === 0 && searchQuery.length === 0 && <span class='m-auto opacity-70'>You haven't added anything yet</span>}
-          {tracks.length === 0 && searchQuery.length !== 0 && <span class='m-auto opacity-70'>Nothing found :(</span>}
-        </div>
-      </div>
-
+      <ScrollAndLoadList onLoadNeed={() => dispatch(fetchNextSongsPage())} >
+        {tracks.map(song => <TrackCardWrapper track={song} contextQueue={tracks} selected={song.uuid === currentTrack?.uuid} />)}
+      </ScrollAndLoadList>
     </>
   )
 }

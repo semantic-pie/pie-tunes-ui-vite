@@ -1,4 +1,3 @@
-import BubblePlayer from "@/components/BubblePlayer"
 import DevUploader from "@/components/DevUploader"
 import MainPage from "@/components/pages/MainPage"
 import { createRoute } from "@tanstack/react-router"
@@ -11,6 +10,7 @@ import ArtistsPage from "@/components/pages/ArtistsPage"
 import MadeForYouPage from "@/components/pages/MadeForYouPage"
 import PlaylistPage from "@/components/pages/PlaylistPage"
 import { pieApiClient } from "@/api/client"
+import { BubblePlayerWrapper } from "@/components/BubblePlayerComponent/BubblePlayerWrapper"
 
 
 export const libraryScreen = createRoute({
@@ -24,7 +24,7 @@ export const libraryScreen = createRoute({
         <MainPage />
 
         {track && <div class="w-full mt-auto">
-          <BubblePlayer />
+          <BubblePlayerWrapper />
         </div>}
 
       </div>)

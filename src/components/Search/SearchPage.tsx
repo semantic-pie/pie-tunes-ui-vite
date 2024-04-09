@@ -3,12 +3,12 @@ import { useSearchQuery } from "@/utils/useSearchQuery"
 import { useSignal } from "@preact/signals"
 import { useEffect, useRef } from "preact/hooks"
 import GlobalSearchInput from "./GlobalSearchInput"
-import TrackCard from "../common/TrackCard"
-import AlbumCard from "../common/AlbumCard"
-import ArtistCard from "../common/ArtistCard"
 import SnoopySearch from "./SnoopySearch"
-import BubblePlayer from "../BubblePlayer"
 import { fetchForGlobalSearch } from "@/redux/slices/searchSlice"
+import { BubblePlayerWrapper } from "../BubblePlayerComponent/BubblePlayerWrapper"
+import { TrackCardWrapper } from "../TrackCardComponent/TrackCardWrapper"
+import { AlbumCardWrapper } from "../AlbumCardComponent/AlbumCardWrapper"
+import { ArtistCardWrapper } from "../ArtistCardComponent/ArtistCardWrapper"
 
 const SearchPage = () => {
     const dispatch = useAppDispatch()
@@ -43,7 +43,7 @@ const SearchPage = () => {
                         <h2 class='text-[28px] font-bold'>Tracks</h2>
                         <div>
                             <div class={`w-full ${songs.length > 4 ? 'h-[250px]' : 'h-fit'}  flex flex-col gap-4 overflow-y-scroll`}>
-                                {songs.map(t => (<TrackCard track={t} addButton />))}
+                                {songs.map(t => (<TrackCardWrapper track={t} contextQueue={songs} search />))}
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@ const SearchPage = () => {
                     <div class='w-full mx-auto sm:w-[1000px] flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 py-2 backdrop-blur-[60px]'>
                         <h2 class='text-[28px] font-bold'>Albums</h2>
                         <div class={`flex flex-col sm:grid sm:grid-cols-4 gap-3 overflow-x-scroll `}>
-                            {albums.map((a) => <AlbumCard album={a} />)}
+                            {albums.map((a) => <AlbumCardWrapper album={a} />)}
                         </div>
                     </div>
                 }
@@ -63,7 +63,7 @@ const SearchPage = () => {
                     <div class='w-full mx-auto sm:w-[1000px] flex flex-col rounded-[29px] bg-black bg-opacity-15 px-5 py-2 backdrop-blur-[60px]'>
                         <h2 class='text-[28px] font-bold'>Artits</h2>
                         <div class={`flex flex-col sm:grid sm:grid-cols-4 gap-3 overflow-x-scroll `}>
-                            {bands.map((b) => <ArtistCard band={b} />)}
+                            {bands.map((b) => <ArtistCardWrapper artist={b} />)}
                         </div>
                     </div>
                 }
@@ -73,7 +73,7 @@ const SearchPage = () => {
 
 
         {currentTrack && <div class={`mt-auto ${isSearchMode ? '!mt-auto' : ''} sm:mt-0 sm:w-full transition-all duration-300`}>
-            <BubblePlayer />
+            <BubblePlayerWrapper />
         </div>}
 
     </div>)

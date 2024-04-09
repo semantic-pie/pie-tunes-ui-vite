@@ -41,7 +41,7 @@ export const playerSlice = createSlice({
             state.queue.tracks = action.payload
         },
         playPrevQueueTrack: (state) => {
-            if (!state.queue.currentTrackIndex || state.queue.tracks.length <= 1) return
+            if (state.queue.currentTrackIndex === undefined || state.queue.tracks.length <= 1) return
 
             const prevTrackIndexInQueue = state.queue.currentTrackIndex - 1
 
@@ -51,12 +51,14 @@ export const playerSlice = createSlice({
             state.queue.currentTrack = state.queue.tracks[prevTrackIndexInQueue]
         },
         playNextQueueTrack: (state) => {
-            if (!state.queue.currentTrackIndex || state.queue.tracks.length <= 1) return
-
+            console.log(state.queue.currentTrackIndex)
+            console.log(state.queue.tracks.length)
+            if (state.queue.currentTrackIndex === undefined || state.queue.tracks.length <= 1) return
+            console.log(2)
             const nextTrackIndexInQueue = state.queue.currentTrackIndex + 1
-
+            console.log(3)
             if (nextTrackIndexInQueue < 0 || nextTrackIndexInQueue >= state.queue.tracks.length) return
-
+            console.log(4)
             state.queue.currentTrackIndex = nextTrackIndexInQueue
             state.queue.currentTrack = state.queue.tracks[nextTrackIndexInQueue]
         }

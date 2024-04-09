@@ -1,6 +1,6 @@
 export interface Track {
   uuid: string
-  liked: boolean
+  isLiked: boolean
   version: number
   title: string
   releaseYear: any
@@ -8,8 +8,8 @@ export interface Track {
   lengthInMilliseconds: number
   playlist: any
   genres: Genre[]
-  band: MusicBand
-  album: MusicAlbum
+  musicBand: MusicBand
+  musicAlbum: MusicAlbum
 }
 
 export interface Genre {

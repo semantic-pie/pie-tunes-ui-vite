@@ -1,0 +1,145 @@
+html {
+  @apply bg-slate-800 text-white font-['Helvetica'];
+}
+
+body {
+  overscroll-behavior: contain;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-black bg-opacity-25;
+  border-radius: 0.225rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-black bg-opacity-40
+}
+
+::-webkit-scrollbar-corner {
+  @apply bg-transparent
+}
+
+/* ::view-transition-old(root), ::view-transition-new(root) */
+/* ::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 100ms;
+} */
+
+.albumview-info {
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+.sidepill {
+  border-radius: 118.526px;
+  background: rgba(0, 0, 0, 0.10);
+  box-shadow: 0px 9px 7px 0px rgba(0, 0, 0, 0.05), 0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset, 0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset;
+  backdrop-filter: blur(59);
+}
+
+.sidepill>div:hover {
+  @apply bg-white bg-opacity-10 transition-all duration-100
+}
+
+.sidepill>.active {
+  @apply bg-white bg-opacity-10 rounded-full transition-all duration-200
+}
+
+
+.sidebar {
+  border-radius: 28px 0px 0px 28px;
+  background: rgba(0, 0, 0, 0.10);
+  box-shadow: 1px -1px 1px 0px rgba(255, 255, 255, 0.15) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(59px);
+}
+
+.sidebar-link-panel a {
+  @apply mx-[-10px] px-2 bg-white bg-opacity-0 rounded-xl transition-all duration-100 ease-in
+}
+
+.sidebar-link-panel .active {
+  @apply bg-opacity-20
+}
+
+.sidebar-link-panel a:hover {
+  @apply bg-opacity-20
+}
+
+
+.search {
+  box-shadow: 0px 9px 7px 0px rgba(0, 0, 0, 0.05), 1px -1px 1px 0px rgba(255, 255, 255, 0.15) inset;
+}
+
+.playerview-info {
+  border-radius: 7.7px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.playerview-info-nav-item {
+  border-radius: 11.853px;
+  color: rgba(255, 255, 255, 0.60);
+  background: rgba(0, 0, 0, 0.15);
+
+  width: 90px;
+  height: 35px;
+
+  @apply px-3 py-1
+}
+
+.playerview-info-nav-item:hover {
+  color: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(255, 255, 255, 0.50);
+}
+
+.playerview-info-nav-item-active {
+  color: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(255, 255, 255, 0.50);
+}
+
+.playerview-buttom {
+  box-shadow: 1px -1px 1px 0px rgba(255, 255, 255, 0.15) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
+}
+
+.playerview {
+  box-shadow: 0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset, 0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
+}
+
+.mainview {
+  box-shadow: -1px 0px 5px 0px rgba(255, 255, 255, 0.15) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
+}
+
+.mainvew-search {
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.14);
+  box-shadow: 0px -1px 2px 0px rgba(255, 255, 255, 0.14) inset;
+}
+
+.bubble-player {
+  box-shadow: 0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset, 0px -1px 1px 0px rgba(255, 255, 255, 0.25) inset, 0px 9px 7px 0px rgba(0, 0, 0, 0.05);
+}
+
+
+/* @-webkit-keyframes movingtitle {
+  from {
+    margin-left: 0px;
+  }
+
+  to {
+    margin-left: 100%;
+  }
+}
+
+@keyframes movingtitle {
+  from {
+    margin-left: 0px;
+  }
+
+  to {
+    margin-left: 100%;
+  }
+} */

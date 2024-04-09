@@ -1,13 +1,15 @@
-import { useAppSelector } from "@/redux/store"
+import { useAppDispatch, useAppSelector } from "@/redux/store"
 import { api } from "@/api"
-import ProgresBar from "../common/ProgressBar"
-import { useAudioTime } from "../BubblePlayer/hooks.ts/useAudioTime"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
 import ThreeDots from "../icons/ThreeDots"
-import TracksSwitchingControls from "../BubblePlayer/TracksSwitchingControls"
-import ValumeControls from "../BubblePlayer/ValumeControls"
 import Like from "../common/Like"
 import PlayerInfoContainer from "./PlayerInfoContainer"
+import { TrackTimeProgresBar } from "../common/TrackTimeProgresBar"
+import { TracksSwitchingControls } from "../BubblePlayerComponent/BubblePlayer/TracksSwitchingControls"
+import { VolumeControls } from "../BubblePlayerComponent/BubblePlayer/VolumeControls"
+import { fetchForLike } from "@/redux/slices/userSlice"
+
+
 
 const calcPositionInPercent = (time?: number, duration?: number) => {
     if (time && duration) return (time / duration) * 100
@@ -16,15 +18,18 @@ const calcPositionInPercent = (time?: number, duration?: number) => {
 
 
 const Player = () => {
+    const dispatch = useAppDispatch()
     const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
     const tracksQueue = useAppSelector(state => state.player.queue.tracks)
+
+    const { playing } = useGlobalAudioPlayer()
 
     return (
         <div class='flex flex-col m-auto w-[900px] justify-between playerview rounded-[45px] bg-white bg-opacity-15 z-10'>
             {currentTrack &&
                 <div class='w-full flex flex-row justify-between p-12'>
                     <div class='w-[330px] h-[450px] flex flex-col justify-between gap-2'>
-                        <img class='rounded-md' src={api.urlForTrackCoverById({ id: currentTrack.album.uuid })} alt="" />
+                        <img class='rounded-md' src={api.urlForTrackCoverById({ id: currentTrack.musicAlbum.uuid })} alt="" />
 
                         <div className={`h-[74px] justify-center bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
                             <div class='w-full flex justify-between pb-[5px] px-3'>
@@ -32,7 +37,7 @@ const Player = () => {
 
                                     <div className="flex-col justify-center items-start gap-1 inline-flex">
                                         <div className="text-center text-white text-lg font-normal font-['Helvetica Neue'] text-nowrap track-title">{currentTrack.title.length > 18 ? currentTrack.title.substring(0, 18) + '...' : currentTrack.title}</div>
-                                        <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{currentTrack.band.name}</div>
+                                        <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{currentTrack.musicBand.name}</div>
                                     </div>
                                 </div>
                                 <div class="flex flex-row gap-5 items-center justify-center">
@@ -40,7 +45,7 @@ const Player = () => {
                                         <ThreeDots class="w-4 h-4" />
                                     </div>
                                     <div>
-                                        <Like track={currentTrack} />
+                                    <Like onLikeClick={() => dispatch(fetchForLike({  }))} />
                                     </div>
                                 </div>
                             </div>
@@ -51,12 +56,13 @@ const Player = () => {
                 </div>
             }
             <div class='flex flex-col w-full h-[130px] playerview-buttom bg-black bg-opacity-10 backdrop-blur-[60px] rounded-t-0 rounded-b-[45px] pt-[30px] px-5 sm:px-[55px] gap-[14px]'>
-                <ProgresBarWrapper />
+                {/* <ProgresBarWrapper /> */}
+                <TrackTimeProgresBar />
                 <div class='relative'>
                     <div class='flex mx-auto w-[210px]'>
-                        <TracksSwitchingControls />
+                        <TracksSwitchingControls isPlaying={playing} onPlayNextClick={() => { }} onPlayPrevClick={() => { }} togglePlayPause={() => { }} />
                         <div class='absolute right-5 self-center'>
-                            <ValumeControls />
+                            <VolumeControls volume={1} setVolume={() => {}} />
                         </div>
                     </div>
                 </div>
@@ -65,14 +71,14 @@ const Player = () => {
     )
 }
 
-const ProgresBarWrapper = () => {
-    const time = useAudioTime()
-    const { duration, seek } = useGlobalAudioPlayer()
-    const position = calcPositionInPercent(time, duration);
-    return (<>
-        <ProgresBar classes="w-full rounded-full" classesInner="rounded-full" value={position} setValue={seek} relativeValue={duration} polzunok />
-    </>)
-}
+// const ProgresBarWrapper = () => {
+//     const time = useAudioTime()
+//     const { duration, seek } = useGlobalAudioPlayer()
+//     const position = calcPositionInPercent(time, duration);
+//     return (<>
+//         <ProgresBar classes="w-full rounded-full" classesInner="rounded-full" value={position} setValue={seek} relativeValue={duration} polzunok />
+//     </>)
+// }
 
 const lyrics = `
 I've got a river running right into you

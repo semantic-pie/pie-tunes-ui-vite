@@ -3,14 +3,15 @@ import { useAppSelector } from "@/redux/store"
 import { albumViewRoute } from "@/router/library"
 import ThreeDots from "../icons/ThreeDots"
 import Like from "../icons/LikeIcon"
-import TrackCard from "../common/TrackCard"
-
+import { ScrollAndLoadList } from "../ScrollAndLoadListComponent/ScrollAndLoadList"
+import { TrackCardWrapper } from "../TrackCardComponent/TrackCardWrapper"
 
 const AlbumPage = () => {
     const { albumId } = albumViewRoute.useParams()
     const albumTracks = albumViewRoute.useLoaderData()
 
     const album = useAppSelector(state => state.library.albums.all.find(a => a.uuid === albumId) ?? { name: '' })
+    const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
 
     let twoRows = false
     if (album) twoRows = album.name.length > 20 ? true : false
@@ -48,11 +49,10 @@ const AlbumPage = () => {
                 </div>
             </div>
 
-            <div class='relative flex h-full w-full'>
-                <div class="absolute p-2 sm:p-5 w-full top-0 left-0 right-0 flex flex-col sm:overflow-y-scroll">
-                    {albumTracks.map((track, i) => <TrackCard class={`p-2.5`} track={track} />)}
-                </div>
-            </div>
+
+            <ScrollAndLoadList >
+                {albumTracks.map(song => <TrackCardWrapper track={song} contextQueue={albumTracks} selected={song.uuid === currentTrack?.uuid} />)}
+            </ScrollAndLoadList>
         </div>
     )
 }
