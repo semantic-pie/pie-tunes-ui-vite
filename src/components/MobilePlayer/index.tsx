@@ -8,7 +8,7 @@ import { trancate } from "@/utils/hellpers"
 import { useNavigate } from "@tanstack/react-router"
 import { useSwipeHook } from "@/utils/useSwipeHook"
 import { useSignal } from "@preact/signals"
-import { playTrack } from "@/redux/slices/playerSlice"
+import { playNextQueueTrack, playPrevQueueTrack, playTrack } from "@/redux/slices/playerSlice"
 import { TrackTimeProgresBar } from "../common/TrackTimeProgresBar"
 import { TracksSwitchingControls } from "../BubblePlayerComponent/BubblePlayer/TracksSwitchingControls"
 import { fetchForLike } from "@/redux/slices/userSlice"
@@ -76,7 +76,7 @@ const MobilePlayer = () => {
 
     useSwipeHook(() => nav({ to: '/library/songs' }), 'swiped-down', imgRef)
 
-    const { playing, } = useGlobalAudioPlayer()
+    const { playing, togglePlayPause } = useGlobalAudioPlayer()
 
     return (
         <div class='w-full h-dvh flex flex-col justify-start p-2 gap-2 z-10'>
@@ -109,7 +109,7 @@ const MobilePlayer = () => {
             <div class='flex flex-col max-h-full w-full flex-grow bg-black bg-opacity-10 backdrop-blur-[60px] rounded-xl pt-[30px] px-5 gap-5 transition-all duration-200 ease-out'>
                 {/* <ProgresBar classes="w-full rounded-full" classesInner="rounded-full" value={position} setValue={seek} relativeValue={duration} polzunok /> */}
                 <TrackTimeProgresBar />
-                <TracksSwitchingControls isPlaying={playing} onPlayNextClick={() => { }} onPlayPrevClick={() => { }} togglePlayPause={() => { }} classes='w-[300px] mx-auto' />
+                <TracksSwitchingControls isPlaying={playing} onPlayNextClick={() => dispatch(playNextQueueTrack())} onPlayPrevClick={() => playPrevQueueTrack()} togglePlayPause={togglePlayPause} classes='w-[300px] mx-auto' />
             </div>
         </div>
     )
