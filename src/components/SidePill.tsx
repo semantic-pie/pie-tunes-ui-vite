@@ -12,7 +12,7 @@ const SidePill = () => {
                         <Player class='w-6 h-6 sm:w-8 sm:h-8' />
                     </div>
                 </Link>
-                <Link to="/library">
+                <Link to="/library/songs">
                     <div class="flex items-center justify-center rounded-full w-14 h-14">
                         <Library class='w-6 h-6 sm:w-8 sm:h-8' />
                     </div>
