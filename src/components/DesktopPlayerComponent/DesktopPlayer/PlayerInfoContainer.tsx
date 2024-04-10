@@ -22,7 +22,7 @@ const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
     useEffect(() => {
         if (ref.current && currentMiniPage.value === 'Up Next') {
             const selectedTrack = ref.current.querySelector('.selected')
-            if (selectedTrack) selectedTrack.scrollIntoView()
+            if (selectedTrack) selectedTrack.scrollIntoView({ behavior: 'smooth' })
         }
     }, [props.currentTrack])
 
