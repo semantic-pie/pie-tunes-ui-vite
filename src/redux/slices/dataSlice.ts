@@ -71,7 +71,7 @@ export const fetchNextAlbumsPage = createAsyncThunk<PieApiResponse<MusicAlbum[]>
     'data/fetchNextAlbumsPage',
     async (_args, { getState }) => {
         const state = getState()
-        const page = state.library.albums.page === 0 ? 0 : state.library.albums.page * limit
+        const page = state.library.albums.page === 0 ? 0 : state.library.albums.page
         // return pieApiClient.findAlbumsByDate({ page, limit, userUuid: getState().user.userUuid })
         return pieApiClient.findAlbumsDeprecated({ page, limit, query: 'ignore' })
     }
@@ -81,7 +81,7 @@ export const fetchNextBandsPage = createAsyncThunk<PieApiResponse<MusicBand[]>, 
     'data/fetchNextBandsPage',
     async (_args, { getState }) => {
         const state = getState()
-        const page = state.library.albums.page === 0 ? 0 : state.library.albums.page * limit
+        const page = state.library.albums.page === 0 ? 0 : state.library.albums.page 
         // return pieApiClient.findArtistsByDate({ page, limit, userUuid: getState().user.userUuid })
         return pieApiClient.findArtistsDeprecated({ page, limit, query: 'ignore' })
     }
