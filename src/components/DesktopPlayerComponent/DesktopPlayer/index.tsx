@@ -53,7 +53,7 @@ export const DesktopPlayer: FunctionalComponent<DesktopPlayerProps> = ({ current
 
             </div>
             <div class='flex flex-col w-full h-[130px] playerview-buttom bg-black bg-opacity-10 backdrop-blur-[60px] rounded-t-0 rounded-b-[45px] pt-[30px] px-5 sm:px-[55px] gap-[14px]'>
-                <TrackTimeProgresBar />
+                <TrackTimeProgresBar classes="rounded-[29px]" classesInner="rounded-[29px]" polzunok />
                 <div class='relative'>
                     <div class='flex mx-auto w-[210px]'>
                         <TracksSwitchingControls isPlaying={isPlaying} onPlayNextClick={onNextTrackClick} onPlayPrevClick={onPrevTrackClick} togglePlayPause={onTogglePlayPause} />
