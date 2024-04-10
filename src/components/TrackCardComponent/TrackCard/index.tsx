@@ -15,7 +15,7 @@ export type TrackCardProps = {
 
 export const TrackCard: FunctionalComponent<TrackCardProps> = ({ track, classes, likeButton, selected, onTrackClick, trackCoverUrl }) => {
     return (
-        <div class={`w-full flex flex-row justify-start items-center gap-3 p-1 rounded-md ${classes} ${selected ? 'border-white border-[0.4px] border-opacity-20 !bg-white !bg-opacity-15' : ''}`}>
+        <div class={`w-full flex flex-row justify-start items-center gap-3 p-1 rounded-md ${classes} ${selected ? 'border-white border-[0.4px] border-opacity-20 !bg-white !bg-opacity-15 selected' : ''}`}>
             {track.musicAlbum ?
                 <img onClick={onTrackClick} class="w-12 h-12 rounded-md cursor-pointer" src={trackCoverUrl} /> :
                 <div class="w-12 h-12 rounded-md bg-fuchsia-100 bg-opacity-40" />}
