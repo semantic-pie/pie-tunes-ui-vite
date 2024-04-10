@@ -108,7 +108,7 @@ const MobilePlayer = () => {
 
             <div class='flex flex-col max-h-full w-full flex-grow bg-black bg-opacity-10 backdrop-blur-[60px] rounded-xl pt-[30px] px-5 gap-5 transition-all duration-200 ease-out'>
                 {/* <ProgresBar classes="w-full rounded-full" classesInner="rounded-full" value={position} setValue={seek} relativeValue={duration} polzunok /> */}
-                <TrackTimeProgresBar />
+                <TrackTimeProgresBar classes="rounded-md" classesInner="rounded-md" />
                 <TracksSwitchingControls isPlaying={playing} onPlayNextClick={() => dispatch(playNextQueueTrack())} onPlayPrevClick={() => playPrevQueueTrack()} togglePlayPause={togglePlayPause} classes='w-[300px] mx-auto' />
             </div>
         </div>
