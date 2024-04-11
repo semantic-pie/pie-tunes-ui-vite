@@ -42,7 +42,7 @@ export const DesktopPlayer: FunctionalComponent<DesktopPlayerProps> = ({ current
                                 <div class="w-4 h-4">
                                     <ThreeDots class="w-4 h-4" />
                                 </div>
-                                <div>
+                                <div class={`${currentTrack.isLiked ? 'hidden' : 'inline'}`}>
                                     <Like onLikeClick={onTrackLike} />
                                 </div>
                             </div>

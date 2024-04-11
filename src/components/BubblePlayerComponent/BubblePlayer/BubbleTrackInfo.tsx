@@ -33,7 +33,7 @@ export const BubbleTrackInfo: FunctionalComponent<BubbleTrackInfoProps> = ({ cur
                         <ThreeDots class="w-4 h-4" />
                     </div>
 
-                    <div class={`${isSearchScope && !liked ? 'hidden' : 'inline'}`}>
+                    <div class={`${currentTrack.isLiked ? 'hidden' : 'inline'}`}>
                         <Like onLikeClick={onLikeClick} />
                     </div>
 
