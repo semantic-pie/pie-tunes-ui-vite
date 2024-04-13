@@ -1,4 +1,4 @@
-import { Track, api } from "@/api"
+import { Track } from "@/api"
 import { FunctionalComponent } from "preact"
 import ThreeDots from "@/components/icons/ThreeDots"
 import Like from "@/components/common/Like"

@@ -6,9 +6,9 @@ import { useEffect } from "preact/hooks";
 import { pieApiClient } from "@/api/client";
 import { Helmet } from '@notwoods/preact-helmet'
 import { api } from "@/api";
-import { config } from "@/appConfiguration";
 import { playTrack } from "@/redux/slices/playerSlice";
 import { DesktopPlayerWrapper } from "@/components/DesktopPlayerComponent/DesktopPlayerWrapper";
+import SidePill from "@/components/SidePill";
 
 export const playerScreen = createRoute({
     getParentRoute: () => rootRoute,
@@ -51,11 +51,11 @@ export const sharePlayerScreen = createRoute({
 
         return (
             <>
+                <SidePill />
                 <Helmet link={[
                     // { rel: "image_src", href: api.urlForTrackCoverById({ id: track.musicAlbum.uuid }) },
                     // { as: "image", rel: "preload", href: api.urlForTrackCoverById({ id: track.musicAlbum.uuid }) }
                 ]} meta={[
-                    // { name: "title", content: `${track.title} - ${track.musicBand.name}` },
                     { name: "description", content: `Description` },
                     { property: "og:title", content: `${track.title} - ${track.musicBand.name}` },
                     // { property: "og:site_name", content: `@pietunes` },

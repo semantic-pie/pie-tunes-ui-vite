@@ -11,6 +11,7 @@ import MadeForYouPage from "@/components/pages/MadeForYouPage"
 import PlaylistPage from "@/components/pages/PlaylistPage"
 import { pieApiClient } from "@/api/client"
 import { BubblePlayerWrapper } from "@/components/BubblePlayerComponent/BubblePlayerWrapper"
+import SidePill from "@/components/SidePill"
 
 
 export const libraryScreen = createRoute({
@@ -20,14 +21,19 @@ export const libraryScreen = createRoute({
     const track = useAppSelector(state => state.player.queue.currentTrack)
 
     return (
-      <div class='h-dvh sm:h-auto flex flex-col sm:gap-5 sm:mx-auto sm:my-auto'>
-        <MainPage />
+      <>
+        <SidePill />
+        <div class='h-dvh w-full sm:w-auto sm:h-auto flex flex-col sm:gap-5 sm:mx-auto sm:my-auto'>
 
-        {track && <div class="w-full mt-auto">
-          <BubblePlayerWrapper />
-        </div>}
+          <MainPage />
 
-      </div>)
+          {track && <div class="w-full mt-auto">
+            <BubblePlayerWrapper />
+          </div>}
+
+        </div>
+      </>
+    )
   }
 })
 
@@ -62,7 +68,7 @@ export const albumsRoute = createRoute({
 export const albumViewRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/albums/$albumId',
-  loader: ({params }) => pieApiClient.findTrackByAlbum({ uuid: params.albumId }).then(data => data.data),
+  loader: ({ params }) => pieApiClient.findTrackByAlbum({ uuid: params.albumId }).then(data => data.data),
   component: () => <AlbumPage />
 })
 

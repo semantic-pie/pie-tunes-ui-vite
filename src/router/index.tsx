@@ -1,4 +1,3 @@
-import SidePill from "@/components/SidePill";
 import { Outlet, createRootRoute, createRouter } from "@tanstack/react-router";
 import { albumViewRoute, albumsRoute, artistsRoute, libraryScreen, madeForYouRoute, madeForYouViewRoute, racentsRoute, songsRoute, uploadRoute } from "./library";
 import { playerScreen, sharePlayerScreen } from "./player";
@@ -9,10 +8,9 @@ import { useGlobalAudioPlayer } from "react-use-audio-player";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { blureBackgroundHook } from "@/utils/blureBackgroundHook";
 import { useNavigatorMediaSessionHook } from "@/utils/useNavigatorMediaSessionHook";
-import { config } from "@/appConfiguration";
-import { Helmet } from '@notwoods/preact-helmet'
 import { fetchNextAlbumsPage, fetchNextBandsPage, fetchNextSongsPage, fetchPlaylists } from "@/redux/slices/dataSlice";
 import { playNextQueueTrack } from "@/redux/slices/playerSlice";
+import { loginRoute, signUpRoute } from "./auth";
 
 export const rootRoute = createRootRoute({
   component: () => {
@@ -51,27 +49,24 @@ export const rootRoute = createRootRoute({
       }
     }, [currentTrack])
 
-    return (
-      <div class='relative flex flex-col w-full sm:flex-row h-dvh'>
-        {/* <Helmet meta={[
-          { name: "title", content: `Pie Tunes` },
-          { name: "description", content: `Awesome music service` },
-          { property: "og:title", content: `Pie Tunes` },
-          { property: "og:site_name", content: `@pietunes` },
-          { property: "og:description", content: `Awesome music service` },
-          { property: "og:url", content: `${config.host.domain}` },
-          { property: "twitter:card", content: "summary" },
-          { property: "twitter:site", content: "Pie Tunes" },
-          { property: "twitter:title", content: "Pie Tunes" },
-          { property: "twitter:description", content: `Awesome music service` },
-        ]} title={`Pie Tunes`} /> */}
-        <SidePill />
-        <Outlet />
-      </div>
-    )
+    return <div class='h-dvh ralative flex'>
+      <Outlet />
+    </div>
+
+    // return (
+    //   <div class='relative flex flex-col w-full sm:flex-row h-dvh'>
+    //     {/* <SidePill /> */}
+    //     <Outlet />
+    //   </div>
+    // )
   }
 })
 
-const routeTree = rootRoute.addChildren([libraryScreen, playerScreen, sharePlayerScreen, searchScreen, madeForYouRoute, madeForYouViewRoute, songsRoute, albumsRoute, artistsRoute, uploadRoute, albumViewRoute, racentsRoute])
+const routeTree = rootRoute.addChildren([
+  libraryScreen, playerScreen, sharePlayerScreen,
+  searchScreen, madeForYouRoute, madeForYouViewRoute,
+  songsRoute, albumsRoute, artistsRoute, uploadRoute,
+  albumViewRoute, racentsRoute, signUpRoute, loginRoute
+])
 
 export const router = createRouter({ routeTree })
