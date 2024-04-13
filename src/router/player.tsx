@@ -68,12 +68,12 @@ export const sharePlayerScreen = createRoute({
                     { property: "og:type", content: 'music.song' },
                     // { property: "og:url", content: `${config.host.domain}/player/${uuid}` },
                     // { property: "og:type", content: 'music.song' },
-                    { property: "twitter:card", content: "player" },
-                    { property: "twitter:site", content: "@pie_tunes_" },
-                    { property: "twitter:image", content: api.urlForTrackCoverById({ id: track.musicAlbum.uuid }) },
-                    { property: "twitter:title", content: `${track.title} - ${track.musicBand.name}` },
+                    { name: "twitter:card", content: "summary" },
+                    { name: "twitter:site", content: "@pie_tunes_" },
+                    { name: "twitter:image", content: api.urlForTrackCoverById({ id: track.musicAlbum.uuid }) },
+                    { name: "twitter:title", content: `${track.title} - ${track.musicBand.name}` },
                     // { property: "twitter:description", content: `${track.musicBand.name} · Song${track.releaseYear ? ' · ' + track.releaseYear : ''}` },
-                    { property: "twitter:description", content: `Twitter Description` },
+                    { name: "twitter:description", content: `Twitter Description` },
                     // { property: "twitter:player", content: `Twitter Description` },
                 ]} title={`${track.title} - ${track.musicBand.name}`} />
                 {isMobile ? <MobilePlayer /> : <DesktopPlayerWrapper />}
