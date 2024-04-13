@@ -53,7 +53,7 @@ export const rootRoute = createRootRoute({
 
     return (
       <div class='relative flex flex-col w-full sm:flex-row h-dvh'>
-        <Helmet meta={[
+        {/* <Helmet meta={[
           { name: "title", content: `Pie Tunes` },
           { name: "description", content: `Awesome music service` },
           { property: "og:title", content: `Pie Tunes` },
@@ -64,7 +64,7 @@ export const rootRoute = createRootRoute({
           { property: "twitter:site", content: "Pie Tunes" },
           { property: "twitter:title", content: "Pie Tunes" },
           { property: "twitter:description", content: `Awesome music service` },
-        ]} title={`Pie Tunes`} />
+        ]} title={`Pie Tunes`} /> */}
         <SidePill />
         <Outlet />
       </div>

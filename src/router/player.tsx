@@ -52,24 +52,29 @@ export const sharePlayerScreen = createRoute({
         return (
             <>
                 <Helmet link={[
-                    { rel: "image_src", href: api.urlForTrackCoverById({ id: track.musicAlbum.uuid }) },
-                    { as: "image", rel: "preload", href: api.urlForTrackCoverById({ id: track.musicAlbum.uuid }) }
+                    // { rel: "image_src", href: api.urlForTrackCoverById({ id: track.musicAlbum.uuid }) },
+                    // { as: "image", rel: "preload", href: api.urlForTrackCoverById({ id: track.musicAlbum.uuid }) }
                 ]} meta={[
-                    { name: "title", content: `${track.title} - ${track.musicBand.name}` },
-                    { name: "description", content: `${track.title} - ${track.musicBand.name}` },
+                    // { name: "title", content: `${track.title} - ${track.musicBand.name}` },
+                    { name: "description", content: `Description` },
                     { property: "og:title", content: `${track.title} - ${track.musicBand.name}` },
-                    { property: "og:site_name", content: `@pietunes` },
-                    { property: "og:description", content: `${track.title} - ${track.musicBand.name}` },
+                    // { property: "og:site_name", content: `@pietunes` },
+                    { property: "og:description", content: `OG:Description` },
                     { property: "og:image", content: api.urlForTrackCoverById({ id: track.musicAlbum.uuid }) },
-                    { property: "og:image:width", content: '400' },
-                    { property: "og:image:height", content: '400' },
-                    { property: "og:url", content: `${config.host.domain}/player/${uuid}` },
+                    { property: "og:image:width", content: '256' },
+                    { property: "og:image:height", content: '256' },
+                    { property: "og:image:type", content: 'image/png' },
+                    { property: "og:audio", content: api.urlForTrackStreamById({ id: track.uuid }) },
                     { property: "og:type", content: 'music.song' },
-                    { property: "twitter:card", content: "summary" },
-                    { property: "twitter:site", content: "Pie Tunes" },
+                    // { property: "og:url", content: `${config.host.domain}/player/${uuid}` },
+                    // { property: "og:type", content: 'music.song' },
+                    { property: "twitter:card", content: "player" },
+                    { property: "twitter:site", content: "@pie_tunes_" },
                     { property: "twitter:image", content: api.urlForTrackCoverById({ id: track.musicAlbum.uuid }) },
-                    { property: "twitter:title", content: "Pie Tunes" },
-                    { property: "twitter:description", content: `${track.musicBand.name} · Song${track.releaseYear ? ' · ' + track.releaseYear : ''}` },
+                    { property: "twitter:title", content: `${track.title} - ${track.musicBand.name}` },
+                    // { property: "twitter:description", content: `${track.musicBand.name} · Song${track.releaseYear ? ' · ' + track.releaseYear : ''}` },
+                    { property: "twitter:description", content: `Twitter Description` },
+                    // { property: "twitter:player", content: `Twitter Description` },
                 ]} title={`${track.title} - ${track.musicBand.name}`} />
                 {isMobile ? <MobilePlayer /> : <DesktopPlayerWrapper />}
             </>
