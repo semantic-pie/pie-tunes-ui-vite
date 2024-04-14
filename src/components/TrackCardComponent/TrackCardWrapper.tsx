@@ -4,7 +4,7 @@ import { playTrack } from "@/redux/slices/playerSlice"
 import { FunctionalComponent } from "preact"
 import { Track, api } from "@/api"
 
-export const TrackCardWrapper: FunctionalComponent<{ track: Track, contextQueue: Track[], selected?: boolean, search?: boolean }> = ({ track, contextQueue, selected, search }) => {
+export const TrackCardWrapper: FunctionalComponent<{ track: Track, contextQueue: Track[], selected?: boolean, search?: boolean, classes?: string }> = ({ track, contextQueue, selected, search, classes }) => {
     const dispatch = useAppDispatch()
     // const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
 
@@ -15,7 +15,7 @@ export const TrackCardWrapper: FunctionalComponent<{ track: Track, contextQueue:
     const props: TrackCardProps = {
         track,
         selected,
-        classes: '',
+        classes,
         likeButton: search && !liked,
         trackCoverUrl: api.urlForTrackCoverById({ id: track.musicAlbum?.uuid }),
         onTrackClick: () => dispatch(playTrack({ track, continuePlaybackWithTracks: contextQueue })),

@@ -11,6 +11,7 @@ import MadeForYouPage from "@/components/pages/MadeForYouPage"
 import PlaylistPage from "@/components/pages/PlaylistPage"
 import { pieApiClient } from "@/api/client"
 import { BubblePlayerWrapper } from "@/components/BubblePlayerComponent/BubblePlayerWrapper"
+import { TrackUploaderWrapper } from "@/components/TrackUploaderComponent/TrackUploaderWrapper"
 import SidePill from "@/components/SidePill"
 
 
@@ -87,6 +88,6 @@ export const racentsRoute = createRoute({
 export const uploadRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/upload',
-  component: () => <DevUploader />
+  component: () => <TrackUploaderWrapper />
 })
 

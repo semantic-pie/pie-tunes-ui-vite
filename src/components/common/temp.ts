@@ -1,6 +1,11 @@
 import { Playlist, Track } from "@/api";
 
 export const doNothing = () => { }
+
+export const repeat = (obj: any, repeats: number) : any[] => {
+    return Array(repeats).fill(obj)
+}
+
 export const testPLaylist: Playlist = {
     name: 'Playlist Kek',
     tracks: [],
@@ -25,7 +30,7 @@ export const testTrack: Track = {
         version: 0,
         description: null
     },
-    liked: false,
+    isLiked: false,
     version: 0,
     playlist: undefined,
     musicAlbum: {
