@@ -6,7 +6,7 @@ import { PlaylistCard, PlaylistCardProps } from "./PlaylistCard";
 
 export default {
     component: PlaylistCard,
-    title: 'PlaylistCard',
+    title: 'Playlist Card',
     tags: ['autodocs'],
     decorators: [(story: any) => <div class='m-5 bg-black bg-opacity-15 border-black rounded-md'>
         <div style={{

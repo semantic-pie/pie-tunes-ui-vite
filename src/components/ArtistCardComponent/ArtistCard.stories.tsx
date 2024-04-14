@@ -6,7 +6,7 @@ import { ArtistCard, ArtistCardProps } from "./ArtistCard";
 
 export default {
     component: ArtistCard,
-    title: 'ArtistCard',
+    title: 'Artist Card',
     tags: ['autodocs'],
     decorators: [(story: any) => <div class='m-5 bg-black bg-opacity-15 border-black rounded-md'>
         <div style={{

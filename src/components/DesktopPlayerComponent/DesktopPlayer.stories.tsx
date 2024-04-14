@@ -6,7 +6,7 @@ import { DesktopPlayer, DesktopPlayerProps } from "./DesktopPlayer";
 
 export default {
     component: DesktopPlayer,
-    title: 'DesktopPlayer',
+    title: 'Desktop Player',
     tags: ['autodocs'],
     decorators: [(story: any) => <div class='m-5'>
         <div style={{

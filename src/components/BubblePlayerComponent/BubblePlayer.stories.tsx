@@ -6,7 +6,7 @@ import { BubblePlayer, BubblePlayerProps } from "./BubblePlayer";
 
 export default {
     component: BubblePlayer,
-    title: 'BubblePlayer',
+    title: 'Bubble Player',
     tags: ['autodocs'],
     decorators: [(story: any) => <div>
         <div style={{

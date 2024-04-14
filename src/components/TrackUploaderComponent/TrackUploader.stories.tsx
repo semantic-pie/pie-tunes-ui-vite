@@ -6,7 +6,7 @@ import { store } from "@/redux/store";
 
 export default {
     component: TrackUploader,
-    title: 'TrackUploader',
+    title: 'Track Uploader',
     tags: ['autodocs'],
     decorators: [(story: any) => <div class='p-5 bg-black bg-opacity-15 border-black rounded-md'>
         <div style={{

@@ -6,7 +6,7 @@ import { AlbumCard, AlbumCardProps } from "./AlbumCard";
 
 export default {
     component: AlbumCard,
-    title: 'AlbumCard',
+    title: 'Album Card',
     tags: ['autodocs'],
     decorators: [(story: any) => <div class='m-5 bg-black bg-opacity-15 border-black rounded-md'>
         <div style={{

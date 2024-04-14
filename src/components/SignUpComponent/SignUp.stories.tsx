@@ -6,7 +6,7 @@ import { SignUp, SignUpProps } from "./SignUp";
 
 export default {
     component: SignUp,
-    title: 'SignUp',
+    title: 'Sign Up',
     tags: ['autodocs'],
     decorators: [(story: any) => <div class=''>
         <div style={{

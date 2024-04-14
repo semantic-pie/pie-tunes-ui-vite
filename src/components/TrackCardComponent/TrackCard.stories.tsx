@@ -6,7 +6,7 @@ import { TrackCard, TrackCardProps } from "./TrackCard";
 
 export default {
     component: TrackCard,
-    title: 'TrackCard',
+    title: 'Track Card',
     tags: ['autodocs'],
     decorators: [(story: any) => <div class='m-5 bg-black bg-opacity-15 border-black rounded-md'>
         <div style={{
@@ -26,7 +26,6 @@ export const Default = {
         track: testTrack,
         trackCoverUrl: api.urlForTrackCoverById({ id: testTrack.musicAlbum.uuid }),
         likeButton: true,
-        liked: false,
         selected: false
 
     } as TrackCardProps,
@@ -35,7 +34,7 @@ export const Default = {
 export const Liked = {
     args: {
         ...Default.args,
-        liked: true
+        likeButton: false,
     },
 };
 
@@ -43,11 +42,5 @@ export const Selected = {
     args: {
         ...Default.args,
         selected: true
-    },
-};
-
-export const SmallWidth = {
-    args: {
-        ...Default.args,
     },
 };

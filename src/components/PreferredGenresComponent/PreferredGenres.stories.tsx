@@ -5,7 +5,7 @@ import { PreferredGenres, PreferredGenresProps } from "./PreferredGenres";
 
 export default {
     component: PreferredGenres,
-    title: 'PreferredGenres',
+    title: 'Preferred Genres',
     tags: ['autodocs'],
     decorators: [(story: any) => <div class=''>
         <div style={{
