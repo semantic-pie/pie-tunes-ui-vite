@@ -14,7 +14,7 @@ export const TrackUploaderWrapper: FunctionalComponent<{}> = ({ }) => {
     const uploadedTracks = useSignal<UploadDetails[]>([])
     const inProcessTracks = useSignal<string[]>([])
 
-    
+
     const props: TrackUploaderProps = {
         uploadedTracksDetails: uploadedTracks.value,
         inProcessTracks: inProcessTracks.value,
@@ -25,13 +25,20 @@ export const TrackUploaderWrapper: FunctionalComponent<{}> = ({ }) => {
                 const formData = new FormData();
                 formData.append("file", file);
 
-                await pieApiClient.uploadMp3(formData).then(response => {
-                    uploadedTracks.value = [...uploadedTracks.value, {fileName: file.name, response }]
+                try {
+                    await pieApiClient.uploadMp3(formData).then(response => {
+                        uploadedTracks.value = [...uploadedTracks.value, { fileName: file.name, response }]
+                    })
+                } catch (err) {
+                    const errResponse = { fileName: file.name, response: { data: { }, meta: { status: 400, xTotalCount: 0 } } } as UploadDetails
+                    uploadedTracks.value = [...uploadedTracks.value, errResponse]
+                } finally {
                     inProcessTracks.value = inProcessTracks.value.filter(t => t !== file.name)
-                })
+                }
+
             })
         }
-            
+
 
 
     }
