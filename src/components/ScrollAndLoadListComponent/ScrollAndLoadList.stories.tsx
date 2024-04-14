@@ -16,7 +16,7 @@ const backgroundImage = <div style={{ zIndex: -99, backgroundImage: `url('${api.
 
 const meta: Meta<typeof ScrollAndLoadList> = {
     title: 'Scroll And Load List',
-    tags: ['autodocs'],
+    // tags: ['autodocs'],
     decorators:
         [(story: any) => <div class='w-full p-1 h-[300px] bg-black bg-opacity-15 border-dashed border-[2px] border-black '>{story()}</div>,
         (story: any) => <div>{backgroundImage}{story()}</div>],
