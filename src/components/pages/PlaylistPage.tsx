@@ -12,8 +12,8 @@ const calcGenres = (playlist: Playlist) => {
   const map = new Map()
 
   playlist.tracks.forEach(wrapper =>
-    wrapper.track.genres.forEach(
-      genre => map.set(genre.name, (map.get(genre.name) || 0) + 1))
+    wrapper.genres.forEach(
+      genre => map.set(genre, (map.get(genre) || 0) + 1))
   )
 
   const [first, second, third] = [...map.entries()].sort((a, b) => b[1] - a[1]).map(s => s[0]).slice(0, 3);
@@ -55,7 +55,7 @@ const PlaylistPage = () => {
 
 
         <ScrollAndLoadList>
-          {playlist.tracks.map((wrapper, i) => <TrackCardWrapper track={wrapper.track} contextQueue={playlist.tracks.map(t => t.track)} />)}
+          {playlist.tracks.map((wrapper, i) => <TrackCardWrapper track={wrapper} contextQueue={playlist.tracks} />)}
         </ScrollAndLoadList>
       </div>
     </>
