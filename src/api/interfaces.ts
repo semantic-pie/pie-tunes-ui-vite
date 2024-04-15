@@ -7,15 +7,9 @@ export interface Track {
   bitrate: number
   lengthInMilliseconds: number
   playlist: any
-  genres: Genre[]
+  genres: string[]
   musicBand: MusicBand
   musicAlbum: MusicAlbum
-}
-
-export interface Genre {
-  uuid: string
-  version: number
-  name: string
 }
 
 export interface MusicBand {
@@ -42,5 +36,5 @@ export interface SearchResult {
 export interface Playlist {
   uuid: string
   name: string
-  tracks: { track: Track }[]
+  tracks: Track[]
 }
