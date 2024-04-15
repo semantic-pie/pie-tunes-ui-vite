@@ -54,7 +54,7 @@ export const fetchForTrackSearchByTitle = createAsyncThunk<PieApiResponse<Track[
     'data/fetchForTrackSearchByTitle',
     async ({ query }, { getState }) => {
         const state = getState()
-        return pieApiClient.findTrackByTitle({ page: state.library.songs.page, limit, userUuid: getState().user.userUuid, query })
+        return pieApiClient.findTrackByTitle({ page: state.library.songs.page, limit, query })
     }
 )
 
@@ -63,7 +63,7 @@ export const fetchNextSongsPage = createAsyncThunk<PieApiResponse<Track[]>, void
     'data/fetchNextSongsPage',
     async (_args, { getState }) => {
         const state = getState()
-        return pieApiClient.findTrackByDate({ page: state.library.songs.page, limit, userUuid: getState().user.userUuid, order: "asc" })
+        return pieApiClient.findTrackByDate({ page: state.library.songs.page, limit, order: "desc" })
     }
 )
 
@@ -87,9 +87,9 @@ export const fetchNextBandsPage = createAsyncThunk<PieApiResponse<MusicBand[]>, 
     }
 )
 
-export const fetchPlaylists = createAsyncThunk<PieApiResponse<Playlist[]>, void, { state: RootState }>(
+export const fetchPlaylists = createAsyncThunk<PieApiResponse<Playlist[]>, void>(
     'data/fetchPlaylists',
-    async (_args, { getState }) => pieApiClient.findPlaylistsByDate({ userUuid: getState().user.userUuid })
+    async (_args) => pieApiClient.findPlaylistsByDate({ userUuid: '' })
 )
 
 
@@ -128,7 +128,7 @@ export const dataSlice = createSlice({
             const album = action.payload.album
             const band = action.payload.band
             if (track) {
-                state.songs.all = [track, ...state.songs.all]
+                state.songs.all = [{...track, isLiked: true }, ...state.songs.all.filter(t => t.uuid !== track.uuid)]
             }
         })
     }

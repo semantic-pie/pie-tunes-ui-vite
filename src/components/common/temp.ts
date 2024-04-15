@@ -17,13 +17,7 @@ export const testTrack: Track = {
     releaseYear: "2021",
     bitrate: 128,
     lengthInMilliseconds: 255048,
-    genres: [
-        {
-            uuid: '3c3264ca-3d19-43e0-b78c-80bc9edb8d64',
-            version: 0,
-            name: "chill-breakcore"
-        }
-    ],
+    genres: [ "chill-breakcore" ],
     musicBand: {
         uuid: "2c3264ca-3d19-43e0-b78c-80bc9edb8d65",
         name: "Deathbrain",

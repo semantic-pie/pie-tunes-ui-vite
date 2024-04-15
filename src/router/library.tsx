@@ -1,8 +1,7 @@
-import DevUploader from "@/components/DevUploader"
 import MainPage from "@/components/pages/MainPage"
 import { createRoute } from "@tanstack/react-router"
 import { rootRoute } from "."
-import { useAppSelector } from "@/redux/store"
+import { useAppDispatch, useAppSelector } from "@/redux/store"
 import AlbumPage from "@/components/pages/AlbumPage"
 import AlbumsPage from "@/components/pages/AlbumsPage"
 import TracksPage from "@/components/pages/TracksPage"
@@ -13,19 +12,30 @@ import { pieApiClient } from "@/api/client"
 import { BubblePlayerWrapper } from "@/components/BubblePlayerComponent/BubblePlayerWrapper"
 import { TrackUploaderWrapper } from "@/components/TrackUploaderComponent/TrackUploaderWrapper"
 import SidePill from "@/components/SidePill"
-
+import { useEffect } from "preact/hooks"
+import { fetchNextAlbumsPage, fetchNextBandsPage, fetchNextSongsPage, fetchPlaylists } from "@/redux/slices/dataSlice"
 
 export const libraryScreen = createRoute({
   getParentRoute: () => rootRoute,
   path: '/library',
   component: () => {
+    const dispatch = useAppDispatch()
     const track = useAppSelector(state => state.player.queue.currentTrack)
+    const page = useAppSelector(state => state.library.songs.page)
+
+    useEffect(() => {
+      if (page === 0) {
+        dispatch(fetchPlaylists())
+        dispatch(fetchNextAlbumsPage())
+        dispatch(fetchNextSongsPage())
+        dispatch(fetchNextBandsPage())
+      }
+    }, [])
 
     return (
       <>
         <SidePill />
         <div class='h-dvh w-full sm:w-auto sm:h-auto flex flex-col sm:gap-5 sm:mx-auto sm:my-auto'>
-
           <MainPage />
 
           {track && <div class="w-full mt-auto">
@@ -90,7 +100,7 @@ export const uploadRoute = createRoute({
   path: '/upload',
   component: () =>
     <div class='h-full w-full ralative flex'>
-        <TrackUploaderWrapper />
+      <TrackUploaderWrapper />
     </div>
 
 })

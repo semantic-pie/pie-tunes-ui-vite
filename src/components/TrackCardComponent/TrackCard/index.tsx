@@ -10,10 +10,11 @@ export type TrackCardProps = {
     selected?: boolean
     classes?: string
     onTrackClick: () => void
+    onTrackLike: () => void
 }
 
 
-export const TrackCard: FunctionalComponent<TrackCardProps> = ({ track, classes, likeButton, selected, onTrackClick, trackCoverUrl }) => {
+export const TrackCard: FunctionalComponent<TrackCardProps> = ({ track, classes, likeButton, selected, onTrackClick, onTrackLike, trackCoverUrl }) => {
     return (
         <div class={`w-full flex flex-row justify-start items-center gap-3 p-1 rounded-md ${classes} ${selected ? 'border-white border-[0.4px] border-opacity-20 !bg-white !bg-opacity-15 selected' : ''}`}>
             {track.musicAlbum ?
@@ -27,7 +28,7 @@ export const TrackCard: FunctionalComponent<TrackCardProps> = ({ track, classes,
                 </div>
 
                 <div class={`flext ${likeButton ? 'min-w-20' : 'max-w-10'} items-center w-14 flex justify-between gap-3 pr-2`}>
-                    {likeButton && <Like onLikeClick={() => { console.log('liked track: ', track.uuid) }} />}
+                    {likeButton && <Like onLikeClick={onTrackLike} />}
 
                     <span class='test-white text-[14px] opacity-50'>
                         {toMinSec(track.lengthInMilliseconds)}

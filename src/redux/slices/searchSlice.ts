@@ -2,7 +2,6 @@ import { MusicAlbum, MusicBand, SearchResult, Track } from "@/api"
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { PieApiResponse, SnoopySearchTrackExtended, SnoopyTrackStatus, pieApiClient } from "@/api/client"
 import { fetchForLike, fetchForUnlike } from "./userSlice"
-import { RootState } from "../store"
 
 interface SearchSlice {
     result: {
@@ -32,9 +31,9 @@ type Query = {
     controller?: AbortController
 }
 
-export const fetchForGlobalSearch = createAsyncThunk<PieApiResponse<SearchResult>, Query, { state: RootState }>(
+export const fetchForGlobalSearch = createAsyncThunk<PieApiResponse<SearchResult>, Query>(
     'search/fetchForGlobalSearch',
-    async ({ query, controller }, { getState }) => pieApiClient.searchByTitle({ query, userUuid: getState().user.userUuid, controller })
+    async ({ query, controller }) => pieApiClient.searchByTitle({ query, controller })
 )
 
 export const fetchForSnoopySearch = createAsyncThunk(
@@ -94,7 +93,7 @@ export const searchSlice = createSlice({
             const album = action.payload.album
             const band = action.payload.band
             if (track) {
-                state.result.songs = state.result.songs.map(song => song.uuid === track.uuid ? { ...song, liked: true } : song)
+                state.result.songs = state.result.songs.map(song => song.uuid === track.uuid ? { ...song, isLiked: true } : song)
             }
         })
         builder.addCase(fetchForUnlike.fulfilled, (state, action) => {
@@ -102,7 +101,7 @@ export const searchSlice = createSlice({
             const album = action.payload.album
             const band = action.payload.band
             if (track) {
-                state.result.songs = state.result.songs.map(song => song.uuid === track.uuid ? { ...song, liked: false } : song)
+                state.result.songs = state.result.songs.map(song => song.uuid === track.uuid ? { ...song, isLiked: false } : song)
             }
             
         })

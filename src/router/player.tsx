@@ -9,11 +9,13 @@ import { api } from "@/api";
 import { playTrack } from "@/redux/slices/playerSlice";
 import { DesktopPlayerWrapper } from "@/components/DesktopPlayerComponent/DesktopPlayerWrapper";
 import SidePill from "@/components/SidePill";
+import { useGlobalAudioPlayer } from "react-use-audio-player";
 
 export const playerScreen = createRoute({
     getParentRoute: () => rootRoute,
     path: '/player',
     component: () => {
+        useGlobalAudioPlayer()
         // const isMobile = window.innerWidth < 640
         const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
 
@@ -30,6 +32,7 @@ export const sharePlayerScreen = createRoute({
     loader: ({ params }) => pieApiClient.findTrackByUuid({ uuid: params.uuid }).then(res => res.data),
     component: () => {
         const dispatch = useAppDispatch()
+        useGlobalAudioPlayer()
 
         const { uuid } = sharePlayerScreen.useParams()
         const track = sharePlayerScreen.useLoaderData()

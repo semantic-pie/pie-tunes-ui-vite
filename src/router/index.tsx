@@ -1,30 +1,50 @@
-import { Outlet, createRootRoute, createRouter } from "@tanstack/react-router";
+import { Outlet, createRootRoute, createRouter, useNavigate } from "@tanstack/react-router";
 import { albumViewRoute, albumsRoute, artistsRoute, libraryScreen, madeForYouRoute, madeForYouViewRoute, racentsRoute, songsRoute, uploadRoute } from "./library";
 import { playerScreen, sharePlayerScreen } from "./player";
 import { searchScreen } from "./search";
+import { loginRoute, signUpRoute } from "./auth";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { fetchForUser } from "@/redux/slices/userSlice";
+import { useGlobalAudioPlayer } from "react-use-audio-player";
 import { useEffect } from "preact/hooks";
 import { api } from "@/api";
-import { useGlobalAudioPlayer } from "react-use-audio-player";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { playNextQueueTrack } from "@/redux/slices/playerSlice";
 import { blureBackgroundHook } from "@/utils/blureBackgroundHook";
 import { useNavigatorMediaSessionHook } from "@/utils/useNavigatorMediaSessionHook";
-import { fetchNextAlbumsPage, fetchNextBandsPage, fetchNextSongsPage, fetchPlaylists } from "@/redux/slices/dataSlice";
-import { playNextQueueTrack } from "@/redux/slices/playerSlice";
-import { loginRoute, signUpRoute } from "./auth";
+import { useSignal } from "@preact/signals";
 
 export const rootRoute = createRootRoute({
+  // loader: loadUserOrUndefined,
   component: () => {
     const dispatch = useAppDispatch()
+    const nav = useNavigate()
 
-    blureBackgroundHook()
-    useNavigatorMediaSessionHook()
+    // const fetchedUser = rootRoute.useLoaderData()
+    const user = useAppSelector(state => state.user.user)
+
+    const userIsFetched = useSignal(false)
 
     useEffect(() => {
-      dispatch(fetchPlaylists())
-      dispatch(fetchNextAlbumsPage())
-      dispatch(fetchNextSongsPage())
-      dispatch(fetchNextBandsPage())
-    }, [])
+      if (!user) {
+        console.log('kek')
+        dispatch(fetchForUser()).finally(() => {
+          userIsFetched.value = true
+        })
+      }
+        
+    }, [user])
+
+    if (['/auth/signup', '/auth/login'].includes(location.pathname))
+      return <div class='h-dvh ralative flex'>
+        <Outlet />
+      </div>
+
+    console.log('user: ', user)
+    console.log('userIsFetched: ', userIsFetched)
+    
+    if (!user && userIsFetched.value) nav({ to: '/auth/signup' })
+    if (!user && !userIsFetched.value) return <></>
+    if (!user) nav({ to: '/auth/signup' })
 
     const { load } = useGlobalAudioPlayer()
     const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
@@ -49,16 +69,12 @@ export const rootRoute = createRootRoute({
       }
     }, [currentTrack])
 
+    blureBackgroundHook()
+    useNavigatorMediaSessionHook()
+
     return <div class='h-dvh ralative flex'>
       <Outlet />
     </div>
-
-    // return (
-    //   <div class='relative flex flex-col w-full sm:flex-row h-dvh'>
-    //     {/* <SidePill /> */}
-    //     <Outlet />
-    //   </div>
-    // )
   }
 })
 
