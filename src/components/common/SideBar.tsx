@@ -109,16 +109,19 @@ const SideBar = () => {
                         </div>
                     </Link>
 
-                    <Link to="/library/racent" class='sidebar-link'>
+                    {/* <Link to="/library/racent" class='sidebar-link'>
                         <div class="h-12 flex items-center gap-3">
                             <Clock class="w-8 h-8" />
                             <span class='hidden sm:inline'>Recently Added</span>
                         </div>
-                    </Link>
+                    </Link> */}
 
                     <Link to="/library/upload" class='sidebar-link'>
                         <div class="h-12 flex items-center gap-3">
-                            <UploadIcon />
+                            <div class='flex items-center justify-center w-8 h-8'>
+                                <UploadIcon classes={''} />
+                            </div>
+
                             <span class='hidden sm:inline'>Upload</span>
                         </div>
                     </Link>
