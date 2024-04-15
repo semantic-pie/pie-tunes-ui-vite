@@ -34,7 +34,7 @@ export const sharePlayerScreen = createRoute({
         const dispatch = useAppDispatch()
         useGlobalAudioPlayer()
 
-        const { uuid } = sharePlayerScreen.useParams()
+        // const { uuid } = sharePlayerScreen.useParams()
         const track = sharePlayerScreen.useLoaderData()
 
         const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
@@ -42,7 +42,7 @@ export const sharePlayerScreen = createRoute({
 
         useEffect(() => {
             if (!currentTrack)
-                dispatch(playTrack({ track }))
+                dispatch(playTrack({ track, continuePlaybackWithTracks: [track] }))
         }, [])
 
         const nav = useNavigate()

@@ -153,17 +153,25 @@ const get = (params: { auth?: boolean }) => {
   };
 };
 
-const postWithBody = (params: { auth?: boolean; body?: any }) => {
-  const headers = new Headers({
-    "Content-Type": "application/json",
-  });
+const postWithBody = (params: { auth?: boolean; body?: any, contentType?: string, disableContentType?: boolean }) => {
+  const headers = new Headers()
+
+  if (!params.disableContentType) {
+    if (params.contentType) {
+        headers.append("Content-Type", params.contentType)
+    } else {
+        headers.append("Content-Type","application/json")
+    }
+  }
+  
 
   if (params.auth) {
     headers.append("Authorization", `Bearer ${Cookies.get("token")}`);
   }
 
-  const body = params.body ? JSON.stringify(params.body) : undefined;
+  const body = params.body ? (params.disableContentType ? params.body : JSON.stringify(params.body)) : undefined;
 
+  console.log('payload: ', body)
   return {
     method: "POST",
     headers,
@@ -224,7 +232,7 @@ export const pieApiClient: PieApiClient = {
     fetch(api.urlForArtistsDeprecated(params), get({ auth: true }))
       .then(responseToPieApiResponse),
   uploadMp3: async (body) =>
-    fetch(api.urlForSingleUpload(), postWithBody({ body, auth: true }))
+    fetch(api.urlForSingleUpload(), postWithBody({ body, auth: true , disableContentType: true} ))
       .then(responseToPieApiResponse),
   postEvent: async (body) =>
     fetch(api.urlForLike(), postWithBody({ body, auth: true }))
