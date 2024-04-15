@@ -88,6 +88,10 @@ export const racentsRoute = createRoute({
 export const uploadRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/upload',
-  component: () => <TrackUploaderWrapper />
+  component: () =>
+    <div class='h-full w-full ralative flex'>
+        <TrackUploaderWrapper />
+    </div>
+
 })
 
