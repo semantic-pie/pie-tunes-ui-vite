@@ -18,10 +18,10 @@ export const TrackUploaderWrapper: FunctionalComponent<{}> = ({ }) => {
     const props: TrackUploaderProps = {
         uploadedTracksDetails: uploadedTracks.value,
         inProcessTracks: inProcessTracks.value,
-        uploadFiles: (files) => {
+        uploadFiles: async (files) => {
             inProcessTracks.value = [...inProcessTracks.value, ...files.map(f => f.name)]
 
-            files.forEach(async file => {
+            for (const file of files) {
                 const formData = new FormData();
                 formData.append("file", file);
 
@@ -30,13 +30,12 @@ export const TrackUploaderWrapper: FunctionalComponent<{}> = ({ }) => {
                         uploadedTracks.value = [...uploadedTracks.value, { fileName: file.name, response }]
                     })
                 } catch (err) {
-                    const errResponse = { fileName: file.name, response: { data: { }, meta: { status: 400, xTotalCount: 0 } } } as UploadDetails
+                    const errResponse = { fileName: file.name, response: { data: {}, meta: { status: 400, xTotalCount: 0 } } } as UploadDetails
                     uploadedTracks.value = [...uploadedTracks.value, errResponse]
                 } finally {
                     inProcessTracks.value = inProcessTracks.value.filter(t => t !== file.name)
                 }
-
-            })
+            }
         }
 
 
