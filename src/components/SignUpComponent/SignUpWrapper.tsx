@@ -17,7 +17,7 @@ export const SignUpWrapper: FunctionalComponent<{}> = ({ }) => {
     const nav = useNavigate()
 
     const error = useSignal<string | undefined>(undefined)
-
+    const submiting = useSignal<boolean>(false)
 
     const signUpProps: SignUpProps = {
         onSubmit: async (data) => {
@@ -42,6 +42,7 @@ export const SignUpWrapper: FunctionalComponent<{}> = ({ }) => {
                     return
                 }
 
+                submiting.value = true
                 await pieApiClient.authSignUp(data)
                 .then(response => {
                     if (response.meta.status === 200 || response.meta.status === 201) {
@@ -55,18 +56,31 @@ export const SignUpWrapper: FunctionalComponent<{}> = ({ }) => {
                 })
             } catch (err) {
                 console.log('error: ', err)
+            } finally {
+                submiting.value = false
             }
            
         },
         onLoginLinkClick: () => nav({ to: '/auth/login' }),
         error: error.value,
+        submiting: submiting.value
     }
 
     const preferredGenresProps: PreferredGenresProps = {
-        onSubmit: (data) => {
-            pieApiClient.putPreferredGenres(data)
-                .then(() => nav({ to: '/library/songs' }))
+        onSubmit: async (data) => {
+            submiting.value = true
+            console.log('submiting s: ', submiting.value)
+            try {
+                await pieApiClient.putPreferredGenres(data)
+                    .then(() => nav({ to: '/library/songs' }))
+            } catch (err) {
+                nav({ to: '/library/songs' }) 
+            } finally {
+                submiting.value = false
+                console.log('submiting f: ', submiting.value)
+            }
         },
+        submiting: submiting.value
     }
 
     return nextStep.value ? <PreferredGenres {...preferredGenresProps} /> : <SignUp {...signUpProps} />

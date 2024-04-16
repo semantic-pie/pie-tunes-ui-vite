@@ -1,4 +1,5 @@
 import GoogleIcon from "@/components/icons/GoogleIcon"
+import LoadingIcon from "@/components/icons/LoadingIcon"
 import { useSignal } from "@preact/signals"
 import { FunctionalComponent } from "preact"
 
@@ -10,13 +11,14 @@ interface SignUpData {
     confirmPassword: string
 }
 export type SignUpProps = {
+    submiting?: boolean
     onSubmit?: (signUpData: SignUpData) => void
     onLoginLinkClick?: () => void
     error?: string
 }
 
 
-export const SignUp: FunctionalComponent<SignUpProps> = ({ onSubmit, onLoginLinkClick, error }) => {
+export const SignUp: FunctionalComponent<SignUpProps> = ({ onSubmit, onLoginLinkClick, error, submiting }) => {
 
     const username = useSignal<string>('')
     const email = useSignal<string>('')
@@ -52,8 +54,8 @@ export const SignUp: FunctionalComponent<SignUpProps> = ({ onSubmit, onLoginLink
 
                     <span class='inline sm:hidden w-full mt-5 text-left text-[18px] opacity-75'>Already have an account? <a onClick={onLoginLinkClick} class='font-bold underline cursor-pointer'>Log in</a></span>
                     
-                    <button onClick={onSubmitClick} class='w-full h-[60px] bg-black bg-opacity-10 hover:bg-opacity-15 authinput backdrop-blur-[60px] transition-all ease-in duration-150 rounded-full'>
-                        Sign Up
+                    <button onClick={onSubmitClick} class='w-full h-[60px] flex justify-center items-center bg-black bg-opacity-10 hover:bg-opacity-15 authinput backdrop-blur-[60px] transition-all ease-in duration-150 rounded-full'>
+                        {submiting ? <LoadingIcon /> : <span>Sign Up</span> } 
                     </button>
 
                     <span class='hidden sm:inline w-full mt-5 text-left text-[18px] opacity-75'>Already have an account? <a onClick={onLoginLinkClick} class='font-bold underline cursor-pointer'>Log in</a></span>

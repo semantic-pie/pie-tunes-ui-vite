@@ -12,6 +12,7 @@ export const LoginWrapper: FunctionalComponent<{}> = ({ }) => {
     const nav = useNavigate()
 
     const error = useSignal<string | undefined>(undefined)
+    const submiting = useSignal<boolean>(false)
 
     const props: LoginProps = {
         error: error.value,
@@ -27,6 +28,7 @@ export const LoginWrapper: FunctionalComponent<{}> = ({ }) => {
                     return
                 }
 
+                submiting.value = true
                 await pieApiClient.authLogin(data)
                 .then(response => {
                     if (response.meta.status === 200 || response.meta.status === 201) {
@@ -40,6 +42,8 @@ export const LoginWrapper: FunctionalComponent<{}> = ({ }) => {
                 })
             } catch (err) {
                 console.log('error: ', err)
+            } finally {
+                submiting.value = false
             }
            
         },
