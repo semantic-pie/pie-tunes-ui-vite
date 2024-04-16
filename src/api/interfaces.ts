@@ -25,6 +25,8 @@ export interface MusicAlbum {
   name: string
   description: any
   yearOfRecord: number
+  musicBand?: MusicBand
+  tracks?: Track[]
 }
 
 export interface SearchResult {

@@ -9,10 +9,12 @@ const pieStreamingHost = (https ? 'https' : 'http') + '://' + host.streaming
 const pieSnoopyHost= (https ? 'https' : 'http') + '://' + host.snoopy
 const pieRecHost= (https ? 'https' : 'http') + '://' + host.rec
 
-export type LikeTrackBody = {
-    type: 'LIKE_TRACK',
-    trackUuid: string,
+export type EventLike = {
+    type: 'LIKE_ENTITY',
+    entityUuid: string
 }
+
+export type EventBody = EventLike
 
 export type FindByTitleParams = {
     page?: number
@@ -25,12 +27,6 @@ export type FindByDateParams = {
     limit?: number
     order?: 'asc' | 'desc'
 }
-
-export type EventBody = {
-    type: "LIKE_TRACK" | "REMOVE_LIKE"
-    trackUuid: string,
-}
-
 
 export type FindById = {
     id: string | number
@@ -62,6 +58,7 @@ export const api = {
 
     urlForAlbumsByTitle: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/albums/find-by-title', { queryParams: { page: page, limit, q: query } })!,
     urlForAlbumsByDate: ({ page, limit, order }: FindByDateParams) => buildUrl(pieDomainHost + '/api/v1/library/albums/find-by-date', { queryParams: { page: page, limit, order } })!,
+    urlForAlbumsByUuid: ({ uuid }: FindByUuid) => buildUrl(pieDomainHost + '/api/v1/library/albums/', { path: uuid })!,
 
 
     urlForPlaylistsByDate: () => buildUrl(pieRecHost + '/api/v1/recommendations/playlists/daily-mix/find-by-date')!,
@@ -72,6 +69,7 @@ export const api = {
     urlForSingleUpload: () => pieDomainHost + '/api/track-loader/upload-one',
 
     urlForLike: () => pieDomainHost + '/api/tracks/events',
+    urlForEvents: () => pieDomainHost + '/api/tracks/events',
 
     urlForTracksDeprecated: ({ page, limit }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks', { queryParams: { page: page, limit } })!,
     urlForArtistsDeprecated: ({ page, limit }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/artists', { queryParams: { page: page, limit } })!,
@@ -82,6 +80,6 @@ export const api = {
 
     urlForAuthSignUp: () => buildUrl(pieDomainHost + '/api/v1/auth/signup')!,
     urlForAuthLogin: () => buildUrl(pieDomainHost + '/api/v1/auth/login')!,
-    urlForPreferredGenres: () => buildUrl(pieDomainHost + '/api/v1/domain/users/addGenres')!,
+    urlForPreferredGenres: () => buildUrl(pieDomainHost + '/api/v1/domain/users/add-genres')!,
     urlForUser: () => buildUrl(pieDomainHost + '/api/v1/domain/users')!,
 }

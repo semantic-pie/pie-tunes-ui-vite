@@ -79,7 +79,7 @@ export const albumsRoute = createRoute({
 export const albumViewRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/albums/$albumId',
-  loader: ({ params }) => pieApiClient.findTrackByAlbum({ uuid: params.albumId }).then(data => data.data),
+  loader: ({ params }) => pieApiClient.findAlbumsByUuid({ uuid: params.albumId }).then(data => data.data),
   component: () => <AlbumPage />
 })
 

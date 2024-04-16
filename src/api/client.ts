@@ -95,7 +95,9 @@ interface PieApiClient {
   findPlaylistsByDate: (
     params: FindByUserUuid,
   ) => Promise<PieApiResponse<Playlist[]>>;
-
+  findAlbumsByUuid: (
+    params: FindByUuid,
+  ) => Promise<PieApiResponse<MusicAlbum>>;
   findAlbumsByTitle: (
     params: FindByTitleParams,
   ) => Promise<PieApiResponse<MusicAlbum[]>>;
@@ -204,6 +206,9 @@ export const pieApiClient: PieApiClient = {
   findTrackByAlbum: async (params) =>
     fetch(api.urlForTracksByAlbum(params), get({ auth: true }))
       .then(responseToPieApiResponse),
+    findAlbumsByUuid: async (params) =>
+        fetch(api.urlForAlbumsByUuid(params), get({ auth: true }))
+          .then(responseToPieApiResponse),
   findTrackByPlaylist: async (params) =>
     fetch(api.urlForTracksByPlaylist(params), get({ auth: true }))
       .then(responseToPieApiResponse),
@@ -235,7 +240,7 @@ export const pieApiClient: PieApiClient = {
     fetch(api.urlForSingleUpload(), postWithBody({ body, auth: true , disableContentType: true} ))
       .then(responseToPieApiResponse),
   postEvent: async (body) =>
-    fetch(api.urlForLike(), postWithBody({ body, auth: true }))
+    fetch(api.urlForEvents(), postWithBody({ body, auth: true }))
       .then(responseToPieApiResponse),
   searchByTitle: async (params) =>
     fetch(api.urlForGlobalSearch(params), {

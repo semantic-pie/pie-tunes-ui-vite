@@ -8,9 +8,9 @@ import { TrackCardWrapper } from "../TrackCardComponent/TrackCardWrapper"
 
 const AlbumPage = () => {
     const { albumId } = albumViewRoute.useParams()
-    const albumTracks = albumViewRoute.useLoaderData()
+    const album = albumViewRoute.useLoaderData()
 
-    const album = useAppSelector(state => state.library.albums.all.find(a => a.uuid === albumId) ?? { name: '' })
+    // const album = useAppSelector(state => state.library.albums.all.find(a => a.uuid === albumId) ?? { name: '' })
     const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
 
     let twoRows = false
@@ -51,7 +51,7 @@ const AlbumPage = () => {
 
 
             <ScrollAndLoadList >
-                {albumTracks.map(song => <TrackCardWrapper track={song} contextQueue={albumTracks} selected={song.uuid === currentTrack?.uuid} />)}
+                {album.tracks?.map(song => <TrackCardWrapper track={{ ...song, musicAlbum: { uuid: album.uuid } }} contextQueue={album.tracks!} selected={song.uuid === currentTrack?.uuid} />)}
             </ScrollAndLoadList>
         </div>
     )
