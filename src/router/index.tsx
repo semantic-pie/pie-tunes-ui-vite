@@ -12,39 +12,40 @@ import { playNextQueueTrack } from "@/redux/slices/playerSlice";
 import { blureBackgroundHook } from "@/utils/blureBackgroundHook";
 import { useNavigatorMediaSessionHook } from "@/utils/useNavigatorMediaSessionHook";
 import { useSignal } from "@preact/signals";
+import { PageNotFoundWrapper } from "@/components/PageNotFoundComponent/PageNotFoundWrapper";
 
 export const rootRoute = createRootRoute({
-  // loader: loadUserOrUndefined,
   component: () => {
     const dispatch = useAppDispatch()
     const nav = useNavigate()
 
-    // const fetchedUser = rootRoute.useLoaderData()
     const user = useAppSelector(state => state.user.user)
 
     const userIsFetched = useSignal(false)
 
     useEffect(() => {
       if (!user) {
-        console.log('kek')
         dispatch(fetchForUser()).finally(() => {
           userIsFetched.value = true
         })
       }
-        
+
     }, [user])
 
-    if (['/auth/signup', '/auth/login'].includes(location.pathname))
-      return <div class='h-dvh ralative flex'>
-        <Outlet />
-      </div>
+    if (!user) {
+      // if (['/auth/signup', '/auth/login'].includes(location.pathname))
+      //   return <div class='h-dvh ralative flex'>
+      //     <Outlet />
+      //   </div>
 
-    console.log('user: ', user)
-    console.log('userIsFetched: ', userIsFetched)
-    
-    if (!user && userIsFetched.value) nav({ to: '/auth/signup' })
-    if (!user && !userIsFetched.value) return <></>
-    if (!user) nav({ to: '/auth/signup' })
+      if (userIsFetched.value) nav({ to: '/auth/signup' })
+      if (!userIsFetched.value) return <div></div>
+
+      nav({ to: '/auth/signup' })
+    }
+
+    // redirect from empty page
+    if (location.pathname === '/') location.pathname = '/library/songs'
 
     const { load } = useGlobalAudioPlayer()
     const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
@@ -75,7 +76,8 @@ export const rootRoute = createRootRoute({
     return <div class='h-dvh ralative flex'>
       <Outlet />
     </div>
-  }
+  },
+  notFoundComponent: PageNotFoundWrapper
 })
 
 const routeTree = rootRoute.addChildren([
