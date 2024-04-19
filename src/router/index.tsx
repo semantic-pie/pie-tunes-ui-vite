@@ -33,11 +33,6 @@ export const rootRoute = createRootRoute({
     }, [user])
 
     if (!user) {
-      // if (['/auth/signup', '/auth/login'].includes(location.pathname))
-      //   return <div class='h-dvh ralative flex'>
-      //     <Outlet />
-      //   </div>
-
       if (userIsFetched.value) nav({ to: '/auth/signup' })
       if (!userIsFetched.value) return <div></div>
 

@@ -1,6 +1,8 @@
 import { api } from "@/api";
 import { doNothing, testTrack } from "../common/temp";
 import { BubblePlayer, BubblePlayerProps } from "./BubblePlayer";
+import { Provider } from "react-redux";
+import { store } from "@/redux/store";
 
 
 
@@ -10,11 +12,13 @@ export default {
     tags: ['autodocs'],
     decorators: [(story: any) => <div>
         <div style={{
-            backgroundImage: `url('${api.urlForTrackCoverById({id: testTrack.musicAlbum.uuid})}')`,
+            backgroundImage: `url('${api.urlForTrackCoverById({ id: testTrack.musicAlbum.uuid })}')`,
             filter: 'blur(200px)'
         }}
-        class='absolute inset-0 bg-cover bg-center'></div>
-        {story()}
+            class='absolute inset-0 bg-cover bg-center'></div>
+        <Provider store={store}>
+            {story()}
+        </Provider>
     </div>],
 };
 
@@ -32,6 +36,7 @@ export const Default = {
         onTrackClick: doNothing,
         onPlayNextClick: doNothing,
         onPlayPrevClick: doNothing,
+        onTrackLike: doNothing,
         onSwipeUp: doNothing
     } as BubblePlayerProps,
 };

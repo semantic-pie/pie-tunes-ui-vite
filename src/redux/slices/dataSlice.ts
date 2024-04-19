@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { PieApiResponse, pieApiClient } from "@/api/client"
 import { RootState } from "../store"
 import { CONSTANTS } from "@/appConfiguration"
-import { fetchForLike } from "./userSlice"
+import { fetchForLike, fetchForUnlike } from "./userSlice"
 
 interface DataSlice {
     songs: {
@@ -109,15 +109,15 @@ export const dataSlice = createSlice({
     },
     extraReducers(builder) {
         builder.addCase(fetchNextSongsPage.fulfilled, (state, action) => {
-            state.songs.all = [...state.songs.all, ...action.payload.data]
+            state.songs.all = [...state.songs.all, ...action.payload.data.map(t => ({...t, isLiked: true}))] //
             state.songs.page += 1
         })
         builder.addCase(fetchNextAlbumsPage.fulfilled, (state, action) => {
-            state.albums.all = [...state.albums.all, ...action.payload.data]
+            state.albums.all = [...state.albums.all, ...action.payload.data.map(t => ({...t, isLiked: true}))]
             state.albums.page += 1
         })
         builder.addCase(fetchNextBandsPage.fulfilled, (state, action) => {
-            state.bands.all = [...state.bands.all, ...action.payload.data]
+            state.bands.all = [...state.bands.all, ...action.payload.data.map(t => ({...t, isLiked: true}))]
             state.bands.page += 1
         })
         builder.addCase(fetchPlaylists.fulfilled, (state, action) => {
@@ -129,6 +129,14 @@ export const dataSlice = createSlice({
             const band = action.payload.band
             if (track) {
                 state.songs.all = [{...track, isLiked: true }, ...state.songs.all.filter(t => t.uuid !== track.uuid)]
+            }
+        })
+        builder.addCase(fetchForUnlike.fulfilled, (state, action) => {
+            const track = action.payload.track
+            const album = action.payload.album
+            const band = action.payload.band
+            if (track) {
+                state.songs.all = state.songs.all.map(s => s.uuid === track.uuid ? {...s, isLiked: false} : s )
             }
         })
     }

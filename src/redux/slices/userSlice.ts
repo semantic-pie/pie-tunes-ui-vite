@@ -23,7 +23,7 @@ export const fetchForLike = createAsyncThunk<FetchLikeProps, FetchLikeProps, { s
 export const fetchForUnlike = createAsyncThunk<FetchLikeProps, FetchLikeProps, { state: RootState }>(
     'user/fetchForUnlike',
     async (props) => {
-        return pieApiClient.postEvent({ type: 'LIKE_ENTITY', entityUuid: props.track?.uuid! }).then(() => props)
+        return pieApiClient.postEvent({ type: 'REMOVE_LIKE', entityUuid: props.track?.uuid! }).then(() => props)
     }
 )
 

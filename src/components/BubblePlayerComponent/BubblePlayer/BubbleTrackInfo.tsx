@@ -1,9 +1,9 @@
 import { api } from "@/api"
 import ThreeDots from "@/components/icons/ThreeDots"
 import { Track } from "@/api"
-import Like, { LikeProps } from "@/components/common/Like"
 import { FunctionalComponent } from "preact"
 import { TrackTimeProgresBar } from "@/components/common/TrackTimeProgresBar"
+import { Like } from "@/components/LikeComponent/Like"
 
 export type BubbleTrackInfoProps = {
     currentTrack: Track
@@ -11,9 +11,10 @@ export type BubbleTrackInfoProps = {
     isSearchScope?: boolean
     liked: boolean
     onTrackClick: () => void
-} & LikeProps
+    onTrackLike: () => void
+}
 
-export const BubbleTrackInfo: FunctionalComponent<BubbleTrackInfoProps> = ({ currentTrack, classes, liked, isSearchScope, onLikeClick, onTrackClick }) => {
+export const BubbleTrackInfo: FunctionalComponent<BubbleTrackInfoProps> = ({ currentTrack, classes, liked, onTrackLike, onTrackClick }) => {
     return (
         <div className={`${classes} h-[74px] pt-2 bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
             <div class='w-full flex justify-between pb-[6px] px-1.5'>
@@ -28,15 +29,12 @@ export const BubbleTrackInfo: FunctionalComponent<BubbleTrackInfoProps> = ({ cur
 
                 </div>
 
-                <div class={`flex flex-row  ${isSearchScope && !liked ? 'pr-2' : 'gap-5'} items-center justify-center`}>
+                <div class={`group flex flex-row gap-5 items-center justify-center`}>
+                    <Like onClick={onTrackLike} isLiked={liked} />
+
                     <div class="w-4 h-4">
                         <ThreeDots class="w-4 h-4" />
                     </div>
-
-                    <div class={`${currentTrack.isLiked ? 'hidden' : 'inline'}`}>
-                        <Like onLikeClick={onLikeClick} />
-                    </div>
-
                 </div>
             </div>
             <TrackTimeProgresBar />

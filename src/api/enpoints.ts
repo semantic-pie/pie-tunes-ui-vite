@@ -10,7 +10,7 @@ const pieSnoopyHost= (https ? 'https' : 'http') + '://' + host.snoopy
 const pieRecHost= (https ? 'https' : 'http') + '://' + host.rec
 
 export type EventLike = {
-    type: 'LIKE_ENTITY',
+    type: 'LIKE_ENTITY' | 'REMOVE_LIKE',
     entityUuid: string
 }
 

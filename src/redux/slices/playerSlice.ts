@@ -1,5 +1,6 @@
 import { Track } from "@/api"
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { fetchForLike, fetchForUnlike } from "./userSlice"
 
 interface PlayerSlice {
     queue: {
@@ -61,8 +62,27 @@ export const playerSlice = createSlice({
             console.log(4)
             state.queue.currentTrackIndex = nextTrackIndexInQueue
             state.queue.currentTrack = state.queue.tracks[nextTrackIndexInQueue]
-        }
+        },
+    },
+    extraReducers(builder) {
+        builder.addCase(fetchForUnlike.fulfilled, (state, action) => {
+            const track = action.payload.track
+            const album = action.payload.album
+            const band = action.payload.band
+            if (track && track.uuid === state.queue.currentTrack?.uuid) {
+                state.queue.currentTrack.isLiked = false
+            }
+        })
+        builder.addCase(fetchForLike.fulfilled, (state, action) => {
+            const track = action.payload.track
+            const album = action.payload.album
+            const band = action.payload.band
+            if (track && track.uuid === state.queue.currentTrack?.uuid) {
+                state.queue.currentTrack.isLiked = true
+            }
+        })
     }
+
 })
 
 export const { playNextQueueTrack, playPrevQueueTrack, playTrack, pushBackToQueue, pushForwardToQueue, setQueueTracks } = playerSlice.actions

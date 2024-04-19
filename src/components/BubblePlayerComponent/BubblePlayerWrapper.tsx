@@ -3,7 +3,7 @@ import { BubblePlayer, BubblePlayerProps } from "./BubblePlayer"
 import { useAppDispatch, useAppSelector } from "@/redux/store"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
 import { playNextQueueTrack, playPrevQueueTrack } from "@/redux/slices/playerSlice"
-import { fetchForLike } from "@/redux/slices/userSlice"
+import { fetchForLike, fetchForUnlike } from "@/redux/slices/userSlice"
 
 export const BubblePlayerWrapper = () => {
     const dispatch = useAppDispatch()
@@ -13,12 +13,11 @@ export const BubblePlayerWrapper = () => {
     if (!currentTrack) return <></>
 
     const searchScopeTrack = useAppSelector(state => state.search.result.songs.find(t => t.uuid === currentTrack.uuid))
-    const liked = searchScopeTrack ? searchScopeTrack.liked === true ? true : false : false
 
     const { volume, setVolume, playing, togglePlayPause } = useGlobalAudioPlayer()
 
     const props: BubblePlayerProps = {
-        liked,
+        liked: currentTrack.isLiked,
         volume,
         currentTrack,
         togglePlayPause,
@@ -29,7 +28,8 @@ export const BubblePlayerWrapper = () => {
         isSearchScope: !!searchScopeTrack,
         onPlayNextClick: () => dispatch(playNextQueueTrack()),
         onPlayPrevClick: () => dispatch(playPrevQueueTrack()),
-        onLikeClick: () => dispatch(fetchForLike({ track: currentTrack })),
+        onTrackLike: () =>  currentTrack.isLiked ? dispatch(fetchForUnlike({ track: currentTrack })) : dispatch(fetchForLike({ track: currentTrack })),
+        
 
     }
 
