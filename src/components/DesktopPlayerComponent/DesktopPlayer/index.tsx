@@ -7,6 +7,8 @@ import { TrackTimeProgresBar } from "@/components/common/TrackTimeProgresBar"
 import { TracksSwitchingControls } from "@/components/BubblePlayerComponent/BubblePlayer/TracksSwitchingControls"
 import { VolumeControls } from "@/components/BubblePlayerComponent/BubblePlayer/VolumeControls"
 import { LikeWrapper } from "@/components/LikeComponent/LikeWrapper"
+import { useSignal } from "@preact/signals"
+import PieTunesTestLogo from "@/components/icons/PieTunesTestLogo"
 
 export type DesktopPlayerProps = {
     currentTrack: Track
@@ -23,12 +25,19 @@ export type DesktopPlayerProps = {
     setVolume: (volume: number) => void
 }
 
+
+
 export const DesktopPlayer: FunctionalComponent<DesktopPlayerProps> = ({ currentTrack, trackCoverUrl, queue, isPlaying, onTrackLike, onNextTrackClick, onPrevTrackClick, onTogglePlayPause, volume, setVolume }) => {
+    const error = useSignal<boolean>(false)
     return (
         <div class='flex flex-col m-auto w-[900px] justify-between playerview rounded-[45px] bg-white bg-opacity-15 z-10'>
             <div class='w-full flex flex-row justify-between p-12'>
                 <div class='w-[330px] h-[450px] flex flex-col justify-between gap-2'>
-                    <img class='rounded-md' src={trackCoverUrl} alt="" />
+
+                    {
+                        error.value ? <div class='bg-black bg-opacity-10 rounded-xl'><PieTunesTestLogo class={'fill-white opacity-10'} /></div> : <img onError={() => error.value = true} class='rounded-md aspect-square bg-black bg-opacity-10' src={trackCoverUrl} alt="" />
+                    }
+                    
 
                     <div className={`h-[74px] justify-center bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
                         <div class='w-full flex justify-between px-3'>

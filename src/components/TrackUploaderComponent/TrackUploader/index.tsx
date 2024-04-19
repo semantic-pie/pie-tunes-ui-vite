@@ -54,7 +54,7 @@ export const TrackUploader: FunctionalComponent<TrackUploaderProps> = ({ uploade
 
     return (
         <div class='h-full w-full flex flex-col'>
-            <h2 className="flex text-white text-3xl font-bold mb-5">Uploader</h2>
+            <h2 className="flex text-white text-3xl font-bold mb-5">Upload</h2>
 
             <div onDragLeave={() => dragAndDropMode.value = false} onDragOver={onFileDrag} onDrop={onFileDrop} class={`hidden sm:flex h-full ${uploadedTracksDetails.length > 0 ? '' : ''} flex-1 flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg bg-transparent transition-all duration-200 ease-in`}>
                 <div class=" flex flex-col items-center my-auto justify-center pt-5 pb-6">
