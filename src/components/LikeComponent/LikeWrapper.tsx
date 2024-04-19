@@ -3,9 +3,8 @@ import { FunctionalComponent } from "preact"
 import { Like, LikeProps } from "./Like"
 import { Track } from "@/api"
 import { fetchForLike, fetchForUnlike } from "@/redux/slices/userSlice"
-import { useSignal } from "@preact/signals"
 
-export const LikeWrapper: FunctionalComponent<{ track: Track }> = ({ track }) => {
+export const LikeWrapper: FunctionalComponent<{ track: Track, classes?: string }> = ({ track, classes }) => {
     const dispatch = useAppDispatch()
     // const liked = useSignal<boolean>(track.isLiked)
 
@@ -14,7 +13,8 @@ export const LikeWrapper: FunctionalComponent<{ track: Track }> = ({ track }) =>
             track.isLiked ? dispatch(fetchForUnlike({ track })) : dispatch(fetchForLike({ track }))
             // liked.value = !liked.value
         },
-        isLiked: track.isLiked
+        isLiked: track.isLiked,
+        classes
     }
 
     return <Like {...props} />

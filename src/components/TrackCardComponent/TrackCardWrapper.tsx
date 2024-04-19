@@ -11,7 +11,6 @@ export const TrackCardWrapper: FunctionalComponent<{ track: Track, contextQueue:
     const props: TrackCardProps = {
         track,
         selected,
-        classes,
         likeButton: !track.isLiked,
         trackCoverUrl: api.urlForTrackCoverById({ id: track.musicAlbum?.uuid }),
         onTrackClick: () => dispatch(playTrack({ track, continuePlaybackWithTracks: contextQueue })),

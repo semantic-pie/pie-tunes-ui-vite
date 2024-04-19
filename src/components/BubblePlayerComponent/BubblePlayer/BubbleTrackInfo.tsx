@@ -17,7 +17,7 @@ export type BubbleTrackInfoProps = {
 export const BubbleTrackInfo: FunctionalComponent<BubbleTrackInfoProps> = ({ currentTrack, classes, liked, onTrackLike, onTrackClick }) => {
     return (
         <div className={`${classes} h-[74px] pt-2 bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
-            <div class='w-full flex justify-between pb-[6px] px-1.5'>
+            <div class='w-full flex justify-between pb-[6px] pl-1.5 px-5'>
 
                 <div onClick={onTrackClick} className="flex w-2/3 sm:w-3/5 justify-start items-center gap-3.5 cursor-pointer">
 
