@@ -82,7 +82,8 @@ const routeTree = rootRoute.addChildren([
   libraryScreen, playerScreen, sharePlayerScreen,
   searchScreen, madeForYouRoute, madeForYouViewRoute,
   songsRoute, albumsRoute, artistsRoute, uploadRoute,
-  albumViewRoute, racentsRoute, signUpRoute, loginRoute
+  albumViewRoute, signUpRoute, loginRoute
+  // racentsRoute
 ])
 
 export const router = createRouter({ routeTree })
