@@ -27,7 +27,7 @@ const PlayerInfoContainer = (props: PlayerInfoContainerProps) => {
     }, [props.currentTrack])
 
     return (
-        <div class={`sm:w-[370px] h-[450px] flex flex-col justify-start gap-[10px] rounded-lg bg-black bg-opacity-15 p-[10px] mt-2 sm:mt-0 mb-[138px] sm:mb-0`}>
+        <div class={`sm:w-[370px] h-[450px] flex flex-col justify-start gap-[10px] rounded-xl bg-black bg-opacity-15 p-[10px] mt-2 sm:mt-0 mb-[138px] sm:mb-0`}>
             <div class='flex justify-between'>
                 <button onClick={() => changeMiniPage("Up Next")} class={`w-[5.6rem] h-[1.8rem] rounded-lg text-white text-opacity-50 bg-black bg-opacity-15 border-opacity-50 ${currentMiniPage.value === 'Up Next' ? 'border-white border-[1px] text-opacity-100' : ''}`}>Up Next</button>
                 <button onClick={() => changeMiniPage("Lyrics")} class={`w-[5.6rem] h-[1.8rem] rounded-lg text-white text-opacity-50 bg-black bg-opacity-15 border-opacity-50 ${currentMiniPage.value === 'Lyrics' ? 'border-white border-[1px] text-opacity-100' : ''}`}>Lyrics</button>
