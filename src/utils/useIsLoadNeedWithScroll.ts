@@ -11,7 +11,7 @@ export const useIsLoadNeedScroll = (callback: () => void) => {
 
 
             sessionStorage.setItem("scrollPosition", scrollTop + '')
-            const trigger = 1 // play around with the trigger factor instead of fixed px
+            const trigger = 0.1 // play around with the trigger factor instead of fixed px
             if (scrollHeight - (scrollTop + window.innerHeight) < window.innerHeight * trigger) {
                 if (!isLoadNeed.value) isLoadNeed.value = true
                 
@@ -24,7 +24,7 @@ export const useIsLoadNeedScroll = (callback: () => void) => {
             callback()
             setTimeout(() => {
                 isLoadNeed.value = false
-            }, 300)
+            }, 500)
         }
     }, [isLoadNeed.value])
 
