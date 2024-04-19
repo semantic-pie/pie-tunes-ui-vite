@@ -3,7 +3,6 @@ import { api } from "@/api"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
 import ThreeDots from "../icons/ThreeDots"
 import { useRef } from "preact/hooks"
-import Like from "../common/Like"
 import { trancate } from "@/utils/hellpers"
 import { useNavigate } from "@tanstack/react-router"
 import { useSwipeHook } from "@/utils/useSwipeHook"
@@ -11,12 +10,7 @@ import { useSignal } from "@preact/signals"
 import { playNextQueueTrack, playPrevQueueTrack, playTrack } from "@/redux/slices/playerSlice"
 import { TrackTimeProgresBar } from "../common/TrackTimeProgresBar"
 import { TracksSwitchingControls } from "../BubblePlayerComponent/BubblePlayer/TracksSwitchingControls"
-import { fetchForLike } from "@/redux/slices/userSlice"
-
-const calcPositionInPercent = (time?: number, duration?: number) => {
-    if (time && duration) return (time / duration) * 100
-    else return 0
-}
+import { LikeWrapper } from "../LikeComponent/LikeWrapper"
 
 type PlayerInfoPage = {
     label: string
@@ -83,15 +77,15 @@ const MobilePlayer = () => {
             <div class={`flex ${currentMiniPage.value ? 'flex-row' : 'flex-col'}  justify-between gap-2 `}>
                 <img ref={imgRef} class={`rounded-xl max-[380px]:self-center max-[380px]:h-56 max-[380px]:w-56 h-full w-full ${currentMiniPage.value ? '!w-20 !h-20' : ''} transition-all duration-400`} src={api.urlForTrackCoverById({ id: currentTrack.musicAlbum.uuid })} alt="" />
 
-                <div class='w-full flex justify-between pb-[5px] px-3 py-1 bg-black bg-opacity-15 rounded-xl truncate'>
+                <div class='w-full flex justify-between mb-[5px] px-3 py-2 bg-black bg-opacity-15 rounded-xl truncate'>
                     <div className="flex flex-col justify-center items-start gap-1 truncate">
                         <div className="text-center text-white text-[24px] font-semibold text-opacity-80 font-['Helvetica Neue'] text-nowrap track-title">{currentTrack.title.length > 25 ? currentTrack.title.substring(0, 25) + '...' : currentTrack.title}</div>
                         <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{currentTrack.musicBand.name.length > 25 ? currentTrack.musicBand.name.substring(0, 25) + '...' : currentTrack.musicBand.name}</div>
                     </div>
 
-                    <div class="flex flex-row gap-5 items-center justify-center">
+                    <div class="flex flex-row gap-5 items-center justify-center mr-2">
+                        <LikeWrapper track={currentTrack} />
                         <ThreeDots class="w-4 h-4" />
-                        <Like onLikeClick={() => dispatch(fetchForLike({ track: currentTrack }))} />
                     </div>
                 </div>
             </div>
