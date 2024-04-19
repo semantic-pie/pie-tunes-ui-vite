@@ -48,13 +48,14 @@ export const api = {
     urlForGlobalSearch: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/search', { queryParams: { page, limit, q: query } })!,
 
     urlForTracksByUuid: ({ uuid }: FindByUuid) => buildUrl(pieDomainHost + '/api/v1/library/tracks/', { path: uuid })!,
-    urlForTracksByTitle: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-title', { queryParams: { page: page, limit, q: query } })!,
+    urlForTracksByTitle: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-title', { queryParams: { page, limit, q: query } })!,
     urlForTracksByDate: ({ page, limit, order }: FindByDateParams) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-date', { queryParams: { page: page, limit, order } })!,
     urlForTracksByAlbum: (params: FindByUuid) => buildUrl(pieDomainHost + '/api/v1/library/tracks/find-by-album', { path: params.uuid })!,
     urlForTracksByPlaylist: (params: FindByUuid) => buildUrl(pieRecHost + '/api/v1/recommendations/playlists/', { path: params.uuid })!,
 
     urlForArtistsByTitle: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/artists/find-by-title', { queryParams: { page: page, limit, q: query } })!,
     urlForArtistsByDate: ({ page, limit, order }: FindByDateParams) => buildUrl(pieDomainHost + '/api/v1/library/artists/find-by-date', { queryParams: { page: page, limit, order } })!,
+    urlForArtistsByUuid: ({ uuid }: FindByUuid) => buildUrl(pieDomainHost + '/api/v1/library/artists/', { path: uuid})!,
 
     urlForAlbumsByTitle: ({ page, limit, query }: FindByTitleParams) => buildUrl(pieDomainHost + '/api/v1/library/albums/find-by-title', { queryParams: { page: page, limit, q: query } })!,
     urlForAlbumsByDate: ({ page, limit, order }: FindByDateParams) => buildUrl(pieDomainHost + '/api/v1/library/albums/find-by-date', { queryParams: { page: page, limit, order } })!,

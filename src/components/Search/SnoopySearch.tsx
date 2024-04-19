@@ -54,7 +54,7 @@ const SnoopyTrack = (props: SnoopyTrackProps) => {
     
     return (
         <div class={`flex flex-row justify-start items-center gap-3`}>
-            <img class="w-12 h-12 rounded-md cursor-pointer" src={props.snoopyTrack.coverUrl} /> :
+            <img class="w-12 h-12 rounded-md cursor-pointer" src={props.snoopyTrack.coverUrl} />
 
 
             <div class='w-full flex justify-between items-center'>

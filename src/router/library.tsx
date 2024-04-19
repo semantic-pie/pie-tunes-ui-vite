@@ -2,7 +2,6 @@ import MainPage from "@/components/pages/MainPage"
 import { createRoute } from "@tanstack/react-router"
 import { rootRoute } from "."
 import { useAppDispatch, useAppSelector } from "@/redux/store"
-import AlbumPage from "@/components/pages/AlbumPage"
 import AlbumsPage from "@/components/pages/AlbumsPage"
 import TracksPage from "@/components/pages/TracksPage"
 import ArtistsPage from "@/components/pages/ArtistsPage"
@@ -14,6 +13,8 @@ import { TrackUploaderWrapper } from "@/components/TrackUploaderComponent/TrackU
 import SidePill from "@/components/SidePill"
 import { useEffect } from "preact/hooks"
 import { fetchNextAlbumsPage, fetchNextBandsPage, fetchNextSongsPage, fetchPlaylists } from "@/redux/slices/dataSlice"
+import AlbumPage from "@/components/pages/AlbumPage"
+import ArtistPage from "@/components/pages/ArtistPage"
 
 export const libraryScreen = createRoute({
   getParentRoute: () => rootRoute,
@@ -87,6 +88,13 @@ export const artistsRoute = createRoute({
   getParentRoute: () => libraryScreen,
   path: '/artists',
   component: () => <ArtistsPage />
+})
+
+export const artistViewRoute = createRoute({
+  getParentRoute: () => libraryScreen,
+  path: '/artists/$artistId',
+  loader: ({ params }) => pieApiClient.findArtistsByUuid({ uuid: params.artistId }).then(data => data.data),
+  component: () => <ArtistPage />
 })
 
 export const racentsRoute = createRoute({

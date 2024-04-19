@@ -12,11 +12,13 @@ const TracksPage = () => {
   })
 
   const { songs: { all, searched } } = useAppSelector(state => state.library)
+
   const tracks = searchQuery.length > 0 ? searched : all
   const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
 
   const dispatch = useAppDispatch()
-
+console.log('songs: ', all)
+console.log('songs: ', searched)
   return (
     <>
       <div class="justify-between items-start inline-flex">

@@ -1,5 +1,5 @@
 import { MusicAlbum, MusicBand, Playlist, Track } from "@/api"
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { PieApiResponse, pieApiClient } from "@/api/client"
 import { RootState } from "../store"
 import { CONSTANTS } from "@/appConfiguration"
@@ -14,10 +14,12 @@ interface DataSlice {
     bands: {
         page: number
         all: MusicBand[]
+        currentOpen?: MusicBand
     },
     albums: {
         page: number
         all: MusicAlbum[]
+        currentOpen?: MusicAlbum
     },
     playlist: {
         madeForYou: {
@@ -34,11 +36,13 @@ const initialState: DataSlice = {
     },
     bands: {
         all: [],
-        page: 0
+        page: 0,
+        currentOpen: undefined
     },
     albums: {
         all: [],
-        page: 0
+        page: 0,
+        currentOpen: undefined
     },
     playlist: {
         madeForYou: {
@@ -53,8 +57,9 @@ const limit = CONSTANTS.ENTITY_PER_PAGE
 export const fetchForTrackSearchByTitle = createAsyncThunk<PieApiResponse<Track[]>, { query: string }, { state: RootState }>(
     'data/fetchForTrackSearchByTitle',
     async ({ query }, { getState }) => {
-        const state = getState()
-        return pieApiClient.findTrackByTitle({ page: state.library.songs.page, limit, query })
+        const result = await pieApiClient.findTrackByTitle({ page: 0, limit, query})
+        console.log('serached: ', result)
+        return result
     }
 )
 
@@ -73,7 +78,7 @@ export const fetchNextAlbumsPage = createAsyncThunk<PieApiResponse<MusicAlbum[]>
         const state = getState()
         const page = state.library.albums.page === 0 ? 0 : state.library.albums.page
         // return pieApiClient.findAlbumsByDate({ page, limit, userUuid: getState().user.userUuid })
-        return pieApiClient.findAlbumsDeprecated({ page, limit, query: 'ignore' })
+        return pieApiClient.findAlbumsByDate({ page, limit, order: 'desc' })
     }
 )
 
@@ -98,14 +103,12 @@ export const dataSlice = createSlice({
     name: 'data',
     initialState,
     reducers: {
-        // addEntity: (state, action: PayloadAction<FetchLikeProps>) => {
-        //     const track = action.payload.track
-        //     const album = action.payload.album
-        //     const band = action.payload.band
-        //     if (track) {
-        //         state.songs.all = [track, ...state.songs.all]
-        //     }
-        // }
+        currentOpenAlbum: (state, action: PayloadAction<{album: MusicAlbum}>) => {
+            state.albums.currentOpen = action.payload.album
+        },
+        currentOpenBand: (state, action: PayloadAction<{band: MusicBand}>) => {
+            state.bands.currentOpen = action.payload.band
+        },
     },
     extraReducers(builder) {
         builder.addCase(fetchNextSongsPage.fulfilled, (state, action) => {
@@ -123,12 +126,22 @@ export const dataSlice = createSlice({
         builder.addCase(fetchPlaylists.fulfilled, (state, action) => {
             state.playlist.madeForYou.all = [...state.playlist.madeForYou.all, ...action.payload.data]
         })
+        builder.addCase(fetchForTrackSearchByTitle.fulfilled, (state, action) => {
+            state.songs.searched = action.payload.data
+        })
         builder.addCase(fetchForLike.fulfilled, (state, action) => {
             const track = action.payload.track
             const album = action.payload.album
             const band = action.payload.band
             if (track) {
                 state.songs.all = [{...track, isLiked: true }, ...state.songs.all.filter(t => t.uuid !== track.uuid)]
+            }
+            if (album) {
+                state.albums.all = [{...album, isLiked: true }, ...state.albums.all.filter(a => a.uuid !== album.uuid)]
+                if (album.uuid === state.albums.currentOpen?.uuid) state.albums.currentOpen.isLiked = true
+            }
+            if (band) {
+                state.bands.all = [{...band, isLiked: true }, ...state.bands.all.filter(b => b.uuid !== band.uuid)]
             }
         })
         builder.addCase(fetchForUnlike.fulfilled, (state, action) => {
@@ -138,6 +151,15 @@ export const dataSlice = createSlice({
             if (track) {
                 state.songs.all = state.songs.all.map(s => s.uuid === track.uuid ? {...s, isLiked: false} : s )
             }
+            if (album) {
+                state.albums.all = state.albums.all.map(a => a.uuid === album.uuid ? {...a, isLiked: false} : a ) 
+                if (album.uuid === state.albums.currentOpen?.uuid) state.albums.currentOpen.isLiked = false
+            }
+            if (band) {
+                state.bands.all = state.bands.all.map(b => b.uuid === band.uuid ? {...b, isLiked: false} : b ) 
+            }
         })
     }
 })
+
+export const { currentOpenAlbum, currentOpenBand } = dataSlice.actions

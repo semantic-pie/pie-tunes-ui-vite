@@ -1,5 +1,5 @@
 import { Outlet, createRootRoute, createRouter, useNavigate } from "@tanstack/react-router";
-import { albumViewRoute, albumsRoute, artistsRoute, libraryScreen, madeForYouRoute, madeForYouViewRoute, racentsRoute, songsRoute, uploadRoute } from "./library";
+import { albumViewRoute, albumsRoute, artistViewRoute, artistsRoute, libraryScreen, madeForYouRoute, madeForYouViewRoute, racentsRoute, songsRoute, uploadRoute } from "./library";
 import { playerScreen, sharePlayerScreen } from "./player";
 import { searchScreen } from "./search";
 import { loginRoute, signUpRoute } from "./auth";
@@ -82,7 +82,7 @@ const routeTree = rootRoute.addChildren([
   libraryScreen, playerScreen, sharePlayerScreen,
   searchScreen, madeForYouRoute, madeForYouViewRoute,
   songsRoute, albumsRoute, artistsRoute, uploadRoute,
-  albumViewRoute, signUpRoute, loginRoute
+  albumViewRoute, signUpRoute, loginRoute, artistViewRoute
   // racentsRoute
 ])
 

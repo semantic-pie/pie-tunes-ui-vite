@@ -9,7 +9,7 @@ export const ArtistCardWrapper: FunctionalComponent<{ artist: MusicBand }> = ({ 
     const props: ArtistCardProps = {
         artist,
         onArtistClick: () => nav({ to: '/library/artists/$artistId', params: { artistId: artist.uuid } }),
-        artistCoverUrl: api.urlForTrackCoverById({ id: 'anon_artist.jpg' }),
+        artistCoverUrl: '',
     }
 
     return <ArtistCard {...props} />
