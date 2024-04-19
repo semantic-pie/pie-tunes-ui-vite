@@ -16,14 +16,24 @@ export type FetchLikeProps = { track?: Track, album?: MusicAlbum, band?: MusicBa
 export const fetchForLike = createAsyncThunk<FetchLikeProps, FetchLikeProps, { state: RootState, dispatch: AppDispatch }>(
     'user/fetchForLike',
     async (props) => {
-        return pieApiClient.postEvent({ type: 'LIKE_ENTITY', entityUuid: props.track?.uuid! }).then(() => props)
+        let entityUuid;
+        if (props.track) entityUuid = props.track.uuid
+        if (props.album) entityUuid = props.album.uuid
+        if (props.band) entityUuid = props.band.uuid
+
+        return pieApiClient.postEvent({ type: 'LIKE_ENTITY', entityUuid: entityUuid! }).then(() => props)
     }
 )
 
 export const fetchForUnlike = createAsyncThunk<FetchLikeProps, FetchLikeProps, { state: RootState }>(
     'user/fetchForUnlike',
     async (props) => {
-        return pieApiClient.postEvent({ type: 'REMOVE_LIKE', entityUuid: props.track?.uuid! }).then(() => props)
+        let entityUuid;
+        if (props.track) entityUuid = props.track.uuid
+        if (props.album) entityUuid = props.album.uuid
+        if (props.band) entityUuid = props.band.uuid
+
+        return pieApiClient.postEvent({ type: 'REMOVE_LIKE', entityUuid: entityUuid! }).then(() => props)
     }
 )
 

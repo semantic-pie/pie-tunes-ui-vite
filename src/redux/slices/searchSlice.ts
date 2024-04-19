@@ -95,6 +95,12 @@ export const searchSlice = createSlice({
             if (track) {
                 state.result.songs = state.result.songs.map(song => song.uuid === track.uuid ? { ...song, isLiked: true } : song)
             }
+            if (album) {
+                state.result.albums = state.result.albums.map(a => a.uuid === album.uuid ? {...a, isLiked: true} : a ) 
+            }
+            if (band) {
+                state.result.bands = state.result.bands.map(b => b.uuid === band.uuid ? {...b, isLiked: true} : b ) 
+            }
         })
         builder.addCase(fetchForUnlike.fulfilled, (state, action) => {
             const track = action.payload.track
@@ -102,6 +108,12 @@ export const searchSlice = createSlice({
             const band = action.payload.band
             if (track) {
                 state.result.songs = state.result.songs.map(song => song.uuid === track.uuid ? { ...song, isLiked: false } : song)
+            }
+            if (album) {
+                state.result.albums = state.result.albums.map(a => a.uuid === album.uuid ? {...a, isLiked: false} : a ) 
+            }
+            if (band) {
+                state.result.bands = state.result.bands.map(b => b.uuid === band.uuid ? {...b, isLiked: false} : b ) 
             }
             
         })

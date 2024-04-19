@@ -1,6 +1,6 @@
 import { FunctionalComponent } from "preact";
 
-const UploadIcon: FunctionalComponent<{ classes: string }> = ({ classes }) => {
+const UploadIcon: FunctionalComponent<{ classes?: string }> = ({ classes }) => {
   return (
     <svg
       fill="none"

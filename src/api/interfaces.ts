@@ -14,6 +14,7 @@ export interface Track {
 
 export interface MusicBand {
   uuid: string
+  isLiked?: boolean
   version: number
   name: string
   description: any
@@ -21,6 +22,7 @@ export interface MusicBand {
 
 export interface MusicAlbum {
   uuid: string
+  isLiked?: boolean
   version: number
   name: string
   description: any

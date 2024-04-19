@@ -117,6 +117,9 @@ interface PieApiClient {
   findArtistsDeprecated: (
     params: FindByTitleParams,
   ) => Promise<PieApiResponse<MusicBand[]>>;
+  findArtistsByUuid: (
+    params: FindByUuid,
+  ) => Promise<PieApiResponse<MusicBand>>;
 
   searchByTitle: (
     params: FindByTitleParams & { controller?: AbortController },
@@ -235,6 +238,9 @@ export const pieApiClient: PieApiClient = {
       .then(responseToPieApiResponse),
   findArtistsDeprecated: async (params) =>
     fetch(api.urlForArtistsDeprecated(params), get({ auth: true }))
+      .then(responseToPieApiResponse),
+  findArtistsByUuid: async (params) =>
+    fetch(api.urlForArtistsByUuid(params), get({ auth: true }))
       .then(responseToPieApiResponse),
   uploadMp3: async (body) =>
     fetch(api.urlForSingleUpload(), postWithBody({ body, auth: true , disableContentType: true} ))
