@@ -6,6 +6,7 @@ import { TrackTimeProgresBar } from "@/components/common/TrackTimeProgresBar"
 import { Like } from "@/components/LikeComponent/Like"
 import PieTunesTestLogo from "@/components/icons/PieTunesTestLogo"
 import { useSignal } from "@preact/signals"
+import { useEffect } from "preact/hooks"
 
 export type BubbleTrackInfoProps = {
     currentTrack: Track
@@ -18,6 +19,12 @@ export type BubbleTrackInfoProps = {
 
 export const BubbleTrackInfo: FunctionalComponent<BubbleTrackInfoProps> = ({ currentTrack, classes, liked, onTrackLike, onTrackClick }) => {
     const error = useSignal<boolean>(false)
+
+    useEffect(() => {
+        error.value = false
+    }, [currentTrack])
+
+
     return (
         <div className={`${classes} h-[74px] pt-2 bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
             <div class='w-full flex justify-between pb-[6px] pl-1.5 px-5'>
