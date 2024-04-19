@@ -33,7 +33,7 @@ const SearchPage = () => {
         containerHeight.value = window.innerWidth < 640 ? { height: window.innerHeight - 90 } : { height: window.innerHeight - 400 }
     }, [screen.height])
 
-    return (<div class={`h-dvh w-full flex flex-col sm:mx-auto  ${isSearchMode ? 'p-3 gap-2 sm:gap-4' : 'sm:mt-[20%] gap-16'} transition-all duration-200`}>
+    return (<div class={`h-dvh w-full flex flex-col sm:mx-auto  ${isSearchMode ? 'gap-2 sm:gap-4' : 'sm:mt-[20%] gap-16'} transition-all duration-200`}>
         <GlobalSearchInput class={`center mx-auto w-full sm:w-[1000px] sm:transform transition-all duration-200`} value={searchQuery} setValue={changeSearchQuery} />
 
         {isSearchMode &&

@@ -29,8 +29,6 @@ export const BubblePlayerWrapper = () => {
         onPlayNextClick: () => dispatch(playNextQueueTrack()),
         onPlayPrevClick: () => dispatch(playPrevQueueTrack()),
         onTrackLike: () =>  currentTrack.isLiked ? dispatch(fetchForUnlike({ track: currentTrack })) : dispatch(fetchForLike({ track: currentTrack })),
-        
-
     }
 
     return <BubblePlayer {...props} />
