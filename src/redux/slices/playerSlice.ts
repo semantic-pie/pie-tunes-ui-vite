@@ -69,16 +69,20 @@ export const playerSlice = createSlice({
             const track = action.payload.track
             const album = action.payload.album
             const band = action.payload.band
-            if (track && track.uuid === state.queue.currentTrack?.uuid) {
-                state.queue.currentTrack.isLiked = false
+            if (track) {
+                if (track.uuid === state.queue.currentTrack?.uuid) state.queue.currentTrack.isLiked = false
+                
+                state.queue.tracks = state.queue.tracks.map(s => s.uuid === track.uuid ? {...s, isLiked: false} : s)   
             }
         })
         builder.addCase(fetchForLike.fulfilled, (state, action) => {
             const track = action.payload.track
             const album = action.payload.album
             const band = action.payload.band
-            if (track && track.uuid === state.queue.currentTrack?.uuid) {
-                state.queue.currentTrack.isLiked = true
+            if (track) {
+                if (track.uuid === state.queue.currentTrack?.uuid) state.queue.currentTrack.isLiked = true
+                
+                state.queue.tracks = state.queue.tracks.map(s => s.uuid === track.uuid ? {...s, isLiked: true} : s)   
             }
         })
     }
