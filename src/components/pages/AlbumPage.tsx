@@ -18,7 +18,7 @@ const AlbumPage = () => {
 
     return (
         <div class={`h-full flex flex-col gap-3 pr-[8px] mr-[-14px] overflow-y-scroll sm:overflow-hidden`}>
-            <div class='sm:p-5 gap-3 flex flex-row justify-between'>
+            <div class='gap-3 flex flex-row justify-between'>
                 <img class='h-28 w-28 sm:w-[200px] sm:h-[200px] rounded-md' src={api.urlForTrackCoverById({ id: albumId })} alt={album.name} />
                 <div class='flex flex-col w-full justify-between'>
                     <h3 class="hidden sm:block text-[18px]">Album</h3>
