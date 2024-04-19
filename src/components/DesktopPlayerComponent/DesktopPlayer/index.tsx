@@ -6,6 +6,7 @@ import PlayerInfoContainer from "./PlayerInfoContainer"
 import { TrackTimeProgresBar } from "@/components/common/TrackTimeProgresBar"
 import { TracksSwitchingControls } from "@/components/BubblePlayerComponent/BubblePlayer/TracksSwitchingControls"
 import { VolumeControls } from "@/components/BubblePlayerComponent/BubblePlayer/VolumeControls"
+import { LikeWrapper } from "@/components/LikeComponent/LikeWrapper"
 
 export type DesktopPlayerProps = {
     currentTrack: Track
@@ -30,20 +31,17 @@ export const DesktopPlayer: FunctionalComponent<DesktopPlayerProps> = ({ current
                     <img class='rounded-md' src={trackCoverUrl} alt="" />
 
                     <div className={`h-[74px] justify-center bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
-                        <div class='w-full flex justify-between pb-[5px] px-3'>
+                        <div class='w-full flex justify-between px-3'>
                             <div className="flex justify-start items-center gap-3.5 truncate">
-
                                 <div className="flex-col justify-center items-start gap-1 inline-flex">
                                     <div className="text-center text-white text-lg font-normal font-['Helvetica Neue'] text-nowrap track-title">{currentTrack.title}</div>
                                     <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{currentTrack.musicBand.name}</div>
                                 </div>
                             </div>
                             <div class="flex flex-row gap-5 items-center justify-center">
+                                <LikeWrapper track={currentTrack} />
                                 <div class="w-4 h-4">
                                     <ThreeDots class="w-4 h-4" />
-                                </div>
-                                <div class={`${currentTrack.isLiked ? 'hidden' : 'inline'}`}>
-                                    <Like onLikeClick={onTrackLike} />
                                 </div>
                             </div>
                         </div>
