@@ -86,7 +86,7 @@ export const fetchNextBandsPage = createAsyncThunk<PieApiResponse<MusicBand[]>, 
     'data/fetchNextBandsPage',
     async (_args, { getState }) => {
         const state = getState()
-        const page = state.library.albums.page === 0 ? 0 : state.library.albums.page 
+        const page = state.library.bands.page === 0 ? 0 : state.library.bands.page 
         // return pieApiClient.findArtistsByDate({ page, limit, userUuid: getState().user.userUuid })
         return pieApiClient.findArtistsDeprecated({ page, limit, query: 'ignore' })
     }
@@ -135,6 +135,9 @@ export const dataSlice = createSlice({
             const band = action.payload.band
             if (track) {
                 state.songs.all = [{...track, isLiked: true }, ...state.songs.all.filter(t => t.uuid !== track.uuid)]
+                if (state.songs.searched.length > 0) {
+                    state.songs.searched = state.songs.searched.map(t => t.uuid === track.uuid ? {...t, isLiked: true} : t )  
+                }
             }
             if (album) {
                 state.albums.all = [{...album, isLiked: true }, ...state.albums.all.filter(a => a.uuid !== album.uuid)]
@@ -150,6 +153,9 @@ export const dataSlice = createSlice({
             const band = action.payload.band
             if (track) {
                 state.songs.all = state.songs.all.map(s => s.uuid === track.uuid ? {...s, isLiked: false} : s )
+                if (state.songs.searched.length > 0) {
+                    state.songs.searched = state.songs.searched.map(t => t.uuid === track.uuid ? {...t, isLiked: false} : t )  
+                }
             }
             if (album) {
                 state.albums.all = state.albums.all.map(a => a.uuid === album.uuid ? {...a, isLiked: false} : a ) 
