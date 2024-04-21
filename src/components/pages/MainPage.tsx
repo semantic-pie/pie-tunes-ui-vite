@@ -1,5 +1,5 @@
 import { Outlet } from "@tanstack/react-router";
-import SideBar from "../common/SideBar";
+import SideBar from "../SideBar";
 
 const MainPage = () => {
     return (

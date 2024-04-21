@@ -1,22 +1,14 @@
-import { api } from "@/api";
 import { TrackUploader, TrackUploaderProps } from "./TrackUploader";
-import { doNothing, repeat, testTrack } from "../common/temp";
-import { Provider } from "react-redux";
-import { store } from "@/redux/store";
+import { WrappWithBlurAndRedux } from "../stories/test-wrappers";
+import { doNothing, repeat, testTrack } from "../stories/test-entities";
 
 export default {
     component: TrackUploader,
     title: 'Track Uploader',
     tags: ['autodocs'],
     decorators: [(story: any) => <div class='p-5 bg-black bg-opacity-15 border-black rounded-md'>
-        <div style={{
-            zIndex: -99,
-            backgroundImage: `url('${api.urlForTrackCoverById({ id: testTrack.musicAlbum.uuid })}')`,
-            filter: 'blur(200px)'
-        }}
-            class='absolute inset-0 bg-cover bg-center z-0'></div>
-        {story()}
-    </div>, (story: any) => <Provider store={store}>{story()}</Provider>],
+        <WrappWithBlurAndRedux> {story()}</WrappWithBlurAndRedux>
+    </div>],
 };
 
 

@@ -1,8 +1,6 @@
-import { api } from "@/api";
-import { doNothing, testTrack } from "../common/temp";
 import { BubblePlayer, BubblePlayerProps } from "./BubblePlayer";
-import { Provider } from "react-redux";
-import { store } from "@/redux/store";
+import { doNothing, testTrack } from "../stories/test-entities";
+import { WrappWithBlurAndRedux } from "../stories/test-wrappers";
 
 
 
@@ -10,22 +8,13 @@ export default {
     component: BubblePlayer,
     title: 'Bubble Player',
     tags: ['autodocs'],
-    decorators: [(story: any) => <div>
-        <div style={{
-            backgroundImage: `url('${api.urlForTrackCoverById({ id: testTrack.musicAlbum.uuid })}')`,
-            filter: 'blur(200px)'
-        }}
-            class='absolute inset-0 bg-cover bg-center'></div>
-        <Provider store={store}>
-            {story()}
-        </Provider>
-    </div>],
+    decorators: [(story: any) => <WrappWithBlurAndRedux>{story()}</WrappWithBlurAndRedux>],
 };
 
 
 export const Default = {
     args: {
-        liked: true,
+        liked: false,
         volume: 1,
         currentTrack: testTrack,
         togglePlayPause: doNothing,
@@ -44,13 +33,14 @@ export const Default = {
 export const Liked = {
     args: {
         ...Default.args,
-        liked: false
+        liked: true
     },
 };
 
 export const Play = {
     args: {
         ...Default.args,
+        liked: false,
         isPlaying: true,
         volume: 0.77
     },

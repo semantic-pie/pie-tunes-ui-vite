@@ -1,17 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/preact';
 import { ScrollAndLoadList } from './ScrollAndLoadList';
 import { TrackCard } from '@components/TrackCardComponent/TrackCard';
-import { api } from '@/api';
-import { testTrack } from '../common/temp';
 import { Default as AlbumDefault } from '../AlbumCardComponent/AlbumCard.stories';
 import { Default as ArtistDefault } from '@components/ArtistCardComponent/ArtistCard.stories'
 
 import { Default, Selected, Liked } from '@components/TrackCardComponent/TrackCard.stories';
 import { AlbumCard } from '../AlbumCardComponent/AlbumCard';
 import { ArtistCard } from '../ArtistCardComponent/ArtistCard';
-
-const backgroundImage = <div style={{ zIndex: -99, backgroundImage: `url('${api.urlForTrackCoverById({ id: testTrack.musicAlbum.uuid })}')`, filter: 'blur(200px)' }}
-    class='absolute inset-0 bg-cover bg-center'></div>
+import { WrappWithBlurAndRedux } from '../stories/test-wrappers';
 
 
 const meta: Meta<typeof ScrollAndLoadList> = {
@@ -19,10 +15,9 @@ const meta: Meta<typeof ScrollAndLoadList> = {
     // tags: ['autodocs'],
     decorators:
         [(story: any) => <div class='w-full p-1 h-[300px] bg-black bg-opacity-15 border-dashed border-[2px] border-black '>{story()}</div>,
-        (story: any) => <div>{backgroundImage}{story()}</div>],
+        (story: any) => <WrappWithBlurAndRedux>{story()}</WrappWithBlurAndRedux>],
     component: ScrollAndLoadList,
     subcomponents: { TrackCard },
-
 };
 
 export default meta;

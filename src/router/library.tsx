@@ -10,7 +10,7 @@ import PlaylistPage from "@/components/pages/PlaylistPage"
 import { pieApiClient } from "@/api/client"
 import { BubblePlayerWrapper } from "@/components/BubblePlayerComponent/BubblePlayerWrapper"
 import { TrackUploaderWrapper } from "@/components/TrackUploaderComponent/TrackUploaderWrapper"
-import SidePill from "@/components/SidePill"
+import { SidePillWrapper } from "@/components/SidePillComponent/SidePillWrapper"
 import { useEffect } from "preact/hooks"
 import { fetchNextAlbumsPage, fetchNextBandsPage, fetchNextSongsPage, fetchPlaylists } from "@/redux/slices/dataSlice"
 import AlbumPage from "@/components/pages/AlbumPage"
@@ -35,7 +35,7 @@ export const libraryScreen = createRoute({
 
     return (
       <>
-        <SidePill />
+        <SidePillWrapper />
         <div class='h-dvh w-full sm:w-auto sm:h-auto flex flex-col sm:gap-5 sm:mx-auto sm:my-auto'>
           <MainPage />
 

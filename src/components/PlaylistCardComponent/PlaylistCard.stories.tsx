@@ -1,6 +1,7 @@
 import { api } from "@/api";
-import { testPLaylist, testTrack } from "../common/temp";
 import { PlaylistCard, PlaylistCardProps } from "./PlaylistCard";
+import { WrappWithBlur } from "../stories/test-wrappers";
+import { testPLaylist } from "../stories/test-entities";
 
 
 
@@ -8,15 +9,7 @@ export default {
     component: PlaylistCard,
     title: 'Playlist Card',
     tags: ['autodocs'],
-    decorators: [(story: any) => <div class='m-5 bg-black bg-opacity-15 border-black rounded-md'>
-        <div style={{
-            zIndex: -99,
-            backgroundImage: `url('${api.urlForTrackCoverById({ id: testTrack.musicAlbum.uuid })}')`,
-            filter: 'blur(200px)'
-        }}
-            class='absolute inset-0 bg-cover bg-center z-0'></div>
-        <div class='min-w-58'>{story()}</div>
-    </div>],
+    decorators: [(story: any) => <WrappWithBlur><div class='max-w-52'>{story()}</div></WrappWithBlur>],
 };
 
 

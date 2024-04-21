@@ -1,22 +1,14 @@
 import { api } from "@/api";
-import { doNothing, testTrack } from "../common/temp";
 import { DesktopPlayer, DesktopPlayerProps } from "./DesktopPlayer";
-
+import { doNothing, testTrack } from "../stories/test-entities";
+import { WrappWithBlurAndRedux } from "../stories/test-wrappers";
 
 
 export default {
     component: DesktopPlayer,
     title: 'Desktop Player',
     tags: ['autodocs'],
-    decorators: [(story: any) => <div class='m-5'>
-        <div style={{
-            zIndex: -99,
-            backgroundImage: `url('${api.urlForTrackCoverById({ id: testTrack.musicAlbum.uuid })}')`,
-            filter: 'blur(200px)'
-        }}
-            class='absolute inset-0 bg-cover bg-center z-0'></div>
-        <div class='min-w-58'>{story()}</div>
-    </div>],
+    decorators: [(story: any) => <WrappWithBlurAndRedux>{story()}</WrappWithBlurAndRedux>],
 };
 
 
@@ -30,7 +22,7 @@ export const Default = {
         onTogglePlayPause: doNothing,
         onTrackLike: doNothing,
         setVolume: doNothing,
-        trackCoverUrl: api.urlForTrackCoverById({ id: testTrack.musicAlbum.uuid}),
+        trackCoverUrl: api.urlForTrackCoverById({ id: testTrack.musicAlbum.uuid }),
         queue: []
     } as DesktopPlayerProps
 };

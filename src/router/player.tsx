@@ -8,8 +8,8 @@ import { Helmet } from '@notwoods/preact-helmet'
 import { api } from "@/api";
 import { playTrack } from "@/redux/slices/playerSlice";
 import { DesktopPlayerWrapper } from "@/components/DesktopPlayerComponent/DesktopPlayerWrapper";
-import SidePill from "@/components/SidePill";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
+import { SidePillWrapper } from "@/components/SidePillComponent/SidePillWrapper";
 
 export const playerScreen = createRoute({
     getParentRoute: () => rootRoute,
@@ -54,7 +54,7 @@ export const sharePlayerScreen = createRoute({
 
         return (
             <>
-                <SidePill />
+                <SidePillWrapper />
                 <Helmet link={[
                     // { rel: "image_src", href: api.urlForTrackCoverById({ id: track.musicAlbum.uuid }) },
                     // { as: "image", rel: "preload", href: api.urlForTrackCoverById({ id: track.musicAlbum.uuid }) }

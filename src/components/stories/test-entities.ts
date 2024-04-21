@@ -1,4 +1,4 @@
-import { Playlist, Track } from "@/api";
+import { Playlist, Track } from "@/api"
 
 export const doNothing = () => { }
 
