@@ -42,7 +42,7 @@ const PlaylistPage = () => {
             <div class={`flex flex-col p-2.5 albumview-info justify-between h-fit gap-4 leading-tight`}>
               <h2 class={`text-[24px] sm:text-[42px]`}>{playlist.name}</h2>
               <div class='hidden sm:flex justify-between'>
-                {!!genres && genres}
+                {!!genres ? genres : <div></div>}
                 <div class='flex justify-between items-center w-[80px] mx-5'>
                   <ThreeDots class={'w-[27px] h-[27px]'} />
                   <Like onLikeClick={() => dispatch(fetchForLike({  }))} />
