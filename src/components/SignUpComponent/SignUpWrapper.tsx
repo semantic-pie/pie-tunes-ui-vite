@@ -72,7 +72,7 @@ export const SignUpWrapper: FunctionalComponent<{}> = ({ }) => {
             console.log('submiting s: ', submiting.value)
             try {
                 await pieApiClient.putPreferredGenres(data.map(g => g.trim().toLowerCase().replace(' ', '-').replace('maidcore', 'maid-core')))
-
+                    .then(() => pieApiClient.generatePlaylist())
                     .then(() => nav({ to: '/library/songs' }))
             } catch (err) {
                 nav({ to: '/library/songs' }) 

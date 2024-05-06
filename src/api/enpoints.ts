@@ -64,6 +64,7 @@ export const api = {
 
     urlForPlaylistsByDate: () => buildUrl(pieRecHost + '/api/v1/recommendations/playlists/daily-mix/find-by-date')!,
     urlForGenrePlaylistsByDate: () => buildUrl(pieRecHost + '/api/v1/recommendations/playlists/genre-mix/find-by-date')!,
+    urlForPlaylistGenerate: () => buildUrl(pieRecHost + '/api/v1/recommendations/playlists/generate')!,
 
     urlForTrackStreamById: ({ id }: FindById) => buildUrl(pieStreamingHost + '/api/play', { path: id + '.mp3' })!,
     urlForTrackCoverById: ({ id }: FindById) => buildUrl(pieStreamingHost + '/api/tracks/covers', { path: id })!,

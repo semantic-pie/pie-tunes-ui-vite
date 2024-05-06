@@ -98,6 +98,7 @@ interface PieApiClient {
   findGenrePlaylistsByDate: (
     params: FindByUserUuid,
   ) => Promise<PieApiResponse<Playlist[]>>;
+  generatePlaylist: () => Promise<PieApiResponse<any>>;
   findAlbumsByUuid: (
     params: FindByUuid,
   ) => Promise<PieApiResponse<MusicAlbum>>;
@@ -234,6 +235,9 @@ export const pieApiClient: PieApiClient = {
       .then(responseToPieApiResponse),
   findGenrePlaylistsByDate: async () =>
     fetch(api.urlForGenrePlaylistsByDate(), get({ auth: true }))
+      .then(responseToPieApiResponse),
+  generatePlaylist: async () => 
+    fetch(api.urlForPlaylistGenerate(), get({auth: true}))
       .then(responseToPieApiResponse),
   findAlbumsByTitle: async (params) =>
     fetch(api.urlForAlbumsByTitle(params), get({ auth: true }))
