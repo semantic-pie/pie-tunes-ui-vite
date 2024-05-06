@@ -95,6 +95,9 @@ interface PieApiClient {
   findPlaylistsByDate: (
     params: FindByUserUuid,
   ) => Promise<PieApiResponse<Playlist[]>>;
+  findGenrePlaylistsByDate: (
+    params: FindByUserUuid,
+  ) => Promise<PieApiResponse<Playlist[]>>;
   findAlbumsByUuid: (
     params: FindByUuid,
   ) => Promise<PieApiResponse<MusicAlbum>>;
@@ -158,25 +161,33 @@ const get = (params: { auth?: boolean }) => {
   };
 };
 
-const postWithBody = (params: { auth?: boolean; body?: any, contentType?: string, disableContentType?: boolean }) => {
-  const headers = new Headers()
+const postWithBody = (
+  params: {
+    auth?: boolean;
+    body?: any;
+    contentType?: string;
+    disableContentType?: boolean;
+  },
+) => {
+  const headers = new Headers();
 
   if (!params.disableContentType) {
     if (params.contentType) {
-        headers.append("Content-Type", params.contentType)
+      headers.append("Content-Type", params.contentType);
     } else {
-        headers.append("Content-Type","application/json")
+      headers.append("Content-Type", "application/json");
     }
   }
-  
 
   if (params.auth) {
     headers.append("Authorization", `Bearer ${Cookies.get("token")}`);
   }
 
-  const body = params.body ? (params.disableContentType ? params.body : JSON.stringify(params.body)) : undefined;
+  const body = params.body
+    ? (params.disableContentType ? params.body : JSON.stringify(params.body))
+    : undefined;
 
-  console.log('payload: ', body)
+  console.log("payload: ", body);
   return {
     method: "POST",
     headers,
@@ -209,9 +220,9 @@ export const pieApiClient: PieApiClient = {
   findTrackByAlbum: async (params) =>
     fetch(api.urlForTracksByAlbum(params), get({ auth: true }))
       .then(responseToPieApiResponse),
-    findAlbumsByUuid: async (params) =>
-        fetch(api.urlForAlbumsByUuid(params), get({ auth: true }))
-          .then(responseToPieApiResponse),
+  findAlbumsByUuid: async (params) =>
+    fetch(api.urlForAlbumsByUuid(params), get({ auth: true }))
+      .then(responseToPieApiResponse),
   findTrackByPlaylist: async (params) =>
     fetch(api.urlForTracksByPlaylist(params), get({ auth: true }))
       .then(responseToPieApiResponse),
@@ -220,6 +231,9 @@ export const pieApiClient: PieApiClient = {
       .then(responseToPieApiResponse),
   findPlaylistsByDate: async () =>
     fetch(api.urlForPlaylistsByDate(), get({ auth: true }))
+      .then(responseToPieApiResponse),
+  findGenrePlaylistsByDate: async () =>
+    fetch(api.urlForGenrePlaylistsByDate(), get({ auth: true }))
       .then(responseToPieApiResponse),
   findAlbumsByTitle: async (params) =>
     fetch(api.urlForAlbumsByTitle(params), get({ auth: true }))
@@ -243,7 +257,10 @@ export const pieApiClient: PieApiClient = {
     fetch(api.urlForArtistsByUuid(params), get({ auth: true }))
       .then(responseToPieApiResponse),
   uploadMp3: async (body) =>
-    fetch(api.urlForSingleUpload(), postWithBody({ body, auth: true , disableContentType: true} ))
+    fetch(
+      api.urlForSingleUpload(),
+      postWithBody({ body, auth: true, disableContentType: true }),
+    )
       .then(responseToPieApiResponse),
   postEvent: async (body) =>
     fetch(api.urlForEvents(), postWithBody({ body, auth: true }))

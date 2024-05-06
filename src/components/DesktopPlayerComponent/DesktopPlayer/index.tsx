@@ -1,7 +1,6 @@
 import { Track } from "@/api"
 import { FunctionalComponent } from "preact"
 import ThreeDots from "@/components/icons/ThreeDots"
-import Like from "@/components/common/Like"
 import PlayerInfoContainer from "./PlayerInfoContainer"
 import { TrackTimeProgresBar } from "@/components/common/TrackTimeProgresBar"
 import { TracksSwitchingControls } from "@/components/BubblePlayerComponent/BubblePlayer/TracksSwitchingControls"
@@ -38,7 +37,6 @@ export const DesktopPlayer: FunctionalComponent<DesktopPlayerProps> = ({ current
                         error.value ? <div class='bg-black bg-opacity-10 rounded-xl'><PieTunesTestLogo class={'fill-white opacity-10'} /></div> : <img onError={() => error.value = true} class='rounded-md aspect-square bg-black bg-opacity-10' src={trackCoverUrl} alt="" />
                     }
                     
-
                     <div className={`h-[74px] justify-center bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
                         <div class='w-full flex justify-between px-3'>
                             <div className="flex justify-start items-center gap-3.5 truncate">

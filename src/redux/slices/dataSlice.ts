@@ -97,6 +97,11 @@ export const fetchPlaylists = createAsyncThunk<PieApiResponse<Playlist[]>, void>
     async (_args) => pieApiClient.findPlaylistsByDate({ userUuid: '' })
 )
 
+export const fetchGenrePlaylists = createAsyncThunk<PieApiResponse<Playlist[]>, void>(
+    'data/fetchGenrePlaylists',
+    async (_args) => pieApiClient.findGenrePlaylistsByDate({ userUuid: '' })
+)
+
 
 
 export const dataSlice = createSlice({
@@ -124,6 +129,9 @@ export const dataSlice = createSlice({
             state.bands.page += 1
         })
         builder.addCase(fetchPlaylists.fulfilled, (state, action) => {
+            state.playlist.madeForYou.all = [...state.playlist.madeForYou.all, ...action.payload.data]
+        })
+        builder.addCase(fetchGenrePlaylists.fulfilled, (state, action) => {
             state.playlist.madeForYou.all = [...state.playlist.madeForYou.all, ...action.payload.data]
         })
         builder.addCase(fetchForTrackSearchByTitle.fulfilled, (state, action) => {

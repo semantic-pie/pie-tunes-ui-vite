@@ -12,7 +12,7 @@ import { BubblePlayerWrapper } from "@/components/BubblePlayerComponent/BubblePl
 import { TrackUploaderWrapper } from "@/components/TrackUploaderComponent/TrackUploaderWrapper"
 import { SidePillWrapper } from "@/components/SidePillComponent/SidePillWrapper"
 import { useEffect } from "preact/hooks"
-import { fetchNextAlbumsPage, fetchNextBandsPage, fetchNextSongsPage, fetchPlaylists } from "@/redux/slices/dataSlice"
+import { fetchGenrePlaylists, fetchNextAlbumsPage, fetchNextBandsPage, fetchNextSongsPage, fetchPlaylists } from "@/redux/slices/dataSlice"
 import AlbumPage from "@/components/pages/AlbumPage"
 import ArtistPage from "@/components/pages/ArtistPage"
 
@@ -27,6 +27,7 @@ export const libraryScreen = createRoute({
     useEffect(() => {
       if (page === 0) {
         dispatch(fetchPlaylists())
+        dispatch(fetchGenrePlaylists())
         dispatch(fetchNextAlbumsPage())
         dispatch(fetchNextSongsPage())
         dispatch(fetchNextBandsPage())
