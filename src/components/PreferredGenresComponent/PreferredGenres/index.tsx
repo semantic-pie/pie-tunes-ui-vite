@@ -35,10 +35,9 @@ export const PreferredGenres: FunctionalComponent<PreferredGenresProps> = ({ onS
     }
 
     const genres = [
-        "Pop", "Hip-Hop", "Soul", "Electronic Music", "Jazz", "Rock",
-        "Classic Music", "Alternative", "Country", "Metal", "Indie", "Latin",
-        "Reggae", "Blues", "Techno", "House", "Funk", "Disco", "Punk", "Folk",
-        "Drum and Bass", "Dubstep", "Ska"
+        "Hip-Hop", "Electronic Music", "Jazz", "Rock", "Bebop", "Instrumental",
+        "Alternative Metal", "Country", "Glam Metal", "Indie",
+        "Hard Rock", "Blues", "Funk", "Maidcore", "Trash Metal"
     ]
 
 
