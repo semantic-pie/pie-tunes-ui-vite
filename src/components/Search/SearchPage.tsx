@@ -9,6 +9,7 @@ import { BubblePlayerWrapper } from "../BubblePlayerComponent/BubblePlayerWrappe
 import { TrackCardWrapper } from "../TrackCardComponent/TrackCardWrapper"
 import { AlbumCardWrapper } from "../AlbumCardComponent/AlbumCardWrapper"
 import { ArtistCardWrapper } from "../ArtistCardComponent/ArtistCardWrapper"
+import SideBar from "../SideBar"
 
 const SearchPage = () => {
     const dispatch = useAppDispatch()
@@ -33,8 +34,8 @@ const SearchPage = () => {
         containerHeight.value = window.innerWidth < 640 ? { height: window.innerHeight - 90 } : { height: window.innerHeight - 400 }
     }, [screen.height])
 
-    return (<div class={`h-dvh w-full flex flex-col sm:mx-auto  ${isSearchMode ? 'gap-2 sm:gap-4' : 'sm:mt-[20%] gap-16'} transition-all duration-200`}>
-        <GlobalSearchInput class={`center mx-1 mt-1 sm:mx-auto  sm:w-[1000px] sm:transform transition-all duration-200`} value={searchQuery} setValue={changeSearchQuery} />
+    return (<div class={`h-dvh w-full flex flex-col sm:mx-auto  ${isSearchMode ? 'gap-0 sm:gap-2' : 'sm:mt-[20%] gap-0'} transition-all duration-200`}>
+        <GlobalSearchInput class={`center mx-1 mt-1 sm:mx-auto mb-1 sm:w-[1000px] sm:transform transition-all duration-200`} value={searchQuery} setValue={changeSearchQuery} />
 
         {isSearchMode &&
             <div class={`flex sm:w-full flex-col sm:mx-auto gap-5 ml-[6px] overflow-x-hidden  overflow-y-scroll rounded-md sm:rounded-[29px]`}>
@@ -72,7 +73,11 @@ const SearchPage = () => {
             </div>}
 
 
-        {currentTrack && <div class={`mt-auto ${isSearchMode ? '!mt-auto' : ''} sm:mt-0 sm:w-full transition-all duration-300`}>
+        
+        <div class='sm:hidden mt-auto z-10'>
+            <SideBar />
+        </div>
+        {currentTrack && <div class={`${isSearchMode ? '!mt-auto' : ''} sm:mt-0 sm:w-full transition-all duration-300`}>
             <BubblePlayerWrapper />
         </div>}
 
