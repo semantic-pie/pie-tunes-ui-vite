@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store"
 import { useGlobalAudioPlayer } from "react-use-audio-player"
 import { playNextQueueTrack, playPrevQueueTrack } from "@/redux/slices/playerSlice"
 import { fetchForLike, fetchForUnlike } from "@/redux/slices/userSlice"
+import { useEffect } from "preact/hooks"
 
 export const BubblePlayerWrapper = () => {
     const dispatch = useAppDispatch()
@@ -16,13 +17,28 @@ export const BubblePlayerWrapper = () => {
 
     const { volume, setVolume, playing, togglePlayPause } = useGlobalAudioPlayer()
 
+    useEffect(() => {
+        const volumeFromStorage = parseFloat(sessionStorage.getItem('volume') ?? '' + volume)
+        setVolume(volumeFromStorage)
+      }, [])
+
+    useEffect(() => {
+      const volumeFromStorage = parseFloat(sessionStorage.getItem('volume') ?? '' + volume)
+      setVolume(volumeFromStorage)
+    }, [currentTrack])
+
+    const changeVolume = (vol: number) => {
+        setVolume(vol)
+        sessionStorage.setItem('volume', vol.toString())
+    }
+
     const props: BubblePlayerProps = {
         liked: currentTrack.isLiked,
-        volume,
+        volume: volume,
         currentTrack,
         togglePlayPause,
         isPlaying: playing,
-        setVolume: setVolume,
+        setVolume: changeVolume,
         onSwipeUp: () => nav({ to: '/player' }),
         onTrackClick: () => nav({ to: '/player/' + currentTrack.uuid }),
         isSearchScope: !!searchScopeTrack,
