@@ -2,25 +2,38 @@ import { playNextQueueTrack, playPrevQueueTrack } from "@/redux/slices/playerSli
 import { useAppDispatch } from "@/redux/store";
 import { useEffect } from "preact/hooks";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
-import { useKeyPress } from "./useKeyPress";
 
 export const useNavigatorMediaSessionHook = () => {
-    const { seek, pause, play, togglePlayPause } = useGlobalAudioPlayer()
+    const { seek, pause, togglePlayPause } = useGlobalAudioPlayer()
 
     const dispatch = useAppDispatch()
 
     const actionHandlers: [MediaSessionAction, MediaSessionActionHandler][] = [
-        ['play', play],
-        ['pause', pause],
+        ['play', togglePlayPause],
+        ['pause', togglePlayPause],
         ['previoustrack', () => dispatch(playPrevQueueTrack())],
         ['nexttrack', () => dispatch(playNextQueueTrack())],
         ['stop', pause],
         ['seekto', (details) => details.seekTime ? seek(details.seekTime) : undefined]
     ];
 
-    useKeyPress(() => {
-        togglePlayPause()
-    }, 'Space')
+    // временный костыль
+    document['kek'] = togglePlayPause
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === ' ') {
+                document['kek']()
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+    
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+
+    }, []);
 
     useEffect(() => {
         for (const [action, handler] of actionHandlers) {
