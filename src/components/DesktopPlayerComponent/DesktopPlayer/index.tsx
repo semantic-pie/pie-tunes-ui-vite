@@ -29,8 +29,8 @@ export type DesktopPlayerProps = {
 export const DesktopPlayer: FunctionalComponent<DesktopPlayerProps> = ({ currentTrack, trackCoverUrl, queue, isPlaying, onTrackLike, onNextTrackClick, onPrevTrackClick, onTogglePlayPause, volume, setVolume }) => {
     const error = useSignal<boolean>(false)
     return (
-        <div class='flex flex-col m-auto w-[900px] justify-between playerview rounded-[45px] bg-white bg-opacity-15 z-10'>
-            <div class='w-full flex flex-row justify-between p-12'>
+        <div class='flex flex-col m-auto justify-between playerview rounded-[45px] bg-white bg-opacity-15 z-10'>
+            <div class='w-full flex flex-row justify-between gap-12 p-12'>
                 <div class='w-[330px] h-[450px] flex flex-col justify-between gap-2'>
 
                     {
