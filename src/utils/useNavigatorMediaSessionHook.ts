@@ -20,7 +20,7 @@ export const useNavigatorMediaSessionHook = () => {
 
     useKeyPress(() => {
         togglePlayPause()
-    }, 'space')
+    }, 'Space')
 
     useEffect(() => {
         for (const [action, handler] of actionHandlers) {
