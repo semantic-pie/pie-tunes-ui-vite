@@ -29,23 +29,21 @@ export type DesktopPlayerProps = {
 export const DesktopPlayer: FunctionalComponent<DesktopPlayerProps> = ({ currentTrack, trackCoverUrl, queue, isPlaying, onTrackLike, onNextTrackClick, onPrevTrackClick, onTogglePlayPause, volume, setVolume }) => {
     const error = useSignal<boolean>(false)
     return (
-        <div class='flex flex-col m-auto w-[900px] justify-between playerview rounded-[45px] bg-white bg-opacity-15 z-10'>
-            <div class='w-full flex flex-row justify-between p-12'>
+        <div class='flex flex-col m-auto justify-between playerview rounded-[45px] bg-white bg-opacity-15 z-10'>
+            <div class='w-full flex flex-row justify-between gap-12 p-12'>
                 <div class='w-[330px] h-[450px] flex flex-col justify-between gap-2'>
 
                     {
                         error.value ? <div class='bg-black bg-opacity-10 rounded-xl'><PieTunesTestLogo class={'fill-white opacity-10'} /></div> : <img onError={() => error.value = true} class='rounded-md aspect-square bg-black bg-opacity-10' src={trackCoverUrl} alt="" />
                     }
-                    
+
                     <div className={`h-[74px] justify-center bg-black bg-opacity-10 rounded-xl items-center flex flex-col overflow-hidden relative`}>
-                        <div class='w-full flex justify-between px-3'>
-                            <div className="flex justify-start items-center gap-3.5 truncate">
-                                <div className="flex-col justify-center items-start gap-1 inline-flex">
-                                    <div className="text-center text-white text-lg font-normal font-['Helvetica Neue'] text-nowrap track-title">{currentTrack.title}</div>
-                                    <div className="text-center text-white text-opacity-40 text-base font-normal font-['Helvetica Neue']">{currentTrack.musicBand.name}</div>
-                                </div>
+                        <div class='w-full flex items-center gap-3 px-3 justify-between overflow-hidden'>
+                            <div className="w-4/5 flex flex-col items-start gap-0.5 truncate">
+                                <div class="w-full text-white text-lg font-normal track-title truncate">{currentTrack.title}</div>
+                                <div class="text-white text-opacity-40 text-base font-normal truncate">{currentTrack.musicBand.name}</div>
                             </div>
-                            <div class="flex flex-row gap-5 items-center justify-center">
+                            <div class=" flex flex-row gap-5 items-center justify-center">
                                 <LikeWrapper track={currentTrack} />
                                 <div class="w-4 h-4">
                                     <ThreeDots class="w-4 h-4" />
