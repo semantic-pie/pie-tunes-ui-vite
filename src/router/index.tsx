@@ -44,7 +44,7 @@ export const rootRoute = createRootRoute({
 
     const { load } = useGlobalAudioPlayer()
     const currentTrack = useAppSelector(state => state.player.queue.currentTrack)
-    const trackInPlayerUuid = useSignal<string|undefined>(undefined) 
+    const trackInPlayerUuid = useSignal<string | undefined>(undefined)
 
     useEffect(() => {
       if (currentTrack && currentTrack.uuid != trackInPlayerUuid.value) {
