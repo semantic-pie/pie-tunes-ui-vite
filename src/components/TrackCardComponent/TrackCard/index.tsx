@@ -33,7 +33,7 @@ export const TrackCard: FunctionalComponent<TrackCardProps> = ({ track, classes,
                     <div class="text-start text-white text-opacity-60 text-sm font-normal capitalize truncate">{track.musicBand ? track.musicBand.name : 'Band Name'}</div>
                 </div>
 
-                <div class={`flext min-w-[60px] sm:min-w-[65px] items-center w-14 flex justify-between  mr-2`}>
+                <div class={`flext min-w-[60px] sm:min-w-[65px] items-center w-14 flex justify-between mx-2`}>
                     {/* {likeButton && <Like onLikeClick={onTrackLike} />} */}
                     {/* <Like onClick={onTrackLike} isLiked={true} /> */}
                     <LikeWrapper classes='text-white opacity-50' track={track} />
