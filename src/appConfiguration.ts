@@ -3,9 +3,9 @@ export const config = {
     https: import.meta.env.VITE_API_HTTPS === 'enable' ? true : false,
     host: {
         domain: import.meta.env.VITE_API_HOST_DOMAIN ?? 'localhost:8080',
-        streaming: import.meta.env.VITE_API_HOST_STREAMING ?? 'localhost:9999',
-        snoopy: import.meta.env.VITE_API_HOST_SNOOPY ?? 'localhost:8886',
-        rec: import.meta.env.VITE_API_HOST_REC ?? 'localhost:8081'
+        streaming: import.meta.env.VITE_API_HOST_STREAMING ?? 'localhost:8080',
+        snoopy: import.meta.env.VITE_API_HOST_SNOOPY ?? 'localhost:8080',
+        rec: import.meta.env.VITE_API_HOST_REC ?? 'localhost:8080'
     }
 }
 
