@@ -1,0 +1,19 @@
+services:
+  ui:
+    container_name: "pie-tunes-ui"
+    image: semantic-pie/pie-tunes-ui:latest
+    hostname: pie-tunes.ui
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      - VITE_API_HTTPS=disable
+      - VITE_API_HOST_DOMAIN=pie-tunes-domain:8080
+      - VITE_API_HOST_STREAMING=pie-tunes-streaming-prod:9999
+      - VITE_API_HOST_SNOOPY=pie-tunes-snoopy-prod:8886
+      - VITE_API_HOST_REC=pie-tunes-recommendation-service:8081
+networks:
+    pie-tunes-network-prod:
+      name: pie-tunes-network-prod
