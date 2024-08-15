@@ -7,7 +7,6 @@ import { ScrollAndLoadList } from "../ScrollAndLoadListComponent/ScrollAndLoadLi
 import { TrackCardWrapper } from "../TrackCardComponent/TrackCardWrapper";
 import { useAppDispatch } from "@/redux/store";
 import { fetchForLike } from "@/redux/slices/userSlice";
-import { useSignal } from "@preact/signals";
 import PieTunesTestLogo from "../icons/PieTunesTestLogo";
 
 const calcGenres = (playlist: Playlist) => {
@@ -24,7 +23,7 @@ const calcGenres = (playlist: Playlist) => {
     return <div class='flex items-center gap-1.5 opacity-80'><span class='text-nowrap capitalize'>{first},</span><span class='text-nowrap capitalize'>{second}</span>and<span class='text-nowrap capitalize'>{third}</span></div>
   if (first && second)
     return <div class='flex items-center gap-1.5 opacity-80'><span class='text-nowrap capitalize'>{first}</span>and<span class='text-nowrap capitalize'>{second}</span></div>
-  
+
   return undefined
   // return <div class='flex items-center gap-1.5 opacity-80'><span class='text-nowrap capitalize'>{first}</span></div>
 }
@@ -34,16 +33,11 @@ const PlaylistPage = () => {
   const dispatch = useAppDispatch()
 
   const genres = calcGenres(playlist)
-  const error = useSignal<boolean>(false)
   return (
     <>
       <div class={`flex h-full flex-col gap-3 overflow-y-scroll pr-[8px] mr-[-14px] sm:overflow-hidden`}>
-        <div class='h-28 sm:h-auto sm:p-5 gap-3 flex flex-row justify-between'>
-          {
-                error.value ?
-                    <div class='h-28 w-28 sm:w-[200px] sm:h-[200px] rounded-md aspect-square cursor-pointer bg-black bg-opacity-10'><PieTunesTestLogo class={'fill-white opacity-10'} /></div> :
-                    <img class='h-28 w-28 sm:w-[200px] sm:h-[200px] rounded-md' src={api.urlForTrackCoverById({ id: 'dailyplaylist.jpeg' })} alt="" />
-            }
+        <div class='h-28 sm:flex-shrink-0 sm:h-auto sm:p-5 gap-3 flex flex-row justify-between'>
+          <div class='min-h-28 min-w-28 h-28 w-28 sm:min-w-[200px] sm:min-h-[200px] sm:w-[200px] sm:h-[200px] rounded-md aspect-square cursor-pointer bg-black bg-opacity-10'><PieTunesTestLogo class={'min-h-28 min-w-28 h-28 w-28 sm:w-[200px] sm:h-[200px] fill-white opacity-10'} /></div>
           <div class='mt-auto sm:mt-0 flex flex-col w-full  justify-between'>
             <h3 class="hidden sm:block text-[18px]">Playlist</h3>
             <div class={`flex flex-col p-2.5 albumview-info justify-between h-fit gap-4 leading-tight`}>
@@ -52,7 +46,7 @@ const PlaylistPage = () => {
                 {!!genres ? genres : <div></div>}
                 <div class='flex justify-between items-center w-[80px] mx-5'>
                   <ThreeDots class={'w-[27px] h-[27px]'} />
-                  <Like onLikeClick={() => dispatch(fetchForLike({  }))} />
+                  <Like onLikeClick={() => dispatch(fetchForLike({}))} />
                 </div>
               </div>
             </div>
@@ -63,7 +57,7 @@ const PlaylistPage = () => {
           {calcGenres(playlist)}
           <div class='flex justify-between items-center w-[80px]'>
             <ThreeDots class={'w-[27px] h-[27px]'} />
-            <Like onLikeClick={() => dispatch(fetchForLike({  }))} />
+            <Like onLikeClick={() => dispatch(fetchForLike({}))} />
           </div>
         </div>
 
